@@ -13,6 +13,7 @@ import analyticsRoutes from "./routes/analytics.route.js";
 import { connectDB } from "./lib/db.js";
 
 dotenv.config();
+// console.log("process.env.MONGO_URI", process.env.MONGO_URI);
 
 const app = express();
 const PORT = process.env.PORT || 5000;

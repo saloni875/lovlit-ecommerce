@@ -3,7 +3,15 @@ import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
 
-const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags"];
+const categories = [
+	"bracelets",
+	"necklaces",
+	"rings",
+	"photocards",
+	"candles",
+	"keychains",
+	"btswear",
+];
 
 const CreateProductForm = () => {
 	const [newProduct, setNewProduct] = useState({
@@ -18,9 +26,17 @@ const CreateProductForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		try {
 			await createProduct(newProduct);
-			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
+
+			setNewProduct({
+				name: "",
+				description: "",
+				price: "",
+				category: "",
+				image: "",
+			});
 		} catch {
 			console.log("error creating a product");
 		}
@@ -28,94 +44,137 @@ const CreateProductForm = () => {
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
+
 		if (file) {
 			const reader = new FileReader();
 
 			reader.onloadend = () => {
-				setNewProduct({ ...newProduct, image: reader.result });
+				setNewProduct({
+					...newProduct,
+					image: reader.result,
+				});
 			};
 
-			reader.readAsDataURL(file); // base64
+			reader.readAsDataURL(file);
 		}
 	};
 
 	return (
 		<motion.div
-			className='bg-gray-800 shadow-lg rounded-lg p-8 mb-8 max-w-xl mx-auto'
+			className='bg-white/80 backdrop-blur-md border border-purple-200 shadow-2xl rounded-3xl p-8 mb-8 max-w-xl mx-auto'
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8 }}
 		>
-			<h2 className='text-2xl font-semibold mb-6 text-emerald-300'>Create New Product</h2>
+			<h1 className='logo-font text-6xl text-center text-purple-700 mb-2'>
+				Lovlit
+			</h1>
 
-			<form onSubmit={handleSubmit} className='space-y-4'>
+			<h2 className='text-2xl font-semibold mb-6 text-purple-700 text-center'>
+				Create New Product
+			</h2>
+
+			<form onSubmit={handleSubmit} className='space-y-5'>
+				
 				<div>
-					<label htmlFor='name' className='block text-sm font-medium text-gray-300'>
+					<label
+						htmlFor='name'
+						className='block text-sm font-medium text-gray-700'
+					>
 						Product Name
 					</label>
+
 					<input
 						type='text'
 						id='name'
 						name='name'
 						value={newProduct.name}
-						onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2
-						 px-3 text-white focus:outline-none focus:ring-2
-						focus:ring-emerald-500 focus:border-emerald-500'
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								name: e.target.value,
+							})
+						}
+						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
 						required
 					/>
 				</div>
 
+				
 				<div>
-					<label htmlFor='description' className='block text-sm font-medium text-gray-300'>
+					<label
+						htmlFor='description'
+						className='block text-sm font-medium text-gray-700'
+					>
 						Description
 					</label>
+
 					<textarea
 						id='description'
 						name='description'
 						value={newProduct.description}
-						onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								description: e.target.value,
+							})
+						}
 						rows='3'
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm
-						 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 
-						 focus:border-emerald-500'
+						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
 						required
 					/>
 				</div>
 
+				
 				<div>
-					<label htmlFor='price' className='block text-sm font-medium text-gray-300'>
+					<label
+						htmlFor='price'
+						className='block text-sm font-medium text-gray-700'
+					>
 						Price
 					</label>
+
 					<input
 						type='number'
 						id='price'
 						name='price'
 						value={newProduct.price}
-						onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								price: e.target.value,
+							})
+						}
 						step='0.01'
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm 
-						py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500
-						 focus:border-emerald-500'
+						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
 						required
 					/>
 				</div>
 
+				
 				<div>
-					<label htmlFor='category' className='block text-sm font-medium text-gray-300'>
+					<label
+						htmlFor='category'
+						className='block text-sm font-medium text-gray-700'
+					>
 						Category
 					</label>
+
 					<select
 						id='category'
 						name='category'
 						value={newProduct.category}
-						onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md
-						 shadow-sm py-2 px-3 text-white focus:outline-none 
-						 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500'
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								category: e.target.value,
+							})
+						}
+						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
 						required
 					>
 						<option value=''>Select a category</option>
+
 						{categories.map((category) => (
 							<option key={category} value={category}>
 								{category}
@@ -124,28 +183,43 @@ const CreateProductForm = () => {
 					</select>
 				</div>
 
+				
 				<div className='mt-1 flex items-center'>
-					<input type='file' id='image' className='sr-only' accept='image/*' onChange={handleImageChange} />
+					<input
+						type='file'
+						id='image'
+						className='sr-only'
+						accept='image/*'
+						onChange={handleImageChange}
+					/>
+
 					<label
 						htmlFor='image'
-						className='cursor-pointer bg-gray-700 py-2 px-3 border border-gray-600 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500'
+						className='cursor-pointer bg-purple-100 py-3 px-4 border border-purple-200 rounded-xl shadow-sm text-sm font-medium text-purple-700 hover:bg-purple-200 transition'
 					>
 						<Upload className='h-5 w-5 inline-block mr-2' />
 						Upload Image
 					</label>
-					{newProduct.image && <span className='ml-3 text-sm text-gray-400'>Image uploaded </span>}
+
+					{newProduct.image && (
+						<span className='ml-3 text-sm text-gray-500'>
+							Image uploaded
+						</span>
+					)}
 				</div>
 
+				
 				<button
 					type='submit'
-					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md 
-					shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 
-					focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50'
+					className='w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 transition'
 					disabled={loading}
 				>
 					{loading ? (
 						<>
-							<Loader className='mr-2 h-5 w-5 animate-spin' aria-hidden='true' />
+							<Loader
+								className='mr-2 h-5 w-5 animate-spin'
+								aria-hidden='true'
+							/>
 							Loading...
 						</>
 					) : (
@@ -159,4 +233,178 @@ const CreateProductForm = () => {
 		</motion.div>
 	);
 };
+
 export default CreateProductForm;
+
+
+// import { useState } from "react";
+// import { motion } from "framer-motion";
+// import { PlusCircle, Upload, Loader } from "lucide-react";
+// import { useProductStore } from "../stores/useProductStore";
+
+// const categories = [
+// 	"bracelets",
+// 	"necklaces",
+// 	"photocards",
+// 	"candles",
+// 	"keychains",
+// 	"btswear",
+// ];
+
+// const CreateProductForm = () => {
+// 	const [newProduct, setNewProduct] = useState({
+// 		name: "",
+// 		description: "",
+// 		price: "",
+// 		category: "",
+// 		image: "",
+// 	});
+
+// 	const { createProduct, loading } = useProductStore();
+
+// 	const handleSubmit = async (e) => {
+// 		e.preventDefault();
+// 		try {
+// 			await createProduct(newProduct);
+// 			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
+// 		} catch {
+// 			console.log("error creating a product");
+// 		}
+// 	};
+
+// 	const handleImageChange = (e) => {
+// 		const file = e.target.files[0];
+// 		if (file) {
+// 			const reader = new FileReader();
+
+// 			reader.onloadend = () => {
+// 				setNewProduct({ ...newProduct, image: reader.result });
+// 			};
+
+// 			reader.readAsDataURL(file); // base64
+// 		}
+// 	};
+
+// 	return (
+// 		<motion.div
+// 			className='bg-white/80 backdrop-blur-md border border-purple-200 shadow-2xl shadow-lg rounded-lg p-8 mb-8 max-w-xl mx-auto'
+// 			initial={{ opacity: 0, y: 20 }}
+// 			animate={{ opacity: 1, y: 0 }}
+// 			transition={{ duration: 0.8 }}
+// 		>
+// 			<h2 className='text-2xl font-semibold mb-6 text-purple-700'>Create New Product</h2>
+
+// 			<form onSubmit={handleSubmit} className='space-y-4'>
+// 				<div>
+// 					<label htmlFor='name' className='block text-sm font-medium text-gray-700'>
+// 						Product Name
+// 					</label>
+// 					<input
+// 						type='text'
+// 						id='name'
+// 						name='name'
+// 						value={newProduct.name}
+// 						onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2
+// 						 px-3 text-white focus:outline-none focus:ring-2
+// 						focus:ring-emerald-500 focus:border-emerald-500'
+// 						required
+// 					/>
+// 				</div>
+
+// 				<div>
+// 					<label htmlFor='description' className='block text-sm font-medium text-gray-700'>
+// 						Description
+// 					</label>
+// 					<textarea
+// 						id='description'
+// 						name='description'
+// 						value={newProduct.description}
+// 						onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+// 						rows='3'
+// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm
+// 						 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 
+// 						 focus:border-emerald-500'
+// 						required
+// 					/>
+// 				</div>
+
+// 				<div>
+// 					<label htmlFor='price' className='block text-sm font-medium text-gray-700'>
+// 						Price
+// 					</label>
+// 					<input
+// 						type='number'
+// 						id='price'
+// 						name='price'
+// 						value={newProduct.price}
+// 						onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+// 						step='0.01'
+// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm 
+// 						py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500
+// 						 focus:border-emerald-500'
+// 						required
+// 					/>
+// 				</div>
+
+// 				<div>
+// 					<label htmlFor='category' className='block text-sm font-medium text-gray-700'>
+// 						Category
+// 					</label>
+// 					<select
+// 						id='category'
+// 						name='category'
+// 						value={newProduct.category}
+// 						onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md
+// 						 shadow-sm py-2 px-3 text-white focus:outline-none 
+// 						 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500'
+// 						required
+// 					>
+// 						<option value=''>Select a category</option>
+// 						{categories.map((category) => (
+// 							<option key={category} value={category}>
+// 								{category}
+// 							</option>
+// 						))}
+// 					</select>
+// 				</div>
+
+// 				<div className='mt-1 flex items-center'>
+// 					<input type='file' id='image' className='sr-only' accept='image/*' onChange={handleImageChange} />
+// 					<label
+// 						htmlFor='image'
+// 						className='cursor-pointer bg-gray-700 py-2 px-3 border border-gray-600 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500'
+// 					>
+// 						<Upload className='h-5 w-5 inline-block mr-2' />
+// 						Upload Image
+// 					</label>
+// 					{newProduct.image && <span className='ml-3 text-sm text-gray-400'>Image uploaded </span>}
+// 				</div>
+
+// 				<button
+// 					type='submit'
+// 					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md 
+// 					shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 
+// 					focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50'
+// 					disabled={loading}
+// 				>
+// 					{loading ? (
+// 						<>
+// 							<Loader className='mr-2 h-5 w-5 animate-spin' aria-hidden='true' />
+// 							Loading...
+// 						</>
+// 					) : (
+// 						<>
+// 							<PlusCircle className='mr-2 h-5 w-5' />
+// 							Create Product
+// 						</>
+// 					)}
+// 				</button>
+// 			</form>
+// 		</motion.div>
+// 	);
+// };
+// export default CreateProductForm;
+
+
