@@ -34,14 +34,14 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	const isEndDisabled = currentIndex >= featuredProducts.length - itemsPerPage;
 
 	return (
-		<div className='py-20'>
+		<div className='py-10'>
 			<div className='container mx-auto px-4'>
-				<h2 className='text-center text-5xl sm:text-6xl font-extrabold text-purple-700 mb-4'>
-					Featured Collection
+				<h2 className='text-center text-5xl sm:text-6xl font-bold text-black mb-4'>
+					Best sellers
 				</h2>
 
 				<p className='text-center text-gray-700 text-lg mb-12'>
-					Handmade BTS inspired collections picked specially for you 💜
+					Handmade inspired collections picked specially for you!
 				</p>
 
 				<div className='relative'>
