@@ -20,6 +20,8 @@ const CreateProductForm = () => {
 		price: "",
 		category: "",
 		image: "",
+		highlight: "",
+		details: "",
 	});
 
 	const { createProduct, loading } = useProductStore();
@@ -36,6 +38,9 @@ const CreateProductForm = () => {
 				price: "",
 				category: "",
 				image: "",
+				highlight: "",
+				details: "",
+
 			});
 		} catch {
 			console.log("error creating a product");
@@ -75,7 +80,7 @@ const CreateProductForm = () => {
 			</h2>
 
 			<form onSubmit={handleSubmit} className='space-y-5'>
-				
+
 				<div>
 					<label
 						htmlFor='name'
@@ -100,7 +105,7 @@ const CreateProductForm = () => {
 					/>
 				</div>
 
-				
+
 				<div>
 					<label
 						htmlFor='description'
@@ -125,7 +130,59 @@ const CreateProductForm = () => {
 					/>
 				</div>
 
-				
+				<div>
+					<label
+						htmlFor='highlights'
+						className='block text-sm font-medium text-black/80 mb-2'
+					>
+						Product Highlights
+					</label>
+
+					<textarea
+						id='highlights'
+						name='highlights'
+						value={newProduct.highlights}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								highlights: e.target.value,
+							})
+						}
+						rows='4'
+						placeholder='Write each highlight on a new line'
+						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+					/>
+				</div>
+
+				<div>
+					<label
+						htmlFor='details'
+						className='block text-sm font-medium text-black/80 mb-2'
+					>
+						Additional Details
+					</label>
+
+					<textarea
+						id='details'
+						name='details'
+						value={newProduct.details}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								details: e.target.value,
+							})
+						}
+						rows='5'
+						placeholder='Material: Stainless Steel'
+						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+					/>
+				</div>
+
+
+
+
+
+
 				<div>
 					<label
 						htmlFor='price'
@@ -151,7 +208,7 @@ const CreateProductForm = () => {
 					/>
 				</div>
 
-				
+
 				<div>
 					<label
 						htmlFor='category'
@@ -183,7 +240,10 @@ const CreateProductForm = () => {
 					</select>
 				</div>
 
-				
+
+
+
+
 				<div className='mt-1 flex items-center'>
 					<input
 						type='file'
@@ -208,7 +268,7 @@ const CreateProductForm = () => {
 					)}
 				</div>
 
-				
+
 				<button
 					type='submit'
 					className='w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 transition'
@@ -323,7 +383,7 @@ export default CreateProductForm;
 // 						onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
 // 						rows='3'
 // 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm
-// 						 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 
+// 						 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500
 // 						 focus:border-emerald-500'
 // 						required
 // 					/>
@@ -340,7 +400,7 @@ export default CreateProductForm;
 // 						value={newProduct.price}
 // 						onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
 // 						step='0.01'
-// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm 
+// 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm
 // 						py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500
 // 						 focus:border-emerald-500'
 // 						required
@@ -357,7 +417,7 @@ export default CreateProductForm;
 // 						value={newProduct.category}
 // 						onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
 // 						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md
-// 						 shadow-sm py-2 px-3 text-white focus:outline-none 
+// 						 shadow-sm py-2 px-3 text-white focus:outline-none
 // 						 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500'
 // 						required
 // 					>
@@ -384,8 +444,8 @@ export default CreateProductForm;
 
 // 				<button
 // 					type='submit'
-// 					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md 
-// 					shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 
+// 					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md
+// 					shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700
 // 					focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50'
 // 					disabled={loading}
 // 				>

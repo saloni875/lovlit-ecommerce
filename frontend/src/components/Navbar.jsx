@@ -20,7 +20,7 @@ const Navbar = () => {
 		<header className='fixed top-0 left-0 w-full bg-gradient-to-r from-purple-300 via-white to-pink-200  backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-purple-200'>
 			<div className='container mx-auto px-6 py-4'>
 				<div className='flex flex-wrap justify-between items-center'>
-					
+
 					<Link
 						to='/'
 						className='flex items-center space-x-2'
@@ -32,8 +32,9 @@ const Navbar = () => {
 						</h1>
 					</Link>
 
-					
+
 					<nav className='flex flex-wrap items-center gap-4'>
+
 						
 						<Link
 							to={"/"}
@@ -41,8 +42,13 @@ const Navbar = () => {
 						>
 							Home
 						</Link>
-
 						
+						<Link to={"/about"} className='text-purple-700 text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'>
+							About
+						</Link>
+
+
+
 						{user && (
 							<Link
 								to={"/cart"}
@@ -67,7 +73,7 @@ const Navbar = () => {
 							</Link>
 						)}
 
-						
+
 						{isAdmin && (
 							<Link
 								className='bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
@@ -84,7 +90,7 @@ const Navbar = () => {
 							</Link>
 						)}
 
-						
+
 						{user ? (
 							<button
 								className='bg-black/80 hover:bg-purple-700 text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
@@ -98,7 +104,7 @@ const Navbar = () => {
 							</button>
 						) : (
 							<>
-								
+
 								<Link
 									to={"/signup"}
 									className='bg-purple-600 hover:bg-purple-700 text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
@@ -111,7 +117,7 @@ const Navbar = () => {
 									Sign Up
 								</Link>
 
-								
+
 								<Link
 									to={"/login"}
 									className='bg-white border border-purple-300 hover:bg-purple-100 text-purple-700 py-2 px-5 rounded-xl flex items-center shadow-sm transition duration-300 ease-in-out font-medium'

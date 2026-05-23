@@ -16,6 +16,8 @@ import { useCartStore } from "./stores/useCartStore";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import Footer from "./components/Footer";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
@@ -44,6 +46,7 @@ function App() {
 			<div className='relative z-50 pt-20'>
 				<Navbar />
 				<Routes>
+					<Route path='/about' element={<AboutPage />} />
 					<Route path='/' element={<HomePage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
@@ -52,6 +55,7 @@ function App() {
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
 					/>
 					<Route path='/category/:category' element={<CategoryPage />} />
+					<Route path='/product/:id' element={<ProductDetailsPage />} />
 					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
 					<Route
 						path='/purchase-success'
