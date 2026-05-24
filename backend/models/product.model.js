@@ -6,32 +6,65 @@ const productSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+
 		description: {
 			type: String,
 			required: true,
 		},
+
 		price: {
 			type: Number,
 			min: 0,
 			required: true,
 		},
+
 		image: {
 			type: String,
 			required: [true, "Image is required"],
 		},
+
 		category: {
 			type: String,
 			required: true,
 		},
+
 		isFeatured: {
 			type: Boolean,
 			default: false,
 		},
+
+		
 		highlights: {
 			type: [String],
 		},
+
+		
 		details: {
 			type: [String],
+		},
+
+		
+		colors: {
+			type: [String],
+			default: [],
+		},
+
+		
+		stock: {
+			type: Number,
+			default: 1,
+		},
+
+		
+		isCustomizable: {
+			type: Boolean,
+			default: false,
+		},
+
+		
+		maxCustomTextLength: {
+			type: Number,
+			default: 7,
 		},
 	},
 	{ timestamps: true }

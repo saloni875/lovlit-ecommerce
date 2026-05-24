@@ -18,6 +18,8 @@ import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import Footer from "./components/Footer";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AboutPage from "./pages/AboutPage";
+import CustomIdeaPage from "./pages/CustomIdeaPage";
+
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
@@ -47,6 +49,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path='/about' element={<AboutPage />} />
+					<Route path='/ideas' element={<CustomIdeaPage />} />
 					<Route path='/' element={<HomePage />} />
 					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
