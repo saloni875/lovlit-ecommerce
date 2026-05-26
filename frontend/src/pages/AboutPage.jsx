@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 const AboutPage = () => {
 	return (
 		<div className='min-h-screen px-6 py-16 bg-gradient-to-r from-purple-200 via-white to-pink-100'>
 
-			
+
 			<div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
 
-				
+
 				<div className='relative flex justify-center'>
 					<div className='absolute inset-0 bg-gradient-to-r from-pink-200 to-purple-300 blur-3xl opacity-40 rounded-full' />
 
@@ -16,7 +18,7 @@ const AboutPage = () => {
 					/>
 				</div>
 
-				
+
 				<div>
 					<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-5 font-semibold'>
 						Small Business • Handmade With Love
@@ -59,13 +61,13 @@ const AboutPage = () => {
 						and emotionally connected.
 					</p>
 
-					<button className='bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-lg transition duration-300'>
+					<Link to='/' className='bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-lg transition duration-300'>
 						Shop Now 💗
-					</button>
+					</Link>
 				</div>
 			</div>
 
-			
+
 			<div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-28'>
 
 				<div className='backdrop-blur-md bg-white/40 border border-pink-100 rounded-3xl p-6'>
@@ -113,7 +115,7 @@ const AboutPage = () => {
 				</div>
 			</div>
 
-			
+
 			<div className='mt-28 text-center max-w-4xl mx-auto'>
 				<h2 className='text-5xl font-bold text-black/80 mb-8'>
 					A vision beyond candles
@@ -130,26 +132,29 @@ const AboutPage = () => {
 				</p>
 
 				<p className='text-2xl text-pink-600 font-semibold leading-relaxed'>
-					Because sometimes people don’t just buy products —
+					Because sometimes people don't just buy products —
 					they buy feelings, hope, and comfort.
 				</p>
 			</div>
 
-			
+
 			<div className='mt-32 text-center'>
 				<h2 className='text-5xl font-bold text-purple-700 mb-6'>
 					Thank you for supporting a small business 💜
 				</h2>
 
-				<p className='text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed'>
+				<p className='text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-10'>
 					Every order supports a student dream,
 					a growing handmade brand,
 					and a journey built with love and creativity.
 				</p>
-
-				<button className='mt-10 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-lg transition duration-300'>
+				<Link
+					to='/'
+					className='inline-block rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-10 py-5 text-xl font-semibold text-white shadow-xl hover:scale-105 transition duration-300'
+				>
 					Explore Lovlit
-				</button>
+				</Link>
+
 			</div>
 		</div>
 	);

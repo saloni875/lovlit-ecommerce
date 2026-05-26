@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShoppingCart, ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = ({ featuredProducts }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,7 +58,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 									key={product._id}
 									className='w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-3'
 								>
-									<div className='bg-white rounded-3xl shadow-lg overflow-hidden border border-purple-200 hover:shadow-2xl transition-all duration-300 h-full group'>
+									<Link to={`/product/${product._id}`} className='bg-white rounded-3xl shadow-lg overflow-hidden border border-purple-200 hover:shadow-2xl transition-all duration-300 h-full group'>
 										<div className='relative overflow-hidden'>
 											<img
 												src={product.image}
@@ -80,14 +81,17 @@ const FeaturedProducts = ({ featuredProducts }) => {
 											</p>
 
 											<button
-												onClick={() => addToCart(product)}
+												onClick={(e) => {
+													e.preventDefault();
+													addToCart(product);
+												}}
 												className='w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center'
 											>
 												<ShoppingCart className='w-5 h-5 mr-2' />
 												Add to Cart
 											</button>
 										</div>
-									</div>
+									</Link>
 								</div>
 							))}
 						</div>
