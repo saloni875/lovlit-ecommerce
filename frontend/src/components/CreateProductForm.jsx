@@ -22,7 +22,8 @@ const CreateProductForm = () => {
 		image: "",
 		highlight: "",
 		details: "",
-		colors: "",
+		optionType: "",
+		optionValues: "",
 		stock: 1,
 		isCustomizable: false,
 		maxCustomTextLength: 7,
@@ -42,9 +43,10 @@ const CreateProductForm = () => {
 				price: "",
 				category: "",
 				image: "",
-				highlight: "",
+				highlights: "",
 				details: "",
-				colors: "",
+				optionType: "",
+				optionValues: "",
 				stock: 1,
 				isCustomizable: false,
 				maxCustomTextLength: 7,
@@ -140,29 +142,79 @@ const CreateProductForm = () => {
 
 				<div>
 					<label
-						htmlFor='colors'
+						htmlFor='optionType'
 						className='block text-sm font-medium text-black/80 mb-2'
 					>
-						Available Colors
+						Product Option Type
 					</label>
 
-					<input
-						type='text'
-						id='colors'
-						value={newProduct.colors}
+					<select
+						id='optionType'
+						value={newProduct.optionType}
 						onChange={(e) =>
 							setNewProduct({
 								...newProduct,
-								colors: e.target.value,
+								optionType: e.target.value,
 							})
 						}
-						placeholder='Purple, Black, Green'
 						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+					>
+						<option value=''>No Options</option>
+						<option value='Color'>Color</option>
+						<option value='Scent'>Scent</option>
+						<option value='Size'>Size</option>
+					</select>
+				</div>
+
+				{newProduct.optionType && (
+					<div>
+						<label
+							htmlFor='optionValues'
+							className='block text-sm font-medium text-black/80 mb-2'
+						>
+							{newProduct.optionType} Options
+						</label>
+
+						<textarea
+							id='optionValues'
+							value={newProduct.optionValues}
+							onChange={(e) =>
+								setNewProduct({
+									...newProduct,
+									optionValues: e.target.value,
+								})
+							}
+							rows='4'
+							placeholder='Write each option on a new line'
+							className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+						/>
+
+						<p className='text-sm text-gray-500 mt-2'>
+							Write one option per line
+						</p>
+					</div>
+				)}
+
+				<div className='flex items-center gap-3'>
+					<input
+						type='checkbox'
+						id='customizable'
+						checked={newProduct.isCustomizable}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								isCustomizable: e.target.checked,
+							})
+						}
+						className='w-5 h-5 accent-purple-600'
 					/>
 
-					<p className='text-sm text-gray-500 mt-2'>
-						Separate colors with commas
-					</p>
+					<label
+						htmlFor='customizable'
+						className='text-sm font-medium text-black/80'
+					>
+						Enable Custom Name / Text
+					</label>
 				</div>
 
 				<div>

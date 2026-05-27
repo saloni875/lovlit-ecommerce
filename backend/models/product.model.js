@@ -33,18 +33,24 @@ const productSchema = new mongoose.Schema(
 			default: false,
 		},
 
-		
 		highlights: {
 			type: [String],
+			default: [],
 		},
 
-		
 		details: {
 			type: [String],
+			default: [],
 		},
 
 		
-		colors: {
+		optionType: {
+			type: String,
+			default: "",
+		},
+
+		
+		optionValues: {
 			type: [String],
 			default: [],
 		},

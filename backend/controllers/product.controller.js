@@ -51,7 +51,8 @@ export const createProduct = async (req, res) => {
 			category,
 			highlights,
 			details,
-			colors,
+			optionType,
+			optionValues,
 			stock,
 			isCustomizable,
 			maxCustomTextLength,
@@ -89,10 +90,11 @@ export const createProduct = async (req, res) => {
 					.map((item) => item.trim())
 					.filter(Boolean)
 				: [],
-			colors: colors
-				? colors
-					.split(",")
-					.map((color) => color.trim())
+			optionType,
+			optionValues: optionValues
+				? optionValues
+					.split("\n")
+					.map((item) => item.trim())
 					.filter(Boolean)
 				: [],
 			stock,

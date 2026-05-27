@@ -20,7 +20,8 @@ const ProductDetailsPage = () => {
 
 	const { addToCart } = useCartStore();
 
-	const [selectedColor, setSelectedColor] = useState("");
+	const [selectedOption, setSelectedOption] = useState("");
+
 	const [quantity, setQuantity] = useState(1);
 	const [customText, setCustomText] = useState("");
 
@@ -31,9 +32,9 @@ const ProductDetailsPage = () => {
 	useEffect(() => {
 		if (
 			selectedProduct &&
-			selectedProduct.colors?.length > 0
+			selectedProduct.optionValue?.length > 0
 		) {
-			setSelectedColor(selectedProduct.colors[0]);
+			setSelectedOption(selectedProduct.optionValues[0]);
 		}
 	}, [selectedProduct]);
 
@@ -137,28 +138,28 @@ const ProductDetailsPage = () => {
 
 					<div className='space-y-8 mb-10'>
 
-						{selectedProduct.colors?.length > 0 && (
+
+						{selectedProduct.optionValues?.length > 0 && (
 							<div>
 								<h2 className='text-xl font-bold text-black/70 mb-4'>
-									Available Colors
+									Choose {selectedProduct.optionType}
 								</h2>
 
 								<div className='flex flex-wrap gap-3'>
-									{selectedProduct.colors.map(
-										(color, index) => (
+									{selectedProduct.optionValues.map(
+										(option, index) => (
 											<button
 												key={index}
 												onClick={() =>
-													setSelectedColor(color)
+													setSelectedOption(option)
 												}
 												className={`px-5 py-2 rounded-2xl border transition duration-300 font-medium
-												${
-													selectedColor === color
+						${selectedOption === option
 														? "bg-purple-600 text-white border-purple-600"
 														: "bg-white text-purple-700 border-purple-300 hover:bg-purple-50"
-												}`}
+													}`}
 											>
-												{color}
+												{option}
 											</button>
 										)
 									)}
@@ -250,7 +251,7 @@ const ProductDetailsPage = () => {
 							onClick={() =>
 								addToCart({
 									...selectedProduct,
-									selectedColor,
+									selectedOption,
 									quantity,
 									customText,
 								})
