@@ -32,7 +32,7 @@ const ProductDetailsPage = () => {
 	useEffect(() => {
 		if (
 			selectedProduct &&
-			selectedProduct.optionValue?.length > 0
+			selectedProduct.optionValues?.length > 0
 		) {
 			setSelectedOption(selectedProduct.optionValues[0]);
 		}

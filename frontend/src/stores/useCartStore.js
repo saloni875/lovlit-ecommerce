@@ -47,24 +47,37 @@ export const useCartStore = create((set, get) => ({
 		set({ cart: [], coupon: null, total: 0, subtotal: 0 });
 	},
 	addToCart: async (product) => {
-		try {
-			await axios.post("/cart", { productId: product._id });
-			toast.success("Product added to cart");
+	try {
+		await axios.post("/cart", {
+			productId: product._id,
+			selectedOption: product.selectedOption,
+			customText: product.customText,
+			quantity: product.quantity,
+		});
 
-			set((prevState) => {
-				const existingItem = prevState.cart.find((item) => item._id === product._id);
-				const newCart = existingItem
-					? prevState.cart.map((item) =>
-							item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
-					  )
-					: [...prevState.cart, { ...product, quantity: 1 }];
-				return { cart: newCart };
-			});
-			get().calculateTotals();
-		} catch (error) {
-			toast.error(error.response.data.message || "An error occurred");
-		}
-	},
+		toast.success("Product added to cart");
+
+		set((prevState) => {
+			const newItem = {
+				...product,
+				selectedOption: product.selectedOption,
+				customText: product.customText,
+				quantity: product.quantity || 1,
+			};
+
+			return {
+				cart: [...prevState.cart, newItem],
+			};
+		});
+
+		get().calculateTotals();
+	} catch (error) {
+		toast.error(
+			error.response?.data?.message ||
+				"An error occurred"
+		);
+	}
+},
 	removeFromCart: async (productId) => {
 		await axios.delete(`/cart`, { data: { productId } });
 		set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));

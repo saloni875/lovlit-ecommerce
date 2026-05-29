@@ -29,6 +29,14 @@ const userSchema = new mongoose.Schema(
 					type: mongoose.Schema.Types.ObjectId,
 					ref: "Product",
 				},
+				selectedOption: {
+					type: String,
+					default: "",
+				},
+				customText: {
+					type: String,
+					default: "",
+				},
 			},
 		],
 		role: {
