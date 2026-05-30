@@ -47,37 +47,62 @@ export const useCartStore = create((set, get) => ({
 		set({ cart: [], coupon: null, total: 0, subtotal: 0 });
 	},
 	addToCart: async (product) => {
-	try {
-		await axios.post("/cart", {
-			productId: product._id,
-			selectedOption: product.selectedOption,
-			customText: product.customText,
-			quantity: product.quantity,
-		});
-
-		toast.success("Product added to cart");
-
-		set((prevState) => {
-			const newItem = {
-				...product,
+		try {
+			await axios.post("/cart", {
+				productId: product._id,
 				selectedOption: product.selectedOption,
 				customText: product.customText,
-				quantity: product.quantity || 1,
-			};
+				quantity: product.quantity,
+			});
 
-			return {
-				cart: [...prevState.cart, newItem],
-			};
-		});
+			toast.success("Product added to cart");
 
-		get().calculateTotals();
-	} catch (error) {
-		toast.error(
-			error.response?.data?.message ||
+			set((prevState) => {
+				const existingItem = prevState.cart.find(
+					(item) =>
+						item._id === product._id &&
+						item.selectedOption === product.selectedOption &&
+						item.customText === product.customText
+				);
+
+				if (existingItem) {
+					return {
+						cart: prevState.cart.map((item) =>
+							item._id === product._id &&
+								item.selectedOption === product.selectedOption &&
+								item.customText === product.customText
+								? {
+									...item,
+									quantity:
+										item.quantity +
+										(product.quantity || 1),
+								}
+								: item
+						),
+					};
+				}
+
+				return {
+					cart: [
+						...prevState.cart,
+						{
+							...product,
+							selectedOption: product.selectedOption,
+							customText: product.customText,
+							quantity: product.quantity || 1,
+						},
+					],
+				};
+			});
+
+			get().calculateTotals();
+		} catch (error) {
+			toast.error(
+				error.response?.data?.message ||
 				"An error occurred"
-		);
-	}
-},
+			);
+		}
+	},
 	removeFromCart: async (productId) => {
 		await axios.delete(`/cart`, { data: { productId } });
 		set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));

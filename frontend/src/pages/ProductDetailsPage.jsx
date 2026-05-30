@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useProductStore } from "../stores/useProductStore";
 import { useCartStore } from "../stores/useCartStore";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
 	ShoppingCart,
 	Heart,
@@ -142,7 +143,7 @@ const ProductDetailsPage = () => {
 						{selectedProduct.optionValues?.length > 0 && (
 							<div>
 								<h2 className='text-xl font-bold text-black/70 mb-4'>
-									Choose {selectedProduct.optionType}
+									select {selectedProduct.optionType}
 								</h2>
 
 								<div className='flex flex-wrap gap-3'>
@@ -248,14 +249,23 @@ const ProductDetailsPage = () => {
 
 					<div className='flex flex-col sm:flex-row gap-4'>
 						<button
-							onClick={() =>
+							onClick={() => {
+
+								if (
+									selectedProduct.isCustomizable &&
+									!customText.trim()
+								) {
+									toast.error("Please enter a custom name");
+									return;
+								}
+
 								addToCart({
 									...selectedProduct,
 									selectedOption,
 									quantity,
 									customText,
-								})
-							}
+								});
+							}}
 							className='flex items-center justify-center rounded-2xl bg-purple-600 px-6 py-4 text-white font-semibold hover:bg-purple-700 transition duration-300'
 						>
 							<ShoppingCart className='mr-2' />
