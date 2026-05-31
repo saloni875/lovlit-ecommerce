@@ -1,4 +1,6 @@
 import {
+	Menu,
+	X,
 	ShoppingCart,
 	UserPlus,
 	LogIn,
@@ -6,6 +8,7 @@ import {
 	Lock,
 	Heart,
 } from "lucide-react";
+import { useState } from 'react'
 
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
@@ -15,11 +18,12 @@ const Navbar = () => {
 	const { user, logout } = useUserStore();
 	const isAdmin = user?.role === "admin";
 	const { cart } = useCartStore();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
 		<header className='fixed top-0 left-0 w-full bg-gradient-to-r from-purple-300 via-white to-pink-200  backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-purple-200'>
-			<div className='container mx-auto px-6 py-4'>
-				<div className='flex flex-wrap justify-between items-center'>
+			<div className='container mx-auto px-3 sm:px-6 py-3 sm:py-4'>
+				<div className=' flex justify-between items-center'>
 
 					<Link
 						to='/'
@@ -27,23 +31,28 @@ const Navbar = () => {
 					>
 						<Heart className='text-purple-600 fill-purple-300 w-7 h-7' />
 
-						<h1 className='logo-font text-5xl text-purple-700 tracking-wide drop-shadow-sm'>
+						<h1 className='logo-font text-3xl sm:text-5xl text-purple-700 tracking-wide drop-shadow-sm'>
 							Lovlit
 						</h1>
 					</Link>
 
+					<button
+						className='md:hidden text-purple-700'
+						onClick={() => setIsMenuOpen(!isMenuOpen)}
+					>
+						{isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+					</button>
+					<nav className='hidden md:flex flex-wrap items-center gap-4 '>
 
-					<nav className='flex flex-wrap items-center gap-4'>
 
-						
 						<Link
 							to={"/"}
-							className='text-purple-700 text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'
+							className='text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'
 						>
 							Home
 						</Link>
-						
-						<Link to={"/about"} className='text-purple-700 text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'>
+
+						<Link to={"/about"} className='hidden sm:block text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300'>
 							About
 						</Link>
 
@@ -76,7 +85,7 @@ const Navbar = () => {
 
 						{isAdmin && (
 							<Link
-								className='bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
+								className='bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-5 py-2  rounded-xl font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
 								to={"/secret-dashboard"}
 							>
 								<Lock
@@ -93,7 +102,7 @@ const Navbar = () => {
 
 						{user ? (
 							<button
-								className='bg-black/80 hover:bg-purple-700 text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
+								className='bg-black/80 hover:bg-purple-700 text-white py-2 px-3 sm:px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
 								onClick={logout}
 							>
 								<LogOut size={18} />
@@ -132,6 +141,71 @@ const Navbar = () => {
 							</>
 						)}
 					</nav>
+					{isMenuOpen && (
+						<div className='md:hidden mt-4 flex flex-col gap-4 border-t border-purple-200 pt-4'>
+
+							<Link
+								to='/'
+								onClick={() => setIsMenuOpen(false)}
+								className='text-purple-700 font-semibold'
+							>
+								Home
+							</Link>
+
+							<Link
+								to='/about'
+								onClick={() => setIsMenuOpen(false)}
+								className='text-purple-700 font-semibold'
+							>
+								About
+							</Link>
+
+							{user && (
+								<Link
+									to='/cart'
+									onClick={() => setIsMenuOpen(false)}
+									className='text-purple-700 font-semibold'
+								>
+									Cart
+								</Link>
+							)}
+
+							{isAdmin && (
+								<Link
+									to='/secret-dashboard'
+									onClick={() => setIsMenuOpen(false)}
+									className='text-purple-700 font-semibold'
+								>
+									Dashboard
+								</Link>
+							)}
+
+							{user ? (
+								<button
+									onClick={logout}
+									className='text-left text-purple-700 font-semibold'
+								>
+									Log Out
+								</button>
+							) : (
+								<>
+									<Link
+										to='/signup'
+										className='text-purple-700 font-semibold'
+									>
+										Sign Up
+									</Link>
+
+									<Link
+										to='/login'
+										className='text-purple-700 font-semibold'
+									>
+										Login
+									</Link>
+								</>
+							)}
+						</div>
+					)}
 				</div>
 			</div>
 		</header>

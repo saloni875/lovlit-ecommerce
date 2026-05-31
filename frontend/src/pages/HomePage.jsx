@@ -77,7 +77,7 @@ const HomePage = () => {
 					</p>
 				</div>
 
-				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+				<div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6'>
 					{categories.map((category) => (
 						<CategoryItem
 							category={category}
@@ -86,28 +86,28 @@ const HomePage = () => {
 					))}
 				</div>
 
-				<div className='max-w-6xl mx-auto px-6 py-24 ' >
+				<div className='max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 ' >
 
-					<div className='relative overflow-hidden rounded-[3rem] border border-purple-200 bg-gradient-to-r from-purple-200 via-white to-pink-100  backdrop-blur-md shadow-2xl p-10 md:p-16'>
+					<div className='relative overflow-hidden rounded-[3rem] border border-purple-200 bg-gradient-to-r from-purple-200 via-white to-pink-100  backdrop-blur-md shadow-2xl p-6 sm:p-8 md:p-12'>
 
 						<div className='absolute -top-20 -right-20 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-40' />
 
 						<div className='absolute -bottom-20 -left-20 w-72 h-72 bg-purple-300 rounded-full blur-3xl opacity-40 ' />
 
-						<div className='relative z-10 text-center max-w-3xl mx-auto '>
+						<div className='relative z-10 text-center max-w-5xl mx-auto '>
 
 							<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-5'>
 								Lovlit Custom Requests
 							</p>
 
-							<h2 className='text-4xl md:text-5xl font-bold leading-tight text-black mb-8'>
+							<h2 className='text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-black mb-6 '>
 								Have a custom idea in mind?{" "}
 								<span className='text-purple-700'>
 									💜
 								</span>
 							</h2>
 
-							<p className='text-xl text-gray-700 leading-relaxed mb-10'>
+							<p className='text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-3xl mx-auto'>
 								Want a personalized keychain,
 								custom BTS inspired product,
 								aesthetic jewelry,
@@ -119,7 +119,7 @@ const HomePage = () => {
 
 							<Link
 								to='/ideas'
-								className='inline-flex items-center justify-center rounded-2xl bg-purple-600 px-10 py-5 text-lg font-semibold text-white shadow-lg hover:bg-pink-400 transition duration-300'
+								className='inline-flex items-center justify-center rounded-2xl bg-purple-600 px-8  py-3 text-lg font-semibold text-white shadow-lg hover:bg-pink-400 transition duration-300'
 							>
 								Share Your Idea
 							</Link>

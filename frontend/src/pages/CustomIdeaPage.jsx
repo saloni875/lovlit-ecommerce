@@ -41,18 +41,18 @@ const CustomIdeaPage = () => {
 	};
 
 	return (
-		<div className='min-h-screen bg-gradient-to-r from-purple-100 via-white to-pink-100 px-6 py-16'>
-			<div className='max-w-3xl mx-auto bg-gradient-to-r from-purple-200 via-white to-pink-100 rounded-3xl shadow-xl border border-purple-100 p-8'>
+		<div className='min-h-screen bg-gradient-to-r from-purple-100 via-white to-pink-100 px-4 sm:px-6 py-10 sm:py-16'>
+			<div className='max-w-3xl mx-auto bg-gradient-to-r from-purple-200 via-white to-pink-100 rounded-3xl shadow-xl border border-purple-100 p-5 sm:p-8'>
 
 				<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-4'>
 					Lovlit Custom Requests
 				</p>
 
-				<h1 className='text-5xl font-bold text-purple-700 mb-6'>
+				<h1 className='text-3xl sm:text-5xl font-bold text-purple-700 sm:mb-6'>
 					Share Your Idea 💜
 				</h1>
 
-				<p className='text-lg text-gray-600 leading-relaxed mb-10'>
+				<p className='text-base sm:text-lg text-gray-600 leading-relaxed mb-8 sm:mb-10'>
 					Have a custom BTS inspired idea,
 					keychain concept,
 					jewelry design,
@@ -100,7 +100,7 @@ const CustomIdeaPage = () => {
 								})
 							}
 							required
-							className='w-full rounded-2xl border border-purple-200 px-5 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500'
+							className='w-full rounded-2xl border border-purple-200 px-4 sm:py-5 py-3 sm:px-4 focus:outline-none focus:ring-2 focus:ring-purple-500'
 						/>
 					</div>
 
@@ -119,7 +119,7 @@ const CustomIdeaPage = () => {
 								})
 							}
 							required
-							className='w-full rounded-2xl border border-purple-200 px-5 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500'
+							className='w-full rounded-2xl border border-purple-200 sm:px-5 py-4 py-4 sm:py-5 focus:outline-none focus:ring-2 focus:ring-purple-500'
 						/>
 					</div>
 
@@ -138,14 +138,14 @@ const CustomIdeaPage = () => {
 										e.target.value,
 								})
 							}
-							className='w-full rounded-2xl border border-purple-200 px-5 py-4 focus:outline-none focus:ring-2 focus:ring-purple-500'
+							className='w-full rounded-2xl border border-purple-200 sm:px-5 py-4 py-3 sm:py-5 focus:outline-none focus:ring-2 focus:ring-purple-500'
 						/>
 					</div>
 
 					<button
 						type='submit'
 						disabled={loading}
-						className='w-full rounded-2xl bg-purple-600 px-6 py-4 text-white font-semibold hover:bg-purple-700 transition duration-300'
+						className='w-full rounded-2xl bg-purple-600 px-6 py-3 sm:py-4 text-white font-semibold hover:bg-purple-700 transition duration-300'
 					>
 						{loading
 							? "Submitting..."
