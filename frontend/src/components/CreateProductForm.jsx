@@ -76,20 +76,20 @@ const CreateProductForm = () => {
 
 	return (
 		<motion.div
-			className='bg-white/80 backdrop-blur-md border border-purple-200 shadow-2xl rounded-3xl p-8 mb-8 max-w-xl mx-auto'
+			className='bg-white/80 backdrop-blur-md border border-purple-200 shadow-2xl rounded-3xl p-4 sm:p-6 lg:p-8  mb-6 max-w-xl mx-auto'
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8 }}
 		>
-			<h1 className='logo-font text-6xl text-center text-purple-700 mb-2'>
+			<h1 className='logo-font text-4xl sm:text-5xl lg:text-6xl text-center text-purple-700 mb-2'>
 				Lovlit
 			</h1>
 
-			<h2 className='text-2xl font-semibold mb-6 text-purple-700 text-center'>
+			<h2 className='text-xl sm:text-2xl font-semibold mb-4 text-purple-700 text-center'>
 				Create New Product
 			</h2>
 
-			<form onSubmit={handleSubmit} className='space-y-5'>
+			<form onSubmit={handleSubmit} className='space-y-4'>
 
 				<div>
 					<label

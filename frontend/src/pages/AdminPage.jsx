@@ -24,9 +24,9 @@ const AdminPage = () => {
 
 	return (
 		<div className='min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white overflow-hidden'>
-			<div className='relative z-10 container mx-auto px-4 py-16'>
+			<div className='relative z-10 container mx-auto px-4 py-8 sm:py-12'>
 				<motion.h1
-					className='text-5xl font-bold mb-10 text-purple-700 text-center'
+					className='text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-10 text-purple-700 text-center'
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
@@ -34,16 +34,15 @@ const AdminPage = () => {
 					Admin Dashboard
 				</motion.h1>
 
-				<div className='flex justify-center mb-10 flex-wrap gap-4'>
+				<div className='grid grid-cols-2 sm:flex justify-center mb-8 flex-wrap gap-3 max-w-md mx-auto'>
 					{tabs.map((tab) => (
 						<button
 							key={tab.id}
 							onClick={() => setActiveTab(tab.id)}
-							className={`flex items-center px-6 py-3 rounded-xl font-semibold shadow-md transition-all duration-300 ${
-								activeTab === tab.id
+							className={`flex items-center justify-center px-2 sm:px-6 py-3 rounded-xl font-semibold shadow-md transition-all duration-300 text-sm sm:text-base ${activeTab === tab.id
 									? "bg-purple-600 text-white scale-105"
 									: "bg-white border border-purple-300 text-purple-700 hover:bg-purple-100"
-							}`}
+								}`}
 						>
 							<tab.icon className='mr-2 h-5 w-5' />
 							{tab.label}
