@@ -16,9 +16,19 @@ const categories = [
 		imageUrl: "/bracelets.jpeg",
 	},
 	{
-		href: "keychains",
-		name: "keychains",
-		imageUrl: "/keychain.jpeg",
+		href: "bodychains",
+		name: "Body Chains",
+		imageUrl: "/bodychain.jpeg",
+	},
+	{
+		href: "scrunchies",
+		name: "Scrunchies",
+		imageUrl: "/scrunchie.jpeg",
+	},
+	{
+		href: "phonecharms",
+		name: "Phone Charms",
+		imageUrl: "/phonecharm.jpeg",
 	},
 	{
 		href: "candles",
@@ -26,14 +36,34 @@ const categories = [
 		imageUrl: "/candles.jpeg",
 	},
 	{
-		href: "btswear",
-		name: "BTS Wear",
-		imageUrl: "/hoodie.jpeg",
-	},
-	{
 		href: "photocards",
 		name: "Photocards",
-		imageUrl: "/photocard.jpeg",
+		imageUrl: "/photocard1.jpeg",
+	},
+	{
+		href: "actionfigures",
+		name: "Action Figures",
+		imageUrl: "/actionfigure.jpeg",
+	},
+	{
+		href: "chocolatebouquets",
+		name: "Chocolate Bouquets",
+		imageUrl: "/chocolatebouquet.jpeg",
+	},
+	{
+		href: "gifthampers",
+		name: "Gift Hampers",
+		imageUrl: "/gifthamper.jpeg",
+	},
+	{
+		href: "specialboxes",
+		name: "Special Occasion Boxes",
+		imageUrl: "/specialbox.jpeg",
+	},
+	{
+		href: "scoops",
+		name: "Mystery Scoops",
+		imageUrl: "/scoops.jpeg",
 	},
 ];
 

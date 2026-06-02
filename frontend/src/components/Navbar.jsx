@@ -27,13 +27,13 @@ const Navbar = () => {
 
 					<Link
 						to='/'
-						className='flex items-center space-x-2'
+						className='flex items-center'
 					>
-						<Heart className='text-purple-600 fill-purple-300 w-7 h-7' />
-
-						<h1 className='logo-font text-3xl sm:text-5xl text-purple-700 tracking-wide drop-shadow-sm'>
-							Lovlit
-						</h1>
+						<img
+							src='/logo.png'
+							alt='Lovlit'
+							className='h-14 md:h-16 w-auto'
+						/>
 					</Link>
 
 					<button

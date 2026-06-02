@@ -6,11 +6,16 @@ import { useProductStore } from "../stores/useProductStore";
 const categories = [
 	"bracelets",
 	"necklaces",
-	"rings",
-	"photocards",
+	"bodychains",
+	"scrunchies",
+	"phonecharms",
 	"candles",
-	"keychains",
-	"btswear",
+	"photocards",
+	"actionfigures",
+	"chocolatebouquets",
+	"gifthampers",
+	"specialboxes",
+	"scoops",
 ];
 
 const CreateProductForm = () => {
