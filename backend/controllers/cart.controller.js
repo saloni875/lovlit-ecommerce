@@ -28,6 +28,9 @@ export const getCartProducts = async (req, res) => {
 
 				customText:
 					item.customText || "",
+
+				optionType:
+					product.optionType || "",
 			};
 		});
 
