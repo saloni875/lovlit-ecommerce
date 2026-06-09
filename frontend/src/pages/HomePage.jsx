@@ -48,7 +48,7 @@ const categories = [
 	{
 		href: "chocolatebouquets",
 		name: "Chocolate Bouquets",
-		imageUrl: "/chocolatebouquet.jpeg",
+		imageUrl: "/chocolatebouquet1.jpeg",
 	},
 	{
 		href: "gifthampers",
@@ -63,7 +63,7 @@ const categories = [
 	{
 		href: "scoops",
 		name: "Mystery Scoops",
-		imageUrl: "/scoops.jpeg",
+		imageUrl: "/scoops1.jpeg",
 	},
 ];
 

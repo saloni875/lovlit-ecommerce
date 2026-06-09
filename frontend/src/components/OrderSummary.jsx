@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MoveRight, Heart, MessageCircle } from "lucide-react";
 
 const OrderSummary = () => {
-	const { total, subtotal, coupon, isCouponApplied } = useCartStore();
+	const { total, subtotal, coupon, isCouponApplied, cart } = useCartStore();
 
 	const savings = subtotal - total;
 
@@ -13,11 +13,43 @@ const OrderSummary = () => {
 	const formattedSavings = savings.toFixed(2);
 
 	const handleWhatsAppOrder = () => {
-		const message =
-			"Hello Lovlit 💜 I want to place my order.";
+		const orderItems = cart
+			.map((item, index) => {
+				let details = "";
+
+				if (item.selectedOption) {
+					details += `\n${item.optionType}: ${item.selectedOption}`;
+				}
+
+				if (item.customText) {
+					details += `\nCustom Name: ${item.customText}`;
+				}
+
+				details += `\nPrice: ₹${item.price}`;
+				details += `\nQty: ${item.quantity}`;
+				details += `\nItem Total: ₹${item.price * item.quantity}`;
+
+				return ` ${index + 1}. ${item.name}${details}`;
+			})
+			.join("\n\n");
+
+		const message = `Hello - LOVLIT, i would like to place an order with the following details:
+
+${orderItems}
+
+━━━━━━━━━━
+
+Total price: ₹${formattedTotal}
+
+Please share:
+• Payment QR / UPI ID
+• Delivery Charges
+• Estimated Dispatch Date
+
+Thank you `;
 
 		window.open(
-			`https://wa.me/919876543210?text=${encodeURIComponent(message)}`,
+			`https://wa.me/918874407976?text=${encodeURIComponent(message)}`,
 			"_blank"
 		);
 	};
@@ -29,7 +61,7 @@ const OrderSummary = () => {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5 }}
 		>
-			
+
 			<div className='text-center'>
 				<h2 className='text-3xl font-bold text-purple-700'>
 					Order Summary
@@ -40,9 +72,9 @@ const OrderSummary = () => {
 				</p>
 			</div>
 
-			
+
 			<div className='space-y-4 bg-purple-50 rounded-2xl p-5 border border-purple-100'>
-				
+
 				<dl className='flex items-center justify-between gap-4'>
 					<dt className='text-base font-medium text-gray-600'>
 						Original Price
@@ -53,7 +85,7 @@ const OrderSummary = () => {
 					</dd>
 				</dl>
 
-				
+
 				{savings > 0 && (
 					<dl className='flex items-center justify-between gap-4'>
 						<dt className='text-base font-medium text-gray-600'>
@@ -66,7 +98,7 @@ const OrderSummary = () => {
 					</dl>
 				)}
 
-				
+
 				{coupon && isCouponApplied && (
 					<dl className='flex items-center justify-between gap-4'>
 						<dt className='text-base font-medium text-gray-600'>
@@ -79,7 +111,7 @@ const OrderSummary = () => {
 					</dl>
 				)}
 
-				
+
 				<dl className='flex items-center justify-between gap-4 border-t border-purple-200 pt-4'>
 					<dt className='text-xl font-bold text-purple-700'>
 						Total
@@ -91,7 +123,7 @@ const OrderSummary = () => {
 				</dl>
 			</div>
 
-			
+
 			<motion.button
 				className='flex w-full items-center justify-center rounded-2xl bg-purple-600 px-5 py-4 text-base font-semibold text-white hover:bg-purple-700 shadow-lg transition-all duration-300'
 				whileHover={{ scale: 1.03 }}
@@ -102,12 +134,12 @@ const OrderSummary = () => {
 				Order on WhatsApp
 			</motion.button>
 
-			
+
 			<div className='text-center text-gray-400 font-medium'>
 				or
 			</div>
 
-			
+
 			<Link
 				to='/'
 				className='flex items-center justify-center gap-2 rounded-2xl border border-purple-300 bg-white px-5 py-4 text-base font-semibold text-purple-700 hover:bg-purple-50 transition-all duration-300'

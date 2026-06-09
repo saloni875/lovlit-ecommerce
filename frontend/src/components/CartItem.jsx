@@ -33,9 +33,9 @@ const CartItem = ({ item }) => {
 						</p>
 					)}
 
-					{item.optionType === "Fragrance" && (
+					{item.optionType === "Scent" && (
 						<p className='text-sm text-purple-600 font-medium'>
-							Fragrance: {item.selectedOption}
+							Scent: {item.selectedOption}
 						</p>
 					)}
 

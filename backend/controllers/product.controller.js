@@ -15,7 +15,7 @@ export const getAllProducts = async (req, res) => {
 export const getFeaturedProducts = async (req, res) => {
 	try {
 		let featuredProducts = await redis.get("featured_products");
-		console.log("redis data:" , featuredProducts);
+		console.log("redis data:", featuredProducts);
 		// if (featuredProducts) {
 		// 	return res.json(JSON.parse(featuredProducts));
 		// 	console.log("featured from redis:" , featuredProducts);
@@ -26,7 +26,7 @@ export const getFeaturedProducts = async (req, res) => {
 		// which is good for performance when we just want to read data and not use any mongoose methods on it
 
 		featuredProducts = await Product.find({ isFeatured: true }).lean();
-		 console.log("fmongodb data:" , featuredProducts);
+		console.log("fmongodb data:", featuredProducts);
 
 		if (!featuredProducts) {
 			return res.status(404).json({ message: "No featured products found" });
@@ -225,13 +225,24 @@ export const toggleFeaturedProduct = async (req, res) => {
 	}
 };
 
+
+// The lean() method  is used to return plain JavaScript objects instead of full Mongoose documents. This can significantly improve performance
 async function updateFeaturedProductsCache() {
 	try {
-		// The lean() method  is used to return plain JavaScript objects instead of full Mongoose documents. This can significantly improve performance
+		console.log("Updating featured cache...");
 
-		const featuredProducts = await Product.find({ isFeatured: true }).lean();
-		await redis.set("featured_products", JSON.stringify(featuredProducts));
+		const featuredProducts =
+			await Product.find({ isFeatured: true }).lean();
+
+		console.log(featuredProducts.length);
+
+		await redis.set(
+			"featured_products",
+			JSON.stringify(featuredProducts)
+		);
+
+		console.log("Cache updated");
 	} catch (error) {
-		console.log("error in update cache function");
+		console.log(error);
 	}
 }
