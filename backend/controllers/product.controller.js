@@ -15,14 +15,18 @@ export const getAllProducts = async (req, res) => {
 export const getFeaturedProducts = async (req, res) => {
 	try {
 		let featuredProducts = await redis.get("featured_products");
-		if (featuredProducts) {
-			return res.json(JSON.parse(featuredProducts));
-		}
+		console.log("redis data:" , featuredProducts);
+		// if (featuredProducts) {
+		// 	return res.json(JSON.parse(featuredProducts));
+		// 	console.log("featured from redis:" , featuredProducts);
+		// }
 
 		// if not in redis, fetch from mongodb
 		// .lean() is gonna return a plain javascript object instead of a mongodb document
 		// which is good for performance when we just want to read data and not use any mongoose methods on it
+
 		featuredProducts = await Product.find({ isFeatured: true }).lean();
+		 console.log("fmongodb data:" , featuredProducts);
 
 		if (!featuredProducts) {
 			return res.status(404).json({ message: "No featured products found" });
@@ -135,7 +139,8 @@ export const deleteProduct = async (req, res) => {
 		}
 
 		await Product.findByIdAndDelete(req.params.id);
-
+		await redis.del("featured_products"); // Invalidate the cache after deletion
+		await updateFeaturedProductsCache();
 		res.json({ message: "Product deleted successfully" });
 	} catch (error) {
 		console.log("Error in deleteProduct controller", error.message);
