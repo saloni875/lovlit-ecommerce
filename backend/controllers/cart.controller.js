@@ -86,15 +86,38 @@ export const removeAllFromCart = async (req, res) => {
 	try {
 		const { productId } = req.body;
 		const user = req.user;
+
+		console.log("Removing product:", productId);
+
 		if (!productId) {
 			user.cartItems = [];
 		} else {
-			user.cartItems = user.cartItems.filter((item) => item.id !== productId);
+			user.cartItems = user.cartItems.filter((item) => {
+				console.log(
+					"Cart Item Product:",
+					item.product?.toString()
+				);
+
+				return (
+					item.product &&
+					item.product.toString() !== productId
+				);
+			});
 		}
+
 		await user.save();
+
 		res.json(user.cartItems);
 	} catch (error) {
-		res.status(500).json({ message: "Server error", error: error.message });
+		console.log(
+			"Error in removeAllFromCart controller",
+			error.message
+		);
+
+		res.status(500).json({
+			message: "Server error",
+			error: error.message,
+		});
 	}
 };
 

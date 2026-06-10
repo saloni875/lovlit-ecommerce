@@ -2,7 +2,9 @@ import { Minus, Plus, Trash, Heart } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
 
 const CartItem = ({ item }) => {
+	
 	const { removeFromCart, updateQuantity } = useCartStore();
+	console.log("CartItem received item:", item);
 	console.log(item);
 	return (
 		<div className='rounded-3xl border border-purple-200 bg-white shadow-lg p-5 md:p-6 hover:shadow-2xl transition-all duration-300'>

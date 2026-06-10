@@ -12,7 +12,7 @@ const AboutPage = () => {
 					<div className='absolute inset-0 bg-gradient-to-r from-pink-200 to-purple-300 blur-3xl opacity-40 rounded-full' />
 
 					<img
-						src='thv875.jpg'
+						src='anshu1.jpeg'
 						alt='Lovlit Owner'
 						className='relative z-10 w-[350px] md:w-[450px] object-cover rounded-[40px] shadow-2xl border border-purple-200'
 					/>
