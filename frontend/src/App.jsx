@@ -19,6 +19,7 @@ import Footer from "./components/Footer";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AboutPage from "./pages/AboutPage";
 import CustomIdeaPage from "./pages/CustomIdeaPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
 					<Route path='/category/:category' element={<CategoryPage />} />
 					<Route path='/product/:id' element={<ProductDetailsPage />} />
 					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
+					<Route path='/checkout' element={user ? <CheckoutPage /> : <Navigate to='/login' />} />
 					<Route
 						path='/purchase-success'
 						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
