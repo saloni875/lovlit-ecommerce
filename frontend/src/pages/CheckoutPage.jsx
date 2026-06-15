@@ -204,7 +204,17 @@ Thank you 💜`;
 							className="w-full border border-purple-200 rounded-xl p-4"
 						/>
 					</div>
+					<div className='rounded-2xl border border-purple-200 bg-purple-50 p-5 text-sm text-gray-700 space-y-2'>
+						<p>📦 Standard Shipping: ₹45</p>
 
+						<p>⚡ Speed Post: ₹72</p>
+
+						<p>🧵 Every Lovlit product is handmade with care.</p>
+
+						<p>🚚 Dispatch & delivery may take 3–7 days.</p>
+
+						<p>🎥 Please record an unboxing video for any damage, return, or refund claim.</p>
+					</div>
 					<button
 						onClick={handleWhatsAppOrder}
 						className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 rounded-2xl transition duration-300"
