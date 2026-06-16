@@ -8,11 +8,15 @@ const CheckoutPage = () => {
 		name: "",
 		phone: "",
 		address: "",
+		doorNo: "",
 		city: "",
 		state: "",
 		pincode: "",
 		instagram: "",
 	});
+
+	const [shippingMethod, setShippingMethod] = useState("standard shipping");
+	const [shippingCharge, setShippingCharge] = useState(45); // Default shipping charges for standard shipping
 
 	const handleChange = (e) => {
 		setCustomerInfo({
@@ -31,6 +35,7 @@ const CheckoutPage = () => {
 			!customerInfo.name ||
 			!customerInfo.phone ||
 			!customerInfo.address ||
+			!customerInfo.doorNo ||
 			!customerInfo.city ||
 			!customerInfo.state ||
 			!customerInfo.pincode
@@ -55,33 +60,33 @@ const CheckoutPage = () => {
 				details += `\nQty: ${item.quantity}`;
 				details += `\nItem Total: ₹${item.price * item.quantity}`;
 
-				return `🛍️ ${index + 1}. ${item.name}${details}`;
+				return `${index + 1}. ${item.name}${details}`;
 			})
 			.join("\n\n");
 
-		const message = `💜 NEW ORDER - LOVLIT
+		const message = `Hello - LOVLIT, I would like to place an order with the following details:
 
-👤 Name: ${customerInfo.name}
+Name: ${customerInfo.name}
 
-📞 Phone: ${customerInfo.phone}
+Phone: ${customerInfo.phone}
 
-📍 Address:
+Address:
 ${customerInfo.address}
+${customerInfo.doorNo}
 ${customerInfo.city}
 ${customerInfo.state}
 ${customerInfo.pincode}
 
-📸 Instagram: ${customerInfo.instagram || "N/A"}
 
-━━━━━━━━━━
+---
 
 ${orderItems}
 
-━━━━━━━━━━
+---
 
-💰 Grand Total: ₹${total}
+Grand Total: ₹${total}
 
-Thank you 💜`;
+Thank you , kindly share your payment details.`;
 
 		window.open(
 			`https://wa.me/918583094531?text=${encodeURIComponent(message)}`,
@@ -131,13 +136,28 @@ Thank you 💜`;
 
 					<div>
 						<label className="block mb-2 font-semibold text-purple-700">
-							Full Address *
+							Address Line 1 *
 						</label>
 
 						<textarea
 							name="address"
 							placeholder="House Number, Street, Area"
 							value={customerInfo.address}
+							onChange={handleChange}
+							rows="4"
+							className="w-full border border-purple-200 rounded-xl p-4"
+						/>
+					</div>
+
+					<div>
+						<label className="block mb-2 font-semibold text-purple-700">
+							House Number/ Flat No/ Building Name *
+						</label>
+
+						<textarea
+							name="doorNo"
+							placeholder="House number, flat number, or building name"
+							value={customerInfo.doorNo}
 							onChange={handleChange}
 							rows="4"
 							className="w-full border border-purple-200 rounded-xl p-4"
@@ -190,7 +210,7 @@ Thank you 💜`;
 
 					</div>
 
-					<div>
+					{/* <div>
 						<label className="block mb-2 font-semibold text-purple-700">
 							Instagram Username (Optional)
 						</label>
@@ -203,23 +223,87 @@ Thank you 💜`;
 							onChange={handleChange}
 							className="w-full border border-purple-200 rounded-xl p-4"
 						/>
+					</div> */}
+
+					<div className="space-y-4">
+
+						<h3 className="text-lg font-semibold text-purple-700">
+							Choose Delivery Method
+						</h3>
+
+						<label className="flex items-start gap-3 border border-purple-200 rounded-xl p-4 cursor-pointer">
+							<input
+								type="radio"
+								name="shipping"
+								checked={shippingMethod === "Standard Shipping"}
+								onChange={() => {
+									setShippingMethod("Standard Shipping");
+									setShippingCharge(45);
+								}}
+							/>
+
+							<div>
+								<p className="font-medium">
+									Standard Shipping — ₹45
+								</p>
+
+								<p className="text-sm text-gray-500">
+									Delivery in 6–7 business days
+								</p>
+							</div>
+						</label>
+
+						<label className="flex items-start gap-3 border border-purple-200 rounded-xl p-4 cursor-pointer">
+							<input
+								type="radio"
+								name="shipping"
+								checked={shippingMethod === "Speed Post"}
+								onChange={() => {
+									setShippingMethod("Speed Post");
+									setShippingCharge(72);
+								}}
+							/>
+
+							<div>
+								<p className="font-medium">
+									Speed Post — ₹72
+								</p>
+
+								<p className="text-sm text-gray-500">
+									Delivery in 3 - 4 business days
+								</p>
+							</div>
+						</label>
+
 					</div>
+
+
+					<div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+						<p>Products Total: ₹{total}</p>
+
+						<p>Shipping: ₹{shippingCharge}</p>
+
+						<p className="font-bold text-lg text-purple-700">
+							Grand Total: ₹{total + shippingCharge}
+						</p>
+					</div>
+
 					<div className='rounded-2xl border border-purple-200 bg-purple-50 p-5 text-sm text-gray-700 space-y-2'>
-						<p>📦 Standard Shipping: ₹45</p>
+						<p>📦 <b>Standard Shipping:</b> ₹45</p>
 
-						<p>⚡ Speed Post: ₹72</p>
+						<p>⚡ <b>Speed Post:</b> ₹72</p>
 
-						<p>🧵 Every Lovlit product is handmade with care.</p>
+						<p>🧵 <b>Every Lovlit product is <i>handmade</i>  with care.</b></p>
 
-						<p>🚚 Dispatch & delivery may take 3–7 days.</p>
+						<p>🚚 <b>Dispatch & delivery may take 3-7 days.</b></p>
 
-						<p>🎥 Please record an unboxing video for any damage, return, or refund claim.</p>
+						<p> <b>Please record an unboxing video for any damage, return, or refund claim.</b></p>
 					</div>
 					<button
 						onClick={handleWhatsAppOrder}
 						className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 rounded-2xl transition duration-300"
 					>
-						Order on WhatsApp 💜
+						Order on WhatsApp 🩷
 					</button>
 
 				</div>

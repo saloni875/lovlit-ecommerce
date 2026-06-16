@@ -138,9 +138,9 @@ Thank you `;
 				to='/checkout'
 				className='flex w-full items-center justify-center rounded-2xl bg-purple-600 px-5 py-4 text-base font-semibold text-white hover:bg-purple-700 shadow-lg transition-all duration-300'
 			>
-				<MessageCircle className='mr-2' size={20} />
+				{/* <MessageCircle className='mr-2' size={20} /> */}
 				Proceed to Checkout
-			</Link>
+	   		</Link>
 
 			<div className='text-center text-gray-400 font-medium'>
 				or
