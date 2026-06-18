@@ -38,6 +38,11 @@ const ProductCard = ({ product }) => {
 		<div className='flex w-full relative flex-col overflow-hidden rounded-3xl bg-white border border-purple-200 shadow-lg hover:shadow-2xl transition-all duration-300'>
 			<Link to={`/product/${product._id}`} className='relative mx-3 mt-3 flex h-72 overflow-hidden rounded-2xl'>
 				<div className='relative mx-3 mt-3 flex h-72 overflow-hidden rounded-2xl'>
+					{product.stock <= 0 && (
+						<div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+							SOLD OUT
+						</div>
+					)}
 					<img
 						className='object-cover w-full transition-transform duration-500 hover:scale-105'
 						src={product.image}
@@ -52,7 +57,7 @@ const ProductCard = ({ product }) => {
 				</div>
 			</Link>
 			<div className='mt-4 px-5 pb-5 flex flex-col flex-grow'>
-				
+
 				<h5 className='text-2xl font-bold tracking-tight text-purple-700 capitalize mb-2'>
 					{product.name}
 				</h5>
@@ -71,11 +76,13 @@ const ProductCard = ({ product }) => {
 
 				<div className='flex flex-col gap-3'>
 					<button
-						className='flex items-center justify-center rounded-xl bg-purple-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-purple-700 transition-all duration-300 shadow-md'
-						onClick={handleAddToCart}
+						disabled={product.stock <= 0}
+						className={`w-full py-3 rounded-xl font-semibold ${product.stock <= 0
+								? "bg-gray-400 cursor-not-allowed"
+								: "bg-purple-600 hover:bg-purple-700 text-white"
+							}`}
 					>
-						<ShoppingCart size={20} className='mr-2' />
-						Add to Cart
+						{product.stock <= 0 ? "Sold Out" : "Add To Cart"}
 					</button>
 
 					<button

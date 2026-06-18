@@ -37,7 +37,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	return (
 		<div className='py-10'>
 			<div className='container mx-auto px-4'>
-				<h2 className='text-center text-5xl sm:text-6xl font-bold text-black mb-4'>
+				<h2 className='text-center text-4xl sm:text-6xl font-bold text-pink-500 mb-3'>
 					Best sellers
 				</h2>
 

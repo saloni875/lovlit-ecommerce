@@ -205,7 +205,7 @@ const ProductDetailsPage = () => {
 							</div>
 						</div>
 
-						<div>
+						{/* <div>
 							{selectedProduct.stock > 0 ? (
 								<p className='text-green-600 font-semibold text-lg'>
 									In Stock / available
@@ -215,7 +215,7 @@ const ProductDetailsPage = () => {
 									Out of Stock
 								</p>
 							)}
-						</div>
+						</div> */}
 
 						{selectedProduct.isCustomizable && (
 							<div>
@@ -247,9 +247,24 @@ const ProductDetailsPage = () => {
 						)}
 					</div>
 
+					<p
+						className={`font-semibold mb-4 ${selectedProduct.stock <= 0
+								? "text-red-500"
+								: "text-green-600"
+							}`}
+					>
+						{selectedProduct.stock <= 0
+							? "Out of Stock"
+							: `${selectedProduct.stock} items available`}
+					</p>
+
 					<div className='flex flex-col sm:flex-row gap-4'>
+
 						<button
+							disabled={selectedProduct.stock <= 0}
 							onClick={() => {
+
+								if (selectedProduct.stock <= 0) return;
 
 								if (
 									selectedProduct.isCustomizable &&
@@ -266,15 +281,30 @@ const ProductDetailsPage = () => {
 									customText,
 								});
 							}}
-							className='flex items-center justify-center rounded-2xl bg-purple-600 px-6 py-4 text-white font-semibold hover:bg-purple-700 transition duration-300'
+							className={`flex items-center justify-center rounded-2xl px-6 py-4 font-semibold transition duration-300
+			${selectedProduct.stock <= 0
+									? "bg-gray-400 cursor-not-allowed text-white"
+									: "bg-purple-600 text-white hover:bg-purple-700"
+								}`}
 						>
 							<ShoppingCart className='mr-2' />
-							Add to Cart
+
+							{selectedProduct.stock <= 0
+								? "Sold Out"
+								: "Add to Cart"}
 						</button>
 
-						<button className='rounded-2xl border border-purple-600 px-6 py-4 text-purple-700 font-semibold hover:bg-purple-50 transition duration-300'>
+						<button
+							disabled={selectedProduct.stock <= 0}
+							className={`rounded-2xl px-6 py-4 font-semibold transition duration-300
+			${selectedProduct.stock <= 0
+									? "bg-gray-200 cursor-not-allowed text-gray-500 border border-gray-300"
+									: "border border-purple-600 text-purple-700 hover:bg-purple-50"
+								}`}
+						>
 							💜 Buy Now
 						</button>
+
 					</div>
 				</div>
 			</div>

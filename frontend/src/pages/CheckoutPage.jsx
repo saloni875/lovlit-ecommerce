@@ -17,6 +17,7 @@ const CheckoutPage = () => {
 
 	const [shippingMethod, setShippingMethod] = useState("standard shipping");
 	const [shippingCharge, setShippingCharge] = useState(45); // Default shipping charges for standard shipping
+	const grandTotal = total + shippingCharge;
 
 	const handleChange = (e) => {
 		setCustomerInfo({
@@ -26,6 +27,7 @@ const CheckoutPage = () => {
 	};
 
 	const handleWhatsAppOrder = () => {
+		
 		if (cart.length === 0) {
 			alert("Your cart is empty");
 			return;
@@ -84,7 +86,15 @@ ${orderItems}
 
 ---
 
-Grand Total: ₹${total}
+Products Total: ₹${total}
+
+Shipping Method: ${shippingMethod}
+
+Shipping Charge: ₹${shippingCharge}
+
+Grand Total: ₹${grandTotal}
+
+---
 
 Thank you , kindly share your payment details.`;
 
@@ -284,7 +294,7 @@ Thank you , kindly share your payment details.`;
 						<p>Shipping: ₹{shippingCharge}</p>
 
 						<p className="font-bold text-lg text-purple-700">
-							Grand Total: ₹{total + shippingCharge}
+							Grand Total: ₹{grandTotal}
 						</p>
 					</div>
 
@@ -295,7 +305,7 @@ Thank you , kindly share your payment details.`;
 
 						<p>🧵 <b>Every Lovlit product is <i>handmade</i>  with care.</b></p>
 
-						<p>🚚 <b>Dispatch & delivery may take 3-7 days.</b></p>
+						<p>🚚 <b>Dispatch & delivery may take 3-10 days (based on location and shipping method).</b></p>
 
 						<p> <b>Please record an unboxing video for any damage, return, or refund claim.</b></p>
 					</div>

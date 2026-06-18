@@ -3,6 +3,7 @@ import CategoryItem from "../components/CategoryItem";
 import { useProductStore } from "../stores/useProductStore";
 import FeaturedProducts from "../components/FeaturedProducts";
 import { Link } from "react-router-dom";
+import AnnouncementBanner from "../components/AnnouncementBanner";
 
 const categories = [
 	{
@@ -76,12 +77,13 @@ const HomePage = () => {
 	}, [fetchFeaturedProducts]);
 
 	return (
+
 		<div className='relative min-h-screen bg-gradient-to-r from-purple-200 via-white to-pink-100 '>
 
-			<div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10'>
-
-				<div className='text-center mb-10'>
-					<h1 className='logo-font text-6xl sm:text-7xl text-purple-700  drop-shadow-sm'>
+			<div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+				<AnnouncementBanner />
+				<div className='text-center mb-4 px-4'>
+					<h1 className='logo-font text-4xl sm:text-7xl text-purple-700  drop-shadow-sm'>
 						Lovlit
 					</h1>
 					<p className='text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed'> Handmade aesthetic jewelry... </p>
@@ -89,14 +91,14 @@ const HomePage = () => {
 				</div>
 
 				{!isLoading && products.length > 0 && (
-					<div className='mt-24'>
+					<div className='mt-4'>
 						<FeaturedProducts
 							featuredProducts={products}
 						/>
 					</div>
 				)}
-				<div className='text-center mb-14'>
-					<h2 className='text-4xl sm:text-5xl font-bold text-black mb-4'>
+				<div className='text-center mt-8 mb-8 px-4'>
+					<h2 className='text-3xl sm:text-5xl font-bold text-black mb-3'>
 						Explore Our Collection
 					</h2>
 
