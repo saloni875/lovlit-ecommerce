@@ -41,7 +41,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					Best sellers
 				</h2>
 
-				<p className='text-center text-gray-700 text-lg mb-12'>
+				<p className='text-center text-gray-700  mb-12'>
 					Handmade inspired collections picked specially for you!
 				</p>
 

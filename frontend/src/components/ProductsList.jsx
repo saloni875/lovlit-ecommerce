@@ -36,6 +36,14 @@ const ProductsList = () => {
 						<p className='text-xs text-gray-500 capitalize'>
 							{product.category}
 						</p>
+						<p
+							className={`text-xs font-semibold mt-1 ${product.stock > 0
+								? "text-green-600"
+								: "text-red-500"
+								}`}
+						>
+							Stock: {product.stock}
+						</p>
 
 						<div className='flex justify-between mt-2'>
 							<button
@@ -47,8 +55,8 @@ const ProductsList = () => {
 								<button
 									onClick={() => toggleFeaturedProduct(product._id)}
 									className={`p-2 rounded-full transition-all ${product.isFeatured
-											? "bg-yellow-400 text-white"
-											: "bg-purple-100 text-purple-700"
+										? "bg-yellow-400 text-white"
+										: "bg-purple-100 text-purple-700"
 										}`}
 								>
 									<Star className='h-4 w-4' />
@@ -67,6 +75,9 @@ const ProductsList = () => {
 					</div>
 				))}
 			</div>
+
+
+
 			<div className="hidden lg:block">
 				<table className='min-w-[700px] w-full'>
 					<thead className='bg-gradient-to-r from-purple-600 to-pink-500'>
@@ -90,6 +101,13 @@ const ProductsList = () => {
 								className='px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider'
 							>
 								Category
+							</th>
+
+							<th
+								scope='col'
+								className='px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider'
+							>
+								Stock
 							</th>
 
 							<th
@@ -143,6 +161,18 @@ const ProductsList = () => {
 										{product.category}
 									</div>
 								</td>
+
+								<td className='px-6 py-4 whitespace-nowrap'>
+									<div
+										className={`font-semibold ${product.stock > 0
+												? "text-green-600"
+												: "text-red-500"
+											}`}
+									>
+										{product.stock}
+									</div>
+								</td>
+
 
 								<td className='px-6 py-4 whitespace-nowrap'>
 									<button
