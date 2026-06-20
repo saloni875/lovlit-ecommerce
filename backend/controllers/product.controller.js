@@ -246,3 +246,35 @@ async function updateFeaturedProductsCache() {
 		console.log(error);
 	}
 }
+
+export const updateProduct = async (req, res) => {
+	try {
+		const updatedProduct = await Product.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{
+				new: true,
+			}
+		);
+
+		if (!updatedProduct) {
+			return res.status(404).json({
+				message: "Product not found",
+			});
+		}
+
+		await updateFeaturedProductsCache();
+
+		res.json(updatedProduct);
+	} catch (error) {
+		console.log(
+			"Error in updateProduct controller",
+			error.message
+		);
+
+		res.status(500).json({
+			message: "Server error",
+			error: error.message,
+		});
+	}
+};

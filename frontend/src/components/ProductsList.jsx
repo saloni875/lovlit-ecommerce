@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
-import { Trash, Star } from "lucide-react";
+import { Trash, Star, Pencil } from "lucide-react";
+import { useState } from "react";
 import { useProductStore } from "../stores/useProductStore";
+import EditProductModal from "./EditProductModal";
 
 const ProductsList = () => {
-	const { deleteProduct, toggleFeaturedProduct, products } = useProductStore();
+	const { deleteProduct, toggleFeaturedProduct, updateProduct, products } = useProductStore();
+	const [selectedProduct, setSelectedProduct] = useState(null);
 
 	return (
 		<motion.div
@@ -47,20 +50,20 @@ const ProductsList = () => {
 
 						<div className='flex justify-between mt-2'>
 							<button
-								onClick={() =>
-									toggleFeaturedProduct(product._id)
-								}
-								className='p-2 rounded-full bg-purple-100'
+								onClick={() => toggleFeaturedProduct(product._id)}
+								className={`p-2 rounded-full transition-all ${product.isFeatured
+									? "bg-yellow-400 text-white"
+									: "bg-purple-100 text-purple-700"
+									}`}
 							>
-								<button
-									onClick={() => toggleFeaturedProduct(product._id)}
-									className={`p-2 rounded-full transition-all ${product.isFeatured
-										? "bg-yellow-400 text-white"
-										: "bg-purple-100 text-purple-700"
-										}`}
-								>
-									<Star className='h-4 w-4' />
-								</button>
+								<Star className='h-4 w-4' />
+							</button>
+
+							<button
+								onClick={() => setSelectedProduct(product)}
+								className='p-2 rounded-full bg-blue-100 text-blue-600'
+							>
+								<Pencil className='h-4 w-4' />
 							</button>
 
 							<button
@@ -76,7 +79,7 @@ const ProductsList = () => {
 				))}
 			</div>
 
-
+			{/* Desktop View */}
 
 			<div className="hidden lg:block">
 				<table className='min-w-[700px] w-full'>
@@ -165,8 +168,8 @@ const ProductsList = () => {
 								<td className='px-6 py-4 whitespace-nowrap'>
 									<div
 										className={`font-semibold ${product.stock > 0
-												? "text-green-600"
-												: "text-red-500"
+											? "text-green-600"
+											: "text-red-500"
 											}`}
 									>
 										{product.stock}
@@ -188,6 +191,12 @@ const ProductsList = () => {
 
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
 									<button
+										onClick={() => setSelectedProduct(product)}
+										className='bg-blue-100 hover:bg-blue-200 text-blue-600 p-2 rounded-full transition-all duration-300 mr-2'
+									>
+										<Pencil className='h-5 w-5' />
+									</button>
+									<button
 										onClick={() => deleteProduct(product._id)}
 										className='bg-red-100 hover:bg-red-200 text-red-500 p-2 rounded-full transition-all duration-300'
 									>
@@ -199,6 +208,16 @@ const ProductsList = () => {
 					</tbody>
 				</table>
 			</div>
+
+
+			{selectedProduct && (
+				<EditProductModal
+					product={selectedProduct}
+					onClose={() => setSelectedProduct(null)}
+				/>
+			)}
+
+
 
 		</motion.div>
 	);
