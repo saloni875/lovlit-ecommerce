@@ -1,4 +1,4 @@
-const PrivacyPolicyPage = () => {
+const RefundPolicyPage = () => {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white py-12 px-4">
 
@@ -9,76 +9,81 @@ const PrivacyPolicyPage = () => {
 				</h1>
 
 				<h2 className="text-3xl font-bold text-center text-pink-500 mb-8">
-					Privacy Policy
+					Refund & Replacement Policy
 				</h2>
 
 				<div className="space-y-6 text-gray-700 leading-relaxed">
 
 					<section>
 						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Information We Collect
+							Returns
 						</h3>
 
 						<p>
-							When placing an order, we may collect your
-							name, phone number, shipping address,
-							city, state, pincode and Instagram username
-							(if provided).
+							We do not accept returns due to change of mind,
+							personal preference, or accidental orders.
 						</p>
 					</section>
 
 					<section>
 						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							How We Use Your Information
+							Customized Products
 						</h3>
 
 						<p>
-							Your information is used only for order
-							processing, shipping, customer support,
-							and order updates.
+							Customized and personalized products are
+							non-returnable and non-refundable.
 						</p>
 					</section>
 
 					<section>
 						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Information Sharing
+							Damaged Products
 						</h3>
 
 						<p>
-							Lovlit by Anshu does not sell, rent,
-							or share customer information for
-							marketing purposes.
+							If your product arrives damaged, please contact
+							us within 24 hours of delivery.
+						</p>
+					</section>
+
+					<section>
+						<h3 className="text-xl font-semibold text-purple-700 mb-2">
+							Proof Required
+						</h3>
+
+						<p>
+							A complete and unedited unboxing video is
+							mandatory for all damage claims.
 						</p>
 
 						<p className="mt-2">
-							Information may be shared only with
-							shipping partners when required
-							to deliver your order.
+							Claims submitted without an unboxing video
+							may not be eligible for replacement.
 						</p>
 					</section>
 
 					<section>
 						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Data Retention
+							Replacement Policy
 						</h3>
 
 						<p>
-							Customer information is stored only as long
-							as required to process and deliver orders.
-							Order records and screenshots are regularly
-							removed after order completion.
+							After verification of the damage claim,
+							an eligible order may receive a replacement
+							product.
 						</p>
 					</section>
 
 					<section>
 						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Payment Information
+							Refunds
 						</h3>
 
 						<p>
-							We do not store card details, UPI PINs,
-							bank account passwords, or other sensitive
-							payment credentials.
+							Refunds are generally not provided.
+							Replacement is the primary resolution
+							for approved damage claims.
 						</p>
 					</section>
 
@@ -88,9 +93,9 @@ const PrivacyPolicyPage = () => {
 						</h3>
 
 						<p>
-							If you have any questions regarding this
-							Privacy Policy, please contact Lovlit by Anshu
-							through WhatsApp or Instagram.
+							For any issues regarding your order,
+							please contact Lovlit by Anshu through
+							WhatsApp or Instagram.
 						</p>
 					</section>
 
@@ -102,4 +107,4 @@ const PrivacyPolicyPage = () => {
 	);
 };
 
-export default PrivacyPolicyPage;
+export default RefundPolicyPage;

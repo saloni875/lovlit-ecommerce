@@ -20,6 +20,10 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AboutPage from "./pages/AboutPage";
 import CustomIdeaPage from "./pages/CustomIdeaPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsConditionsPage from "./pages/TermsConditionsPage";
+import ShippingPolicyPage from "./pages/ShippingPolicyPage";
+import RefundPolicyPage from "./pages/RefundPolicyPage";
 
 
 function App() {
@@ -62,10 +66,14 @@ function App() {
 					<Route path='/product/:id' element={<ProductDetailsPage />} />
 					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
 					<Route path='/checkout' element={user ? <CheckoutPage /> : <Navigate to='/login' />} />
-					<Route
-						path='/purchase-success'
-						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
-					/>
+					<Route path="/privacy-policy" element={<PrivacyPolicyPage />}/>
+
+					<Route path="/terms-and-conditions" element={<TermsConditionsPage />}/>
+
+					<Route path="/shipping-policy" element={<ShippingPolicyPage />}/>
+
+					<Route path="/refund-policy" element={<RefundPolicyPage />}/>
+					
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
 				</Routes>
 			</div>
