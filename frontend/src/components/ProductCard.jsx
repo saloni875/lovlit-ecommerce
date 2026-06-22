@@ -2,11 +2,12 @@ import toast from "react-hot-toast";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
 	const { user } = useUserStore();
 	const { addToCart } = useCartStore();
+	const navigate = useNavigate();
 
 	const handleAddToCart = () => {
 		if (!user) {
@@ -27,11 +28,7 @@ const ProductCard = ({ product }) => {
 
 		addToCart(product);
 
-		window.open(
-			"https://wa.me/919876543210?text=Hello! I want to buy this product: " +
-			product.name,
-			"_blank"
-		);
+		navigate("/checkout");
 	};
 
 	return (
@@ -76,6 +73,7 @@ const ProductCard = ({ product }) => {
 
 				<div className='flex flex-col gap-3'>
 					<button
+						onClick={handleAddToCart}
 						disabled={product.stock <= 0}
 						className={`w-full py-3 rounded-xl font-semibold ${product.stock <= 0
 								? "bg-gray-400 cursor-not-allowed"

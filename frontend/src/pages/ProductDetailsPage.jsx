@@ -9,9 +9,11 @@ import {
 	Minus,
 	Plus,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetailsPage = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	const {
 		selectedProduct,
@@ -249,8 +251,8 @@ const ProductDetailsPage = () => {
 
 					<p
 						className={`font-semibold mb-4 ${selectedProduct.stock <= 0
-								? "text-red-500"
-								: "text-green-600"
+							? "text-red-500"
+							: "text-green-600"
 							}`}
 					>
 						{selectedProduct.stock <= 0
@@ -293,11 +295,35 @@ const ProductDetailsPage = () => {
 								? "Sold Out"
 								: "Add to Cart"}
 						</button>
-
+						{/* 
 						<button
 							disabled={selectedProduct.stock <= 0}
 							className={`rounded-2xl px-6 py-4 font-semibold transition duration-300
 			${selectedProduct.stock <= 0
+									? "bg-gray-200 cursor-not-allowed text-gray-500 border border-gray-300"
+									: "border border-purple-600 text-purple-700 hover:bg-purple-50"
+								}`}
+						>
+							💜 Buy Now
+						</button> */}
+
+						<button
+							disabled={selectedProduct.stock <= 0}
+							onClick={() => {
+
+								if (selectedProduct.stock <= 0) return;
+
+								addToCart({
+									...selectedProduct,
+									selectedOption,
+									quantity,
+									customText,
+								});
+
+								navigate("/checkout");
+							}}
+							className={`rounded-2xl px-6 py-4 font-semibold transition duration-300
+	${selectedProduct.stock <= 0
 									? "bg-gray-200 cursor-not-allowed text-gray-500 border border-gray-300"
 									: "border border-purple-600 text-purple-700 hover:bg-purple-50"
 								}`}
