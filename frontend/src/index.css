@@ -5,3 +5,7 @@
 .logo-font{
   font-family: 'Allura', cursive;
 }
+.dark-mode {
+  background: linear-gradient(135deg, #0c090f, #330530);
+  color: white;
+}

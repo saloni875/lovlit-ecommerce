@@ -24,10 +24,13 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsConditionsPage from "./pages/TermsConditionsPage";
 import ShippingPolicyPage from "./pages/ShippingPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
+import { useThemeStore } from "./stores/useThemeStore";
 
 
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
+	const { darkMode } = useThemeStore();
+	console.log("Dark mode in App.jsx:", darkMode); // Log the darkMode value
 	const { getCartItems } = useCartStore();
 	useEffect(() => {
 		checkAuth();
@@ -39,14 +42,31 @@ function App() {
 		getCartItems();
 	}, [getCartItems, user]);
 
+
+
 	if (checkingAuth) return <LoadingSpinner />;
 
 	return (
-		<div className='min-h-screen bg-white text-black relative overflow-hidden'>
+		// <div
+		// 	className='min-h-screen text-black dark:text-white relative overflow-hidden'
+		// 	style={{
+		// 		background:
+		// 			"linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+		// 	}}
+		// >
+		<div
+	className="min-h-screen relative overflow-hidden"
+	style={{
+		background: darkMode
+			? "linear-gradient(135deg, #0c090f, #330530)"
+			: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+		color: darkMode ? "#ffffff" : "#000000",
+	}}
+>
 			{/* Background gradient */}
 			<div className='absolute inset-0 overflow-hidden'>
 				<div className='absolute inset-0'>
-					<div className='absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(93, 76, 162, 0.45)_0%,rgba(57, 26, 90, 0.35)_40%,rgb(181, 186, 241)_60%)]' />
+					<div className="absolute inset-0" />
 				</div>
 			</div>
 
@@ -66,14 +86,14 @@ function App() {
 					<Route path='/product/:id' element={<ProductDetailsPage />} />
 					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
 					<Route path='/checkout' element={user ? <CheckoutPage /> : <Navigate to='/login' />} />
-					<Route path="/privacy-policy" element={<PrivacyPolicyPage />}/>
+					<Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
-					<Route path="/terms-and-conditions" element={<TermsConditionsPage />}/>
+					<Route path="/terms-and-conditions" element={<TermsConditionsPage />} />
 
-					<Route path="/shipping-policy" element={<ShippingPolicyPage />}/>
+					<Route path="/shipping-policy" element={<ShippingPolicyPage />} />
 
-					<Route path="/refund-policy" element={<RefundPolicyPage />}/>
-					
+					<Route path="/refund-policy" element={<RefundPolicyPage />} />
+
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
 				</Routes>
 			</div>

@@ -8,17 +8,25 @@ import {
 	Lock,
 	Heart,
 } from "lucide-react";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
+import { Moon, Sun } from "lucide-react";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const Navbar = () => {
 	const { user, logout } = useUserStore();
 	const isAdmin = user?.role === "admin";
 	const { cart } = useCartStore();
+	const { darkMode, toggleTheme } = useThemeStore();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	useEffect(() => {
+		if (localStorage.getItem("theme") === "dark") {
+			document.body.classList.add("dark-mode");
+		}
+	}, []);
 
 	return (
 		<header className='fixed top-0 left-0 w-full bg-gradient-to-r from-purple-300 via-white to-pink-200  backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-purple-200'>
@@ -82,6 +90,21 @@ const Navbar = () => {
 							</Link>
 						)}
 
+
+						<button
+							onClick={() => {
+								console.log("Moon clicked");
+								toggleTheme();
+								console.log(document.body.className);
+							}}
+							className="p-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white transition duration-300 ease-in-out"
+						>
+							{darkMode ? (
+								<Sun className="w-5 h-5" />
+							) : (
+								<Moon className="w-5 h-5" />
+							)}
+						</button>
 
 						{isAdmin && (
 							<Link

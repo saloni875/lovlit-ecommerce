@@ -4,6 +4,7 @@ import { useProductStore } from "../stores/useProductStore";
 import FeaturedProducts from "../components/FeaturedProducts";
 import { Link } from "react-router-dom";
 import AnnouncementBanner from "../components/AnnouncementBanner";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const categories = [
 	{
@@ -72,13 +73,23 @@ const HomePage = () => {
 	const { fetchFeaturedProducts, products, isLoading } =
 		useProductStore();
 
+
 	useEffect(() => {
 		fetchFeaturedProducts();
 	}, [fetchFeaturedProducts]);
+	const { darkMode } = useThemeStore();
 
 	return (
 
-		<div className='relative min-h-screen bg-gradient-to-r from-purple-200 via-white to-pink-100 '>
+		// <div className='relative min-h-screen bg-gradient-to-r from-purple-200 via-white to-pink-100 '>
+		<div
+			className='relative min-h-screen'
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg, #10070d, #8b1c84)"
+					: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+			}}
+		>
 
 			<div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
 				<AnnouncementBanner />
@@ -86,7 +97,14 @@ const HomePage = () => {
 					<h1 className='logo-font text-4xl sm:text-7xl text-purple-700  drop-shadow-sm'>
 						Lovlit
 					</h1>
-					<p className='text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed'> Handmade aesthetic jewelry... </p>
+					<p
+						className='text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed'
+						style={{
+							color: darkMode ? "#d8cde0" : "#374151",
+						}}
+					>
+						Handmade aesthetic jewelry...
+					</p>
 
 				</div>
 
@@ -98,11 +116,21 @@ const HomePage = () => {
 					</div>
 				)}
 				<div className='text-center mt-8 mb-8 px-4'>
-					<h2 className='text-3xl sm:text-5xl font-bold text-black mb-3'>
+					<h2
+						className='text-3xl sm:text-5xl font-bold mb-3'
+						style={{
+							color: darkMode ? "#ffffff" : "#000000",
+						}}
+					>
 						Explore Our Collection
 					</h2>
 
-					<p className='text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed'>
+					<p
+						className='text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed'
+						style={{
+							color: darkMode ? "#d8cde0" : "#374151",
+						}}
+					>
 						BTS inspired jewelry, aesthetic gifts,
 						, candles, rings, keychains,
 						and handmade accessories crafted with love 💜
@@ -120,7 +148,17 @@ const HomePage = () => {
 
 				<div className='max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 ' >
 
-					<div className='relative overflow-hidden rounded-[3rem] border border-purple-200 bg-gradient-to-r from-purple-200 via-white to-pink-100  backdrop-blur-md shadow-2xl p-6 sm:p-8 md:p-12'>
+					<div
+						className='relative overflow-hidden rounded-[3rem] backdrop-blur-md shadow-2xl p-6 sm:p-8 md:p-12'
+						style={{
+							background: darkMode
+								? "#35152c"
+								: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+							border: darkMode
+								? "1px solid #4b1d5c"
+								: "1px solid #e9d5ff",
+						}}
+					>
 
 						<div className='absolute -top-20 -right-20 w-72 h-72 bg-pink-200 rounded-full blur-3xl opacity-40' />
 
@@ -128,18 +166,30 @@ const HomePage = () => {
 
 						<div className='relative z-10 text-center max-w-5xl mx-auto '>
 
-							<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-5'>
+							<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-5' style={{
+								color: darkMode ? "#9b5493" : "#000000",
+							}}>
 								Lovlit Custom Requests
 							</p>
 
-							<h2 className='text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-black mb-6 '>
+							<h2
+								className='text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6'
+								style={{
+									color: darkMode ? "#ffffff" : "#000000",
+								}}
+							>
 								Have a custom idea in mind?{" "}
 								<span className='text-purple-700'>
 									💜
 								</span>
 							</h2>
 
-							<p className='text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-3xl mx-auto'>
+							<p
+								className='text-base sm:text-lg md:text-xl leading-relaxed mb-8 max-w-3xl mx-auto'
+								style={{
+									color: darkMode ? "#d8cde0" : "#374151",
+								}}
+							>
 								Want a personalized keychain,
 								custom BTS inspired product,
 								aesthetic jewelry,
@@ -161,7 +211,7 @@ const HomePage = () => {
 
 
 			</div>
-		</div>
+		</div >
 	);
 };
 

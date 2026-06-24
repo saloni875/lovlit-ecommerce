@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { ShoppingCart, ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
 import { Link } from "react-router-dom";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const FeaturedProducts = ({ featuredProducts }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [itemsPerPage, setItemsPerPage] = useState(4);
+	const { darkMode } = useThemeStore();
 
 	const { addToCart } = useCartStore();
 
@@ -41,7 +43,12 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					Best sellers
 				</h2>
 
-				<p className='text-center text-gray-700  mb-12'>
+				<p
+					className='text-center mb-12'
+					style={{
+						color: darkMode ? "#d8cde0" : "#2c3b53",
+					}}
+				>
 					Handmade inspired collections picked specially for you!
 				</p>
 
@@ -58,7 +65,16 @@ const FeaturedProducts = ({ featuredProducts }) => {
 									key={product._id}
 									className='w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-3'
 								>
-									<Link to={`/product/${product._id}`} className='bg-white rounded-3xl shadow-lg overflow-hidden border border-purple-200 hover:shadow-2xl transition-all duration-300 h-full group'>
+									<Link
+										to={`/product/${product._id}`}
+										className='rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full group'
+										style={{
+											background: darkMode ? "#2b182c" : "#b03b83",
+											border: darkMode
+												? "1px solid #4b1d5c"
+												: "1px solid #e9d5ff",
+										}}
+									>
 										<div className='relative overflow-hidden'>
 											<img
 												src={product.image}
@@ -72,7 +88,12 @@ const FeaturedProducts = ({ featuredProducts }) => {
 										</div>
 
 										<div className='p-5'>
-											<h3 className='text-xl font-bold text-purple-700 mb-2 capitalize'>
+											<h3
+												className='text-xl font-bold mb-2 capitalize'
+												style={{
+													color: darkMode ? "#f3e8ff" : "#7617c4",
+												}}
+											>
 												{product.name}
 											</h3>
 
@@ -100,11 +121,10 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					<button
 						onClick={prevSlide}
 						disabled={isStartDisabled}
-						className={`absolute top-1/2 -left-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${
-							isStartDisabled
-								? "bg-gray-300 cursor-not-allowed"
-								: "bg-purple-600 hover:bg-purple-700 text-white"
-						}`}
+						className={`absolute top-1/2 -left-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${isStartDisabled
+							? "bg-gray-300 cursor-not-allowed"
+							: "bg-purple-600 hover:bg-purple-700 text-white"
+							}`}
 					>
 						<ChevronLeft className='w-6 h-6' />
 					</button>
@@ -112,11 +132,10 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					<button
 						onClick={nextSlide}
 						disabled={isEndDisabled}
-						className={`absolute top-1/2 -right-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${
-							isEndDisabled
-								? "bg-gray-300 cursor-not-allowed"
-								: "bg-purple-600 hover:bg-purple-700 text-white"
-						}`}
+						className={`absolute top-1/2 -right-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${isEndDisabled
+							? "bg-gray-300 cursor-not-allowed"
+							: "bg-purple-600 hover:bg-purple-700 text-white"
+							}`}
 					>
 						<ChevronRight className='w-6 h-6' />
 					</button>
