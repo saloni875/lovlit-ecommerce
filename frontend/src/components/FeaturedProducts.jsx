@@ -71,7 +71,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 										style={{
 											background: darkMode ? "#2b182c" : "#b03b83",
 											border: darkMode
-												? "1px solid #4b1d5c"
+												? "1px solid #d22ab9"
 												: "1px solid #e9d5ff",
 										}}
 									>
@@ -106,7 +106,26 @@ const FeaturedProducts = ({ featuredProducts }) => {
 													e.preventDefault();
 													addToCart(product);
 												}}
-												className='w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center'
+												className='w-full font-semibold py-3 px-4 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
+												style={{
+													background: darkMode
+														? "linear-gradient(135deg, #0c090f, #660c5e)"
+														: "",
+													color: darkMode ? "#ffffff" : "",
+												}}
+												onMouseEnter={(e) => {
+													if (darkMode) {
+														e.currentTarget.style.background = "#e100ff";
+														e.currentTarget.style.color = "#000000";
+													}
+												}}
+												onMouseLeave={(e) => {
+													if (darkMode) {
+														e.currentTarget.style.background =
+															"linear-gradient(135deg, #0c090f, #660c5e)";
+														e.currentTarget.style.color = "#ffffff";
+													}
+												}}
 											>
 												<ShoppingCart className='w-5 h-5 mr-2' />
 												Add to Cart

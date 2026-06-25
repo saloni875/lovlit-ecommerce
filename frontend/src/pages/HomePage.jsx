@@ -86,7 +86,7 @@ const HomePage = () => {
 			className='relative min-h-screen'
 			style={{
 				background: darkMode
-					? "linear-gradient(135deg, #10070d, #8b1c84)"
+					? "linear-gradient(135deg, #10070d, #440840)"
 					: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
 			}}
 		>
@@ -150,9 +150,17 @@ const HomePage = () => {
 
 					<div
 						className='relative overflow-hidden rounded-[3rem] backdrop-blur-md shadow-2xl p-6 sm:p-8 md:p-12'
+						// style={{
+						// 	background: darkMode
+						// 		? "#440840"
+						// 		: "linear-gradient(135deg, #10070d, #440840)",
+						// 	border: darkMode
+						// 		? "1px solid #4b1d5c"
+						// 		: "1px solid #e9d5ff",
+						// }}
 						style={{
 							background: darkMode
-								? "#35152c"
+								? "linear-gradient(135deg, #10070d, #440840)"
 								: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
 							border: darkMode
 								? "1px solid #4b1d5c"
@@ -167,7 +175,7 @@ const HomePage = () => {
 						<div className='relative z-10 text-center max-w-5xl mx-auto '>
 
 							<p className='text-sm uppercase tracking-[0.3em] text-pink-500 mb-5' style={{
-								color: darkMode ? "#9b5493" : "#000000",
+								color: darkMode ? "#e82b93" : "#000000",
 							}}>
 								Lovlit Custom Requests
 							</p>
@@ -202,9 +210,29 @@ const HomePage = () => {
 							<Link
 								to='/ideas'
 								className='inline-flex items-center justify-center rounded-2xl bg-purple-600 px-8  py-3 text-lg font-semibold text-white shadow-lg hover:bg-pink-400 transition duration-300'
+								style={{
+									background: darkMode
+										? "linear-gradient(135deg, #0c090f, #660c5e)"
+										: "",
+									color: darkMode ? "#ffffff" : "",
+								}}
+								onMouseEnter={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background = "#e100ff";
+										e.currentTarget.style.color = "#000000";
+									}
+								}}
+								onMouseLeave={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background =
+											"linear-gradient(135deg, #0c090f, #660c5e)";
+										e.currentTarget.style.color = "#ffffff";
+									}
+								}}
 							>
 								Share Your Idea
 							</Link>
+
 						</div>
 					</div>
 				</div>

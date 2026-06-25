@@ -29,7 +29,17 @@ const Navbar = () => {
 	}, []);
 
 	return (
-		<header className='fixed top-0 left-0 w-full bg-gradient-to-r from-purple-300 via-white to-pink-200  backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-purple-200'>
+		<header
+			className='fixed top-0 left-0 w-full backdrop-blur-md shadow-md z-40 transition-all duration-300'
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg, #0c090f, #660c5e)"
+					: "linear-gradient(to right, rgb(216 180 254), white, rgb(251 207 232))",
+				borderBottom: darkMode
+					? "1px solid #7a1b6d"
+					: "1px solid #e9d5ff",
+			}}
+		>
 			<div className='container mx-auto px-3 sm:px-6 py-3 sm:py-4'>
 				<div className=' flex justify-between items-center'>
 
@@ -107,14 +117,35 @@ const Navbar = () => {
 						</button>
 
 						{isAdmin && (
+							// dashboard link for admin users
 							<Link
-								className='bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-5 py-2  rounded-xl font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
 								to={"/secret-dashboard"}
+								className='px-3 sm:px-5 py-2 rounded-xl text-white font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
+								style={{
+									background: darkMode
+										? "linear-gradient(135deg, #0c090f, #660c5e)"
+										: "#9333ea",
+								}}
+								onMouseEnter={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background = "#e100ff";
+										e.currentTarget.style.color = "#000000";
+									} else {
+										e.currentTarget.style.background = "#7e22ce";
+									}
+								}}
+								onMouseLeave={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background =
+											"linear-gradient(135deg, #0c090f, #660c5e)";
+										e.currentTarget.style.color = "#ffffff";
+									} else {
+										e.currentTarget.style.background = "#9333ea";
+										e.currentTarget.style.color = "#ffffff";
+									}
+								}}
 							>
-								<Lock
-									className='inline-block mr-2'
-									size={18}
-								/>
+								<Lock className='inline-block mr-2' size={18} />
 
 								<span className='hidden sm:inline'>
 									Dashboard
@@ -125,7 +156,19 @@ const Navbar = () => {
 
 						{user ? (
 							<button
-								className='bg-black/80 hover:bg-purple-700 text-white py-2 px-3 sm:px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
+								className='bg-black/80 text-white py-2 px-3 sm:px-5 ho rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
+								onMouseEnter={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background = "#e100ff";
+										e.currentTarget.style.color = "#000000";
+									}
+								}}
+								onMouseLeave={(e) => {
+									if (darkMode) {
+										e.currentTarget.style.background = "";
+										e.currentTarget.style.color = "#ffffff";
+									}
+								}}
 								onClick={logout}
 							>
 								<LogOut size={18} />
@@ -136,41 +179,93 @@ const Navbar = () => {
 							</button>
 						) : (
 							<>
+								{/* sign up button */}
 
 								<Link
 									to={"/signup"}
-									className='bg-purple-600 hover:bg-purple-700 text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
+									className='text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
+									style={{
+										background: darkMode
+											? "linear-gradient(135deg, #0c090f, #660c5e)"
+											: "#9333ea",
+										border: darkMode
+											? "1px solid #c646b3"
+											: "1px solid #e9d5ff",
+									}}
+									onMouseEnter={(e) => {
+										if (darkMode) {
+											e.currentTarget.style.background = "#e100ff";
+											e.currentTarget.style.color = "#000000";
+										} else {
+											e.currentTarget.style.background = "#7e22ce";
+										}
+									}}
+									onMouseLeave={(e) => {
+										if (darkMode) {
+											e.currentTarget.style.background =
+												"linear-gradient(135deg, #0c090f, #660c5e)";
+											e.currentTarget.style.color = "#ffffff";
+										} else {
+											e.currentTarget.style.background = "#9333ea";
+											e.currentTarget.style.color = "#ffffff";
+										}
+									}}
 								>
-									<UserPlus
-										className='mr-2'
-										size={18}
-									/>
-
+									<UserPlus className='mr-2' size={18} />
 									Sign Up
 								</Link>
 
-
+								{/* login button */}
 								<Link
 									to={"/login"}
-									className='bg-white border border-purple-300 hover:bg-purple-100 text-purple-700 py-2 px-5 rounded-xl flex items-center shadow-sm transition duration-300 ease-in-out font-medium'
+									className='py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
+									style={{
+										background: darkMode
+											? "linear-gradient(135deg, #0c090f, #660c5e)"
+											: "#ffffff",
+										color: darkMode ? "#ffffff" : "#6b21a8",
+										border: darkMode
+											? "1px solid #c646b3"
+											: "1px solid #d8b4fe",
+									}}
+									onMouseEnter={(e) => {
+										if (darkMode) {
+											e.currentTarget.style.background = "#e100ff";
+											e.currentTarget.style.color = "#000000";
+										} else {
+											e.currentTarget.style.background = "#f3e8ff";
+										}
+									}}
+									onMouseLeave={(e) => {
+										if (darkMode) {
+											e.currentTarget.style.background =
+												"linear-gradient(135deg, #0c090f, #660c5e)";
+											e.currentTarget.style.color = "#ffffff";
+										} else {
+											e.currentTarget.style.background = "#ffffff";
+											e.currentTarget.style.color = "#6b21a8";
+										}
+									}}
 								>
-									<LogIn
-										className='mr-2'
-										size={18}
-									/>
-
+									<LogIn className='mr-2' size={18} />
 									Login
 								</Link>
 							</>
 						)}
 					</nav>
 					{isMenuOpen && (
-						<div className='md:hidden mt-4 flex flex-col gap-4 border-t border-purple-200 pt-4'>
+						<div className='md:hidden mt-4  flex flex-col gap-4 border-t border-purple-200 pt-4'>
 
-							<Link
+							{/* <Link
 								to='/'
 								onClick={() => setIsMenuOpen(false)}
-								className='text-purple-700 font-semibold'
+								className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
+							>
+								Home
+							</Link> */}
+							<Link
+								to={"/"}
+								className={`${darkMode ? "text-red-500" : "text-green-500"} text-base sm:text-xl font-semibold`}
 							>
 								Home
 							</Link>
@@ -178,7 +273,7 @@ const Navbar = () => {
 							<Link
 								to='/about'
 								onClick={() => setIsMenuOpen(false)}
-								className='text-purple-700 font-semibold'
+								className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
 							>
 								About
 							</Link>
@@ -187,7 +282,7 @@ const Navbar = () => {
 								<Link
 									to='/cart'
 									onClick={() => setIsMenuOpen(false)}
-									className='text-purple-700 font-semibold'
+									className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
 								>
 									Cart
 								</Link>
