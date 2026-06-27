@@ -109,9 +109,10 @@ const FeaturedProducts = ({ featuredProducts }) => {
 												className='w-full font-semibold py-3 px-4 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
 												style={{
 													background: darkMode
-														? "linear-gradient(135deg, #0c090f, #660c5e)"
+														? "linear-gradient(135deg, #0d0a11, #660c5e)"
 														: "",
 													color: darkMode ? "#ffffff" : "",
+													border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
 												}}
 												onMouseEnter={(e) => {
 													if (darkMode) {

@@ -215,6 +215,7 @@ const HomePage = () => {
 										? "linear-gradient(135deg, #0c090f, #660c5e)"
 										: "",
 									color: darkMode ? "#ffffff" : "",
+									border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
 								}}
 								onMouseEnter={(e) => {
 									if (darkMode) {

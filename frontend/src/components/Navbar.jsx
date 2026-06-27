@@ -54,23 +54,55 @@ const Navbar = () => {
 						/>
 					</Link>
 
-					<button
-						className='md:hidden text-purple-700'
-						onClick={() => setIsMenuOpen(!isMenuOpen)}
-					>
-						{isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-					</button>
+					<div className="flex items-center gap-2 md:hidden">
+
+						<button
+							onClick={toggleTheme}
+							className="p-2 rounded-full"
+							style={{
+								background: darkMode
+									? "linear-gradient(135deg, #0c090f, #660c5e)"
+									: "#9333ea",
+								color: "#ffffff",
+								border: darkMode
+									? "1px solid #c646b3"
+									: "1px solid #e9d5ff",
+							}}
+						>
+							{darkMode ? (
+								<Sun size={20} />
+							) : (
+								<Moon size={20} />
+							)}
+						</button>
+
+						<button
+							onClick={() => setIsMenuOpen(!isMenuOpen)}
+							style={{
+								color: darkMode ? "#ffffff" : "#6b21a8",
+							}}
+						>
+							{isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+						</button>
+
+					</div>
 					<nav className='hidden md:flex flex-wrap items-center gap-4 '>
 
 
 						<Link
 							to={"/"}
 							className='text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'
+							style={{
+								color: darkMode ? "#ffffff" : "#6b21a8",
+							}}
 						>
 							Home
 						</Link>
 
-						<Link to={"/about"} className='hidden sm:block text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300'>
+						<Link to={"/about"} className='hidden sm:block text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300'
+							style={{
+								color: darkMode ? "#ffffff" : "#6b21a8",
+							}}>
 							About
 						</Link>
 
@@ -79,14 +111,18 @@ const Navbar = () => {
 						{user && (
 							<Link
 								to={"/cart"}
-								className='relative group flex items-center text-purple-700 font-medium hover:text-pink-500 transition duration-300 ease-in-out'
+								className='relative group flex items-center text-purple-700 font-medium hover:text-pink-500 transition duration-300 ease-in-out' style={{
+									color: darkMode ? "#ffffff" : "#6b21a8",
+								}}
 							>
 								<ShoppingCart
 									className='inline-block mr-1'
 									size={22}
 								/>
 
-								<span className='hidden sm:inline text-lg'>
+								<span className='hidden sm:inline text-lg' style={{
+									color: darkMode ? "#ffffff" : "#6b21a8",
+								}}>
 									Cart
 								</span>
 
@@ -103,11 +139,36 @@ const Navbar = () => {
 
 						<button
 							onClick={() => {
-								console.log("Moon clicked");
 								toggleTheme();
-								console.log(document.body.className);
 							}}
-							className="p-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white transition duration-300 ease-in-out"
+							className="p-2 rounded-full transition duration-300 ease-in-out"
+							style={{
+								background: darkMode
+									? "linear-gradient(135deg, #0c090f, #660c5e)"
+									: "#9333ea",
+								color: "#ffffff",
+								border: darkMode
+									? "1px solid #c646b3"
+									: "1px solid #e9d5ff",
+							}}
+							onMouseEnter={(e) => {
+								if (darkMode) {
+									e.currentTarget.style.background = "#e100ff";
+									e.currentTarget.style.color = "#000000";
+								} else {
+									e.currentTarget.style.background = "#7e22ce";
+								}
+							}}
+							onMouseLeave={(e) => {
+								if (darkMode) {
+									e.currentTarget.style.background =
+										"linear-gradient(135deg, #0c090f, #660c5e)";
+									e.currentTarget.style.color = "#ffffff";
+								} else {
+									e.currentTarget.style.background = "#9333ea";
+									e.currentTarget.style.color = "#ffffff";
+								}
+							}}
 						>
 							{darkMode ? (
 								<Sun className="w-5 h-5" />
@@ -125,6 +186,9 @@ const Navbar = () => {
 									background: darkMode
 										? "linear-gradient(135deg, #0c090f, #660c5e)"
 										: "#9333ea",
+									border: darkMode
+										? "1px solid #d322b8"
+										: "1px solid #e5ddec",
 								}}
 								onMouseEnter={(e) => {
 									if (darkMode) {
@@ -139,6 +203,7 @@ const Navbar = () => {
 										e.currentTarget.style.background =
 											"linear-gradient(135deg, #0c090f, #660c5e)";
 										e.currentTarget.style.color = "#ffffff";
+
 									} else {
 										e.currentTarget.style.background = "#9333ea";
 										e.currentTarget.style.color = "#ffffff";
@@ -157,6 +222,12 @@ const Navbar = () => {
 						{user ? (
 							<button
 								className='bg-black/80 text-white py-2 px-3 sm:px-5 ho rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
+								style={{
+
+									border: darkMode
+										? "1px solid #c646b3"
+										: "1px solid #e9d5ff",
+								}}
 								onMouseEnter={(e) => {
 									if (darkMode) {
 										e.currentTarget.style.background = "#e100ff";
@@ -252,20 +323,18 @@ const Navbar = () => {
 								</Link>
 							</>
 						)}
+
 					</nav>
 					{isMenuOpen && (
 						<div className='md:hidden mt-4  flex flex-col gap-4 border-t border-purple-200 pt-4'>
 
-							{/* <Link
-								to='/'
-								onClick={() => setIsMenuOpen(false)}
-								className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
-							>
-								Home
-							</Link> */}
+
 							<Link
 								to={"/"}
 								className={`${darkMode ? "text-red-500" : "text-green-500"} text-base sm:text-xl font-semibold`}
+								style={{
+									color: darkMode ? "#ffffff" : "#6b21a8",
+								}}
 							>
 								Home
 							</Link>
@@ -293,6 +362,9 @@ const Navbar = () => {
 									to='/secret-dashboard'
 									onClick={() => setIsMenuOpen(false)}
 									className='text-purple-700 font-semibold'
+									style={{
+										color: darkMode ? "#ffffff" : "#6b21a8",
+									}}
 								>
 									Dashboard
 								</Link>
@@ -302,6 +374,9 @@ const Navbar = () => {
 								<button
 									onClick={logout}
 									className='text-left text-purple-700 font-semibold'
+									style={{
+										color: darkMode ? "#ffffff" : "#6b21a8",
+									}}
 								>
 									Log Out
 								</button>
@@ -310,6 +385,9 @@ const Navbar = () => {
 									<Link
 										to='/signup'
 										className='text-purple-700 font-semibold'
+										style={{
+											color: darkMode ? "#ffffff" : "#6b21a8",
+										}}
 									>
 										Sign Up
 									</Link>
@@ -317,6 +395,9 @@ const Navbar = () => {
 									<Link
 										to='/login'
 										className='text-purple-700 font-semibold'
+										style={{
+											color: darkMode ? "#ffffff" : "#6b21a8",
+										}}
 									>
 										Login
 									</Link>

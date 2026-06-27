@@ -1,9 +1,22 @@
 import { Instagram, Mail, MessageCircle, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const Footer = () => {
+    const { darkMode } = useThemeStore();
+
     return (
-        <footer className="relative z-50 mt-10 bg-gradient-to-r from-purple-200 via-white to-pink-100 border-t border-purple-200">
+        <footer
+            className="relative z-50 mt-10"
+            style={{
+                background: darkMode
+                    ? "linear-gradient(135deg, #0c090f, #660c5e)"
+                    : "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+                borderTop: darkMode
+                    ? "1px solid #c646b3"
+                    : "1px solid #e9d5ff",
+            }}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -14,7 +27,12 @@ const Footer = () => {
                             Lovlit
                         </h2>
 
-                        <p className="text-sm sm:text-base text-gray-700">
+                        <p
+                            className="text-sm sm:text-base"
+                            style={{
+                                color: darkMode ? "#ffffff" : "#374151",
+                            }}
+                        >
                             Handmade BTS inspired jewelry,
                             accessories and aesthetic collectibles.
                         </p>
@@ -26,7 +44,7 @@ const Footer = () => {
                             Contact
                         </h3>
 
-                        <div className="space-y-3 text-xs sm:text-base text-gray-700">
+                        <div className="space-y-3 text-xs sm:text-base" style={{ color: darkMode ? "#ffffff" : "#374151" }}>
 
                             <a
                                 href="mailto:lovlitshop@gmail.com"
@@ -61,11 +79,11 @@ const Footer = () => {
 
                     {/* Policies */}
                     <div>
-                        <h3 className="text-lg sm:text-2xl font-semibold text-purple-700 mb-4">
+                        <h3 className="text-lg sm:text-2xl font-semibold text-purple-700 mb-4" >
                             Policies
                         </h3>
 
-                        <div className="flex flex-col gap-2 text-xs sm:text-base text-gray-700">
+                        <div className="flex flex-col gap-2 text-xs sm:text-base" style={{ color: darkMode ? "#ffffff" : "#423751" }}>
 
                             <Link
                                 to="/privacy-policy"
@@ -104,7 +122,7 @@ const Footer = () => {
                             Address
                         </h3>
 
-                        <div className="flex items-center gap-2 text-sm sm:text-base text-gray-700">
+                        <div className="flex items-center gap-2 text-sm sm:text-base" style={{ color: darkMode ? "#ffffff" : "#374151" }}>
                             <MapPin size={16} />
                             <p>Kolkata, India</p>
                         </div>
@@ -112,7 +130,12 @@ const Footer = () => {
 
                 </div>
 
-                <p className="text-xs sm:text-sm text-gray-700 mt-8 text-center">
+                <p
+                    className="text-sm sm:text-base text-center mt-8"
+                    style={{
+                        color: darkMode ? "#ffffff" : "#374151",
+                    }}
+                >
                     © 2026 Lovlit. All rights reserved.
                 </p>
 
