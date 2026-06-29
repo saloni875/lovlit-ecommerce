@@ -20,6 +20,10 @@ const ideaSchema = new mongoose.Schema(
 		inspirationLink: {
 			type: String,
 		},
+		instagram: {
+			type: String,
+			default: "",
+		},
 	},
 	{ timestamps: true }
 );

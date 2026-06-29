@@ -1,0 +1,217 @@
+import { useEffect } from "react";
+import { Trash2, ExternalLink } from "lucide-react";
+import { useIdeaStore } from "../stores/useIdeaStore";
+import { useThemeStore } from "../stores/useThemeStore";
+
+const IdeasList = () => {
+    const { ideas, fetchIdeas, deleteIdea, loading } = useIdeaStore();
+    const { darkMode } = useThemeStore();
+
+    useEffect(() => {
+        fetchIdeas();
+    }, []);
+
+    if (loading) {
+        return (
+            <p
+                className={`text-center text-xl font-semibold ${darkMode ? "text-white" : "text-purple-700"
+                    }`}
+            >
+                Loading ideas...
+            </p>
+        );
+    }
+
+    if (ideas.length === 0) {
+        return (
+            <p
+                className={`text-center text-xl font-semibold ${darkMode ? "text-white" : "text-purple-700"
+                    }`}
+            >
+                No ideas submitted yet.
+            </p>
+        );
+    }
+
+    return (
+        <>
+            <div
+                className="mb-6 rounded-3xl p-6 shadow-lg backdrop-blur-md border"
+                style={{
+                    background: darkMode
+                        ? "linear-gradient(135deg,#0c090f,#660c5e)"
+                        : "#ffffff",
+
+                }}
+            >
+
+                <h1
+                    className={`text-3xl sm:text-4xl font-bold ${darkMode ? "text-white" : "text-purple-700"
+                        }`}
+                >
+                    Customer Ideas
+                </h1>
+
+
+                <p
+                    className={`mt-2 text-sm sm:text-base ${darkMode ? "text-gray-300" : "text-gray-700"
+                        }`}
+                >
+                    custom product ideas submitted by customers.
+                </p>
+
+
+
+                <div
+                    className={`rounded-3xl shadow-xl overflow-hidden border ${darkMode
+                        ? "border-fuchsia-700"
+                        : "border-purple-200"
+                        }`}
+                    style={{
+                        background: darkMode
+                            ? "linear-gradient(135deg,#0c090f,#660c5e)"
+                            : "#ffffff",
+                    }}
+                >
+                    <div className="overflow-x-auto">
+
+                        <table className="min-w-[1000px] w-full">
+
+                            <thead
+                                className={`sticky top-0 ${darkMode
+                                    ? "bg-black/40 text-white"
+                                    : "bg-gradient-to-r from-purple-200 via-white to-pink-100 text-purple-700"
+                                    }`}
+                            >
+                                <tr>
+                                    <th className="p-4 text-left">Name</th>
+                                    <th className="p-4 text-left">Contact</th>
+                                    {/* <th className="p-4 text-left">Instagram</th> */}
+                                    <th className="p-4 text-left">Idea</th>
+                                    <th className="p-4 text-center">
+                                        Inspiration
+                                    </th>
+                                    <th className="p-4 text-center">
+                                        Date
+                                    </th>
+                                    <th className="p-4 text-center">
+                                        Delete
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {ideas.map((idea) => (
+
+                                    <tr
+                                        key={idea._id}
+                                        className={`border-t transition ${darkMode
+                                            ? "border-fuchsia-800 hover:bg-white/5"
+                                            : "border-purple-100 hover:bg-purple-50"
+                                            }`}
+                                    >
+
+                                        <td
+                                            className={`p-4 font-semibold text-sm ${darkMode
+                                                ? "text-white"
+                                                : "text-purple-700"
+                                                }`}
+                                        >
+                                            {idea.name}
+                                        </td>
+
+                                        <td
+                                            className={`p-4 text-sm ${darkMode
+                                                ? "text-gray-200"
+                                                : "text-gray-700"
+                                                }`}
+                                        >
+                                            {idea.contact}
+                                        </td>
+
+                                        <td
+                                            className={`p-4 text-sm ${darkMode
+                                                ? "text-gray-200"
+                                                : "text-gray-700"
+                                                }`}
+                                        >
+                                            {idea.instagram || "-"}
+                                        </td>
+
+                                        <td
+                                            className={`p-4 text-sm max-w-sm ${darkMode
+                                                ? "text-gray-200"
+                                                : "text-gray-700"
+                                                }`}
+                                        >
+                                            <div className="line-clamp-3">
+                                                {idea.idea}
+                                            </div>
+                                        </td>
+
+                                        <td className="text-center">
+
+                                            {idea.inspirationLink ? (
+
+                                                <a
+                                                    href={idea.inspirationLink}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className={`inline-flex items-center justify-center p-2 rounded-full transition ${darkMode
+                                                        ? "hover:bg-fuchsia-500 hover:text-black text-white"
+                                                        : "hover:bg-purple-100 text-purple-700"
+                                                        }`}
+                                                >
+                                                    <ExternalLink size={18} />
+                                                </a>
+
+                                            ) : (
+                                                "-"
+                                            )}
+
+                                        </td>
+
+                                        <td
+                                            className={`text-center text-xs ${darkMode
+                                                ? "text-gray-300"
+                                                : "text-gray-600"
+                                                }`}
+                                        >
+                                            {new Date(
+                                                idea.createdAt
+                                            ).toLocaleDateString()}
+                                        </td>
+
+                                        <td className="text-center">
+
+                                            <button
+                                                onClick={() =>
+                                                    deleteIdea(idea._id)
+                                                }
+                                                className={`p-2 rounded-full transition ${darkMode
+                                                    ? "hover:bg-fuchsia-500 hover:text-black text-red-400"
+                                                    : "hover:bg-red-100 text-red-500"
+                                                    }`}
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+
+                                        </td>
+
+                                    </tr>
+
+                                ))}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default IdeasList;
