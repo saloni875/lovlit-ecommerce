@@ -79,21 +79,29 @@ const IdeasList = () => {
 
                             <thead
                                 className={`sticky top-0 ${darkMode
-                                    ? "bg-black/40 text-white"
-                                    : "bg-gradient-to-r from-purple-200 via-white to-pink-100 text-purple-700"
+                                        ? "bg-black/40 text-white"
+                                        : "bg-gradient-to-r from-purple-200 via-white to-pink-100 text-purple-700"
                                     }`}
                             >
                                 <tr>
                                     <th className="p-4 text-left">Name</th>
-                                    <th className="p-4 text-left">Contact</th>
-                                    {/* <th className="p-4 text-left">Instagram</th> */}
-                                    <th className="p-4 text-left">Idea</th>
-                                    <th className="p-4 text-center">
-                                        Inspiration
+
+                                    <th className="p-4 text-left">
+                                        Instagram / WhatsApp
                                     </th>
+
+                                    <th className="p-4 text-left w-[45%]">
+                                        Idea
+                                    </th>
+
+                                    <th className="p-4 text-center">
+                                        Reference
+                                    </th>
+
                                     <th className="p-4 text-center">
                                         Date
                                     </th>
+
                                     <th className="p-4 text-center">
                                         Delete
                                     </th>
@@ -107,15 +115,14 @@ const IdeasList = () => {
                                     <tr
                                         key={idea._id}
                                         className={`border-t transition ${darkMode
-                                            ? "border-fuchsia-800 hover:bg-white/5"
-                                            : "border-purple-100 hover:bg-purple-50"
+                                                ? "border-fuchsia-800 hover:bg-white/5"
+                                                : "border-purple-100 hover:bg-purple-50"
                                             }`}
                                     >
-
                                         <td
-                                            className={`p-4 font-semibold text-sm ${darkMode
-                                                ? "text-white"
-                                                : "text-purple-700"
+                                            className={`p-4 font-semibold ${darkMode
+                                                    ? "text-white"
+                                                    : "text-purple-700"
                                                 }`}
                                         >
                                             {idea.name}
@@ -123,82 +130,68 @@ const IdeasList = () => {
 
                                         <td
                                             className={`p-4 text-sm ${darkMode
-                                                ? "text-gray-200"
-                                                : "text-gray-700"
+                                                    ? "text-gray-200"
+                                                    : "text-gray-700"
                                                 }`}
                                         >
                                             {idea.contact}
                                         </td>
 
                                         <td
-                                            className={`p-4 text-sm ${darkMode
-                                                ? "text-gray-200"
-                                                : "text-gray-700"
+                                            className={`p-4 text-sm whitespace-pre-wrap break-words max-w-lg ${darkMode
+                                                    ? "text-gray-200"
+                                                    : "text-gray-700"
                                                 }`}
                                         >
-                                            {idea.instagram || "-"}
-                                        </td>
-
-                                        <td
-                                            className={`p-4 text-sm max-w-sm ${darkMode
-                                                ? "text-gray-200"
-                                                : "text-gray-700"
-                                                }`}
-                                        >
-                                            <div className="line-clamp-3">
-                                                {idea.idea}
-                                            </div>
+                                            {idea.idea}
                                         </td>
 
                                         <td className="text-center">
-
                                             {idea.inspirationLink ? (
-
                                                 <a
                                                     href={idea.inspirationLink}
                                                     target="_blank"
-                                                    rel="noreferrer"
+                                                    rel="noopener noreferrer"
                                                     className={`inline-flex items-center justify-center p-2 rounded-full transition ${darkMode
-                                                        ? "hover:bg-fuchsia-500 hover:text-black text-white"
-                                                        : "hover:bg-purple-100 text-purple-700"
+                                                            ? "hover:bg-fuchsia-500 hover:text-black text-white"
+                                                            : "hover:bg-purple-100 text-purple-700"
                                                         }`}
                                                 >
                                                     <ExternalLink size={18} />
                                                 </a>
-
                                             ) : (
-                                                "-"
+                                                <span
+                                                    className={
+                                                        darkMode
+                                                            ? "text-gray-400"
+                                                            : "text-gray-500"
+                                                    }
+                                                >
+                                                    —
+                                                </span>
                                             )}
-
                                         </td>
 
                                         <td
-                                            className={`text-center text-xs ${darkMode
-                                                ? "text-gray-300"
-                                                : "text-gray-600"
+                                            className={`text-center text-sm ${darkMode
+                                                    ? "text-gray-300"
+                                                    : "text-gray-600"
                                                 }`}
                                         >
-                                            {new Date(
-                                                idea.createdAt
-                                            ).toLocaleDateString()}
+                                            {new Date(idea.createdAt).toLocaleDateString()}
                                         </td>
 
                                         <td className="text-center">
-
                                             <button
-                                                onClick={() =>
-                                                    deleteIdea(idea._id)
-                                                }
+                                                onClick={() => deleteIdea(idea._id)}
                                                 className={`p-2 rounded-full transition ${darkMode
-                                                    ? "hover:bg-fuchsia-500 hover:text-black text-red-400"
-                                                    : "hover:bg-red-100 text-red-500"
+                                                        ? "text-red-400 hover:bg-fuchsia-500 hover:text-black"
+                                                        : "text-red-500 hover:bg-red-100"
                                                     }`}
                                             >
                                                 <Trash2 size={18} />
                                             </button>
-
                                         </td>
-
                                     </tr>
 
                                 ))}

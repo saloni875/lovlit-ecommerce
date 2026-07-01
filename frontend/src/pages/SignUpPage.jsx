@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const SignUpPage = () => {
 	const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const SignUpPage = () => {
 	});
 
 	const { signup, loading } = useUserStore();
+	const { darkMode } = useThemeStore();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -20,8 +22,14 @@ const SignUpPage = () => {
 	};
 
 	return (
-		<div className='flex flex-col justify-center py-16 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-br from-purple-100 via-white to-pink-100'>
-			
+		<div
+			className="flex flex-col justify-center py-10 sm:px-6 lg:px-8 min-h-screen transition-all duration-300"
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg,#0c090f,#660c5e)"
+					: "linear-gradient(to bottom right,#ede9fe,#ffffff,#fce7f3)",
+			}}
+		>
 			<motion.div
 				className='sm:mx-auto sm:w-full sm:max-w-md'
 				initial={{ opacity: 0, y: -20 }}
@@ -29,15 +37,15 @@ const SignUpPage = () => {
 				transition={{ duration: 0.8 }}
 			>
 				<div className='text-center'>
-					<h1 className='logo-font text-7xl text-purple-700 mb-2'>
+					<h1 className={`logo-font text-7xl ${darkMode ? "text-pink-500" : "text-purple-700"} mb-2`}>
 						Lovlit
 					</h1>
 
-					<h2 className='text-2xl font-semibold text-gray-800'>
+					<h2 className={`text-2xl font-semibold ${darkMode ? "text-white" : "text-gray-800"}`}>
 						Create your account
 					</h2>
 
-					<p className='text-gray-500 mt-2'>
+					<p className={`${darkMode ? "text-gray-300" : "text-gray-500"} mt-2`}>
 						Join the aesthetic collection community
 					</p>
 				</div>
@@ -49,12 +57,21 @@ const SignUpPage = () => {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.8, delay: 0.2 }}
 			>
-				<div className='bg-white/70 backdrop-blur-md py-10 px-6 shadow-2xl rounded-3xl border border-purple-200 sm:px-10'>
-					
+				<div
+					className={`py-10 px-6 shadow-2xl rounded-3xl sm:px-10 transition-all duration-300 ${darkMode
+						? "border border-fuchsia-700"
+						: "border border-purple-200"
+						}`}
+					style={{
+						background: darkMode
+							? "linear-gradient(135deg,#18111f,#3b0b39)"
+							: "rgba(255,255,255,0.75)",
+					}}
+				>
 					<form onSubmit={handleSubmit} className='space-y-6'>
-						
+
 						<div>
-							<label htmlFor='name' className='block text-sm font-medium text-gray-700'>
+							<label htmlFor='name' className='block text-sm font-medium ${darkMode ? "text-white" : "text-gray-700"}'>
 								Full name
 							</label>
 
@@ -77,9 +94,9 @@ const SignUpPage = () => {
 							</div>
 						</div>
 
-						
+
 						<div>
-							<label htmlFor='email' className='block text-sm font-medium text-gray-700'>
+							<label htmlFor='email' className='block text-sm font-medium ${darkMode ? "text-white" : "text-gray-700"}'>
 								Email address
 							</label>
 
@@ -102,9 +119,9 @@ const SignUpPage = () => {
 							</div>
 						</div>
 
-						
+
 						<div>
-							<label htmlFor='password' className='block text-sm font-medium text-gray-700'>
+							<label htmlFor='password' className='block text-sm font-medium ${darkMode ? "text-white" : "text-gray-700"}'>
 								Password
 							</label>
 
@@ -127,9 +144,9 @@ const SignUpPage = () => {
 							</div>
 						</div>
 
-						
+
 						<div>
-							<label htmlFor='confirmPassword' className='block text-sm font-medium text-gray-700'>
+							<label htmlFor='confirmPassword' className='block text-sm font-medium ${darkMode ? "text-white" : "text-gray-700"}'>
 								Confirm Password
 							</label>
 
@@ -155,42 +172,69 @@ const SignUpPage = () => {
 							</div>
 						</div>
 
-						
+
 						<button
-							type='submit'
-							className='w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out disabled:opacity-50'
+							type="submit"
 							disabled={loading}
+							className="w-full flex justify-center items-center py-3 px-4 rounded-xl text-sm font-medium transition-all duration-300 disabled:opacity-50"
+							style={{
+								background: darkMode
+									? "linear-gradient(135deg,#0c090f,#660c5e)"
+									: "#9333ea",
+								color: "#ffffff",
+								border: darkMode
+									? "1px solid #f209e2"
+									: "1px solid #9333ea",
+							}}
+							onMouseEnter={(e) => {
+								e.currentTarget.style.background = "#e100ff";
+								e.currentTarget.style.color = "#000000";
+							}}
+							onMouseLeave={(e) => {
+								e.currentTarget.style.background = darkMode
+									? "linear-gradient(135deg,#0c090f,#660c5e)"
+									: "#9333ea";
+								e.currentTarget.style.color = "#ffffff";
+							}}
 						>
 							{loading ? (
 								<>
 									<Loader
-										className='mr-2 h-5 w-5 animate-spin'
-										aria-hidden='true'
+										className="mr-2 h-5 w-5 animate-spin"
+										aria-hidden="true"
 									/>
 									Loading...
 								</>
 							) : (
 								<>
 									<UserPlus
-										className='mr-2 h-5 w-5'
-										aria-hidden='true'
+										className="mr-2 h-5 w-5"
+										aria-hidden="true"
 									/>
-									Sign up
+									Sign Up
 								</>
 							)}
 						</button>
 					</form>
 
-					
-					<p className='mt-8 text-center text-sm text-gray-500'>
+					<p
+						className={`mt-8 text-center text-sm ${darkMode ? "text-gray-300" : "text-gray-500"
+							}`}
+					>
 						Already have an account?{" "}
 						<Link
-							to='/login'
-							className='font-medium text-purple-700 hover:text-purple-900'
+							to="/login"
+							className={`font-medium transition ${darkMode
+									? "text-pink-400 hover:text-pink-300"
+									: "text-purple-700 hover:text-purple-900"
+								}`}
 						>
-							Login here <ArrowRight className='inline h-4 w-4' />
+							Login here{" "}
+							<ArrowRight className="inline h-4 w-4" />
 						</Link>
 					</p>
+
+
 				</div>
 			</motion.div>
 		</div>

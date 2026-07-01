@@ -3,11 +3,13 @@ import { ShoppingCart, Heart } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import { Link, useNavigate } from "react-router-dom";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const ProductCard = ({ product }) => {
 	const { user } = useUserStore();
 	const { addToCart } = useCartStore();
 	const navigate = useNavigate();
+	const { darkMode } = useThemeStore();
 
 	const handleAddToCart = () => {
 		if (!user) {
@@ -32,7 +34,18 @@ const ProductCard = ({ product }) => {
 	};
 
 	return (
-		<div className='flex w-full relative flex-col overflow-hidden rounded-3xl bg-white border border-purple-200 shadow-lg hover:shadow-2xl transition-all duration-300'>
+		<div
+			className='flex w-full relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300'
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg, #10070d, #440840)"
+					: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+				border: darkMode
+					? "1px solid #f209e2"
+					: "1px solid #a254bd",
+			}}
+		>
+
 			<Link to={`/product/${product._id}`} className='relative mx-3 mt-3 flex h-72 overflow-hidden rounded-2xl'>
 				<div className='relative mx-3 mt-3 flex h-72 overflow-hidden rounded-2xl'>
 					{product.stock <= 0 && (
@@ -55,11 +68,18 @@ const ProductCard = ({ product }) => {
 			</Link>
 			<div className='mt-4 px-5 pb-5 flex flex-col flex-grow'>
 
-				<h5 className='text-2xl font-bold tracking-tight text-purple-700 capitalize mb-2'>
+				<h5
+					className={`text-xl sm:text-2xl font-bold capitalize mb-2 ${darkMode ? "text-white" : "text-purple-700"
+						}`}
+				>
 					{product.name}
 				</h5>
 
-				<p className='text-gray-600 text-sm mb-4 line-clamp-2'>
+
+				<p
+					className={`text-sm mb-4 line-clamp-2 ${darkMode ? "text-gray-300" : "text-gray-600"
+						}`}
+				>
 					{product.description}
 				</p>
 
@@ -75,23 +95,74 @@ const ProductCard = ({ product }) => {
 					<button
 						onClick={handleAddToCart}
 						disabled={product.stock <= 0}
-						className={`w-full py-3 rounded-xl font-semibold ${product.stock <= 0
-								? "bg-gray-400 cursor-not-allowed"
-								: "bg-purple-600 hover:bg-purple-700 text-white"
-							}`}
+						className="w-full py-3 rounded-xl font-semibold transition-all duration-300"
+						style={{
+							background:
+								product.stock <= 0
+									? "#9ca3af"
+									: darkMode
+										? "linear-gradient(135deg,#10070d,#440840)"
+										: "linear-gradient(to right,rgb(147 51 234),rgb(192 38 211))",
+
+							color: "#ffffff",
+
+							border:
+								product.stock <= 0
+									? "1px solid #9ca3af"
+									: darkMode
+										? "1px solid #f209e2"
+										: "1px solid #9333ea",
+						}}
+						onMouseEnter={(e) => {
+							if (product.stock <= 0) return;
+
+							e.currentTarget.style.background = "#ec0fff";
+							e.currentTarget.style.color = "#000";
+						}}
+						onMouseLeave={(e) => {
+							if (product.stock <= 0) return;
+
+							e.currentTarget.style.background = darkMode
+								? "linear-gradient(135deg,#10070d,#440840)"
+								: "linear-gradient(to right,rgb(147 51 234),rgb(192 38 211))";
+
+							e.currentTarget.style.color = "#ffffff";
+						}}
 					>
 						{product.stock <= 0 ? "Sold Out" : "Add To Cart"}
 					</button>
 
 					<button
-						className='flex items-center justify-center rounded-xl border border-purple-600 bg-white px-5 py-3 text-center text-sm font-semibold text-purple-700 hover:bg-purple-50 transition-all duration-300'
 						onClick={handleBuyNow}
+						className="flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300"
+						style={{
+							background: darkMode
+								? "linear-gradient(135deg,#10070d,#440840)"
+								: "linear-gradient(to right,rgb(233 213 255),white,rgb(251 207 232))",
+
+							border: darkMode
+								? "1px solid #f209e2"
+								: "1px solid #a254bd",
+
+							color: darkMode ? "#ffffff" : "#6b21a8",
+						}}
+						onMouseEnter={(e) => {
+							e.currentTarget.style.background = "#ec0fff";
+							e.currentTarget.style.color = "#000";
+						}}
+						onMouseLeave={(e) => {
+							e.currentTarget.style.background = darkMode
+								? "linear-gradient(135deg,#10070d,#440840)"
+								: "linear-gradient(to right,rgb(233 213 255),white,rgb(251 207 232))";
+
+							e.currentTarget.style.color = darkMode ? "#ffffff" : "#6b21a8";
+						}}
 					>
 						💜 Buy Now
 					</button>
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 };
 
