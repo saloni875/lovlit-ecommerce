@@ -68,6 +68,7 @@ const SignUpPage = () => {
 							: "rgba(255,255,255,0.75)",
 					}}
 				>
+
 					<form onSubmit={handleSubmit} className='space-y-6'>
 
 						<div>
@@ -88,7 +89,10 @@ const SignUpPage = () => {
 									onChange={(e) =>
 										setFormData({ ...formData, name: e.target.value })
 									}
-									className='block w-full px-3 py-3 pl-10 bg-white border border-purple-200 text-black rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm'
+									className={`block w-full px-3 py-3 pl-10 rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all duration-300 ${darkMode
+										? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+										: "bg-white border-2 border-purple-300 text-black"
+										}`}
 									placeholder='John Doe'
 								/>
 							</div>
@@ -113,7 +117,10 @@ const SignUpPage = () => {
 									onChange={(e) =>
 										setFormData({ ...formData, email: e.target.value })
 									}
-									className='block w-full px-3 py-3 pl-10 bg-white border border-purple-200 text-black rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm'
+									className={`block w-full px-3 py-3 pl-10 rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all duration-300 ${darkMode
+										? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+										: "bg-white border-2 border-purple-300 text-black"
+										}`}
 									placeholder='you@example.com'
 								/>
 							</div>
@@ -138,7 +145,10 @@ const SignUpPage = () => {
 									onChange={(e) =>
 										setFormData({ ...formData, password: e.target.value })
 									}
-									className='block w-full px-3 py-3 pl-10 bg-white border border-purple-200 text-black rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm'
+									className={`block w-full px-3 py-3 pl-10 rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all duration-300 ${darkMode
+										? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+										: "bg-white border-2 border-purple-300 text-black"
+										}`}
 									placeholder='••••••••'
 								/>
 							</div>
@@ -166,7 +176,10 @@ const SignUpPage = () => {
 											confirmPassword: e.target.value,
 										})
 									}
-									className='block w-full px-3 py-3 pl-10 bg-white border border-purple-200 text-black rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm'
+									className={`block w-full px-3 py-3 pl-10 rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all duration-300 ${darkMode
+											? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+											: "bg-white border-2 border-purple-300 text-black"
+										}`}
 									placeholder='••••••••'
 								/>
 							</div>
@@ -225,8 +238,8 @@ const SignUpPage = () => {
 						<Link
 							to="/login"
 							className={`font-medium transition ${darkMode
-									? "text-pink-400 hover:text-pink-300"
-									: "text-purple-700 hover:text-purple-900"
+								? "text-pink-400 hover:text-pink-300"
+								: "text-purple-700 hover:text-purple-900"
 								}`}
 						>
 							Login here{" "}

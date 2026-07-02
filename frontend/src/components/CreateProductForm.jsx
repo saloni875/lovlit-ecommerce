@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
-
+import { useThemeStore } from "../stores/useThemeStore";
 const categories = [
 	"bracelets",
 	"necklaces",
@@ -35,6 +35,7 @@ const CreateProductForm = () => {
 	});
 
 	const { createProduct, loading } = useProductStore();
+	const { darkMode } = useThemeStore();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -81,16 +82,26 @@ const CreateProductForm = () => {
 
 	return (
 		<motion.div
-			className='bg-white/80 backdrop-blur-md border border-purple-200 shadow-2xl rounded-3xl p-4 sm:p-6 lg:p-8  mb-6 max-w-xl mx-auto'
+			className={`backdrop-blur-md shadow-2xl rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 max-w-xl mx-auto transition-all duration-300 ${darkMode
+				? "border border-fuchsia-700"
+				: "border border-purple-200"
+				}`}
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg,#18111f,#3b0b39)"
+					: "rgba(255,255,255,.8)",
+			}}
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8 }}
 		>
-			<h1 className='logo-font text-4xl sm:text-5xl lg:text-6xl text-center text-purple-700 mb-2'>
+			<h1 className={`logo-font text-4xl sm:text-5xl lg:text-6xl text-center mb-2 ${darkMode ? "text-pink-400" : "text-purple-700"
+				}`}>
 				Lovlit
 			</h1>
 
-			<h2 className='text-xl sm:text-2xl font-semibold mb-4 text-purple-700 text-center'>
+			<h2 className={`text-xl sm:text-2xl font-semibold mb-4 text-center ${darkMode ? "text-white" : "text-purple-700"
+				}`}>
 				Create New Product
 			</h2>
 
@@ -99,7 +110,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='name'
-						className='block text-sm font-medium text-gray-700'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Product Name
 					</label>
@@ -115,7 +127,10 @@ const CreateProductForm = () => {
 								name: e.target.value,
 							})
 						}
-						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 						required
 					/>
 				</div>
@@ -124,7 +139,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='description'
-						className='block text-sm font-medium text-gray-700'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Description
 					</label>
@@ -140,7 +156,10 @@ const CreateProductForm = () => {
 							})
 						}
 						rows='3'
-						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 						required
 					/>
 				</div>
@@ -148,7 +167,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='optionType'
-						className='block text-sm font-medium text-black/80 mb-2'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Product Option Type
 					</label>
@@ -162,7 +182,10 @@ const CreateProductForm = () => {
 								optionType: e.target.value,
 							})
 						}
-						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 					>
 						<option value=''>No Options</option>
 						<option value='Color'>Color</option>
@@ -175,7 +198,8 @@ const CreateProductForm = () => {
 					<div>
 						<label
 							htmlFor='optionValues'
-							className='block text-sm font-medium text-black/80 mb-2'
+							className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+								}`}
 						>
 							{newProduct.optionType} Options
 						</label>
@@ -191,7 +215,10 @@ const CreateProductForm = () => {
 							}
 							rows='4'
 							placeholder='Write each option on a new line'
-							className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+							className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-2 border-purple-300 text-black"
+								}`}
 						/>
 
 						<p className='text-sm text-gray-500 mt-2'>
@@ -216,7 +243,8 @@ const CreateProductForm = () => {
 
 					<label
 						htmlFor='customizable'
-						className='text-sm font-medium text-black/80'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Enable Custom Name / Text
 					</label>
@@ -225,7 +253,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='stock'
-						className='block text-sm font-medium text-black/80 mb-2'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Product Stock
 					</label>
@@ -240,7 +269,10 @@ const CreateProductForm = () => {
 								stock: e.target.value,
 							})
 						}
-						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 					/>
 				</div>
 
@@ -248,7 +280,8 @@ const CreateProductForm = () => {
 					<div>
 						<label
 							htmlFor='maxText'
-							className='block text-sm font-medium text-black/80 mb-2'
+							className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+								}`}
 						>
 							Max Custom Text Length
 						</label>
@@ -263,7 +296,10 @@ const CreateProductForm = () => {
 									maxCustomTextLength: e.target.value,
 								})
 							}
-							className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+							className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-2 border-purple-300 text-black"
+								}`}
 						/>
 					</div>
 				)}
@@ -271,7 +307,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='highlights'
-						className='block text-sm font-medium text-black/80 mb-2'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Product Highlights
 					</label>
@@ -288,14 +325,18 @@ const CreateProductForm = () => {
 						}
 						rows='4'
 						placeholder='Write each highlight on a new line'
-						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 					/>
 				</div>
 
 				<div>
 					<label
 						htmlFor='details'
-						className='block text-sm font-medium text-black/80 mb-2'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Additional Details
 					</label>
@@ -312,7 +353,10 @@ const CreateProductForm = () => {
 						}
 						rows='5'
 						placeholder='Material: Stainless Steel'
-						className='mt-1 block w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-purple-700 shadow-sm focus:border-purple-500 focus:ring-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 					/>
 				</div>
 
@@ -324,7 +368,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='price'
-						className='block text-sm font-medium text-gray-700'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Price
 					</label>
@@ -341,7 +386,10 @@ const CreateProductForm = () => {
 							})
 						}
 						step='0.01'
-						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 						required
 					/>
 				</div>
@@ -350,7 +398,8 @@ const CreateProductForm = () => {
 				<div>
 					<label
 						htmlFor='category'
-						className='block text-sm font-medium text-gray-700'
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
 					>
 						Category
 					</label>
@@ -365,7 +414,10 @@ const CreateProductForm = () => {
 								category: e.target.value,
 							})
 						}
-						className='mt-1 block w-full bg-white border border-purple-200 rounded-xl shadow-sm py-3 px-3 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500'
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
+							}`}
 						required
 					>
 						<option value=''>Select a category</option>
@@ -392,37 +444,59 @@ const CreateProductForm = () => {
 					/>
 
 					<label
-						htmlFor='image'
-						className='cursor-pointer bg-purple-100 py-3 px-4 border border-purple-200 rounded-xl shadow-sm text-sm font-medium text-purple-700 hover:bg-purple-200 transition'
+						htmlFor="image"
+						className={`cursor-pointer inline-flex items-center py-3 px-4 rounded-xl shadow-sm text-sm font-medium transition-all duration-300 ${darkMode
+								? "bg-[#18111f] border border-fuchsia-700 text-white hover:bg-fuchsia-700"
+								: "bg-purple-100 border border-purple-200 text-purple-700 hover:bg-purple-200"
+							}`}
 					>
-						<Upload className='h-5 w-5 inline-block mr-2' />
+						<Upload className="h-5 w-5 mr-2" />
 						Upload Image
 					</label>
 
 					{newProduct.image && (
-						<span className='ml-3 text-sm text-gray-500'>
-							Image uploaded
+						<span
+							className={`ml-3 text-sm ${darkMode ? "text-gray-300" : "text-gray-500"
+								}`}
+						>
+							✅ Image uploaded
 						</span>
 					)}
 				</div>
 
 
 				<button
-					type='submit'
-					className='w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 transition'
+					type="submit"
 					disabled={loading}
+					className="w-full flex justify-center items-center py-3 px-4 rounded-xl text-sm font-medium transition-all duration-300 disabled:opacity-50"
+					style={{
+						background: darkMode
+							? "linear-gradient(135deg,#0c090f,#660c5e)"
+							: "#9333ea",
+						color: "#fff",
+						border: darkMode
+							? "1px solid #f209e2"
+							: "1px solid #9333ea",
+					}}
+					onMouseEnter={(e) => {
+						e.currentTarget.style.background = "#e100ff";
+						e.currentTarget.style.color = "#000";
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.background = darkMode
+							? "linear-gradient(135deg,#0c090f,#660c5e)"
+							: "#9333ea";
+						e.currentTarget.style.color = "#fff";
+					}}
 				>
 					{loading ? (
 						<>
-							<Loader
-								className='mr-2 h-5 w-5 animate-spin'
-								aria-hidden='true'
-							/>
+							<Loader className="mr-2 h-5 w-5 animate-spin" />
 							Loading...
 						</>
 					) : (
 						<>
-							<PlusCircle className='mr-2 h-5 w-5' />
+							<PlusCircle className="mr-2 h-5 w-5" />
 							Create Product
 						</>
 					)}

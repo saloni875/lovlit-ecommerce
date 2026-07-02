@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const AboutPage = () => {
+	const { darkMode } = useThemeStore();
+
 	return (
-		<div className='min-h-screen px-6 py-16 bg-gradient-to-r from-purple-200 via-white to-pink-100'>
+		<div
+			className="min-h-screen px-6 py-16 transition-all duration-300"
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg,#0c090f,#660c5e)"
+					: "linear-gradient(to right,#e9d5ff,#ffffff,#fce7f3)",
+			}}
+		>
 
 
 			<div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center'>
@@ -14,7 +24,10 @@ const AboutPage = () => {
 					<img
 						src='anshu1.jpeg'
 						alt='Lovlit Owner'
-						className='relative z-10 w-[350px] md:w-[450px] object-cover rounded-[40px] shadow-2xl border border-purple-200'
+						className={`relative z-10 w-[350px] md:w-[450px] object-cover rounded-[40px] shadow-2xl ${darkMode
+							? "border border-fuchsia-700"
+							: "border border-purple-200"
+							}`}
 					/>
 				</div>
 
@@ -24,15 +37,15 @@ const AboutPage = () => {
 						Small Business • Handmade With Love
 					</p>
 
-					<h1 className='text-5xl md:text-7xl font-bold leading-tight text-black mb-8'>
+					<h1 className='text-5xl md:text-7xl font-bold leading-tight k mb-8 ${darkMode ? "text-white" : "text-black"}'>
 						More than a brand, <br />
 
-						<span className='text-purple-700'>
+						<span className='${darkMode ? "text-pink-400" : "text-purple-700"}'>
 							Lovlit is a feeling.
 						</span>
 					</h1>
 
-					<p className='text-xl text-gray-700 leading-relaxed mb-6'>
+					<p className='text-xl ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed mb-6'>
 						Lovlit was created from a simple dream ...
 						to make people feel special through
 						<span className='text-pink-500 font-semibold'>
@@ -44,7 +57,7 @@ const AboutPage = () => {
 						</span>
 					</p>
 
-					<p className='text-xl text-gray-700 leading-relaxed mb-6'>
+					<p className='text-xl ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed mb-6'>
 						Started by a student and young entrepreneur,
 						Lovlit is built with passion, creativity,
 						and the belief that even small gifts can create beautiful emotions.
@@ -52,7 +65,7 @@ const AboutPage = () => {
 						love in the most personal way possible.
 					</p>
 
-					<p className='text-xl text-gray-700 leading-relaxed mb-10'>
+					<p className='text-xl ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed mb-10'>
 						From handmade accessories to aesthetic candles,
 						Lovlit focuses on creating products that feel
 						<span className='text-purple-700 font-semibold'>
@@ -61,7 +74,16 @@ const AboutPage = () => {
 						and emotionally connected.
 					</p>
 
-					<Link to='/' className='bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-lg transition duration-300'>
+					<Link to='/' className='bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold shadow-lg transition duration-300'
+					 style={{
+					background: darkMode
+						? "linear-gradient(135deg,#0c090f,#660c5e)"
+						: "linear-gradient(to right,#9333ea,#db2777)",
+					color: "#fff",
+					border: darkMode
+						? "1px solid #f209e2"
+						: "1px solid #9333ea",
+				}}>
 						Shop Now 💗
 					</Link>
 				</div>
@@ -70,45 +92,57 @@ const AboutPage = () => {
 
 			<div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-28'>
 
-				<div className='backdrop-blur-md bg-white/40 border border-pink-100 rounded-3xl p-6'>
-					<h2 className='text-2xl font-bold text-purple-700 mb-3'>
+				<div className={`backdrop-blur-md rounded-3xl p-6 transition-all duration-300 ${darkMode
+					? "bg-[#18111f] border border-fuchsia-700"
+					: "bg-white/40 border border-pink-100"
+					}`}>
+					<h2 className={`text-2xl font-bold ${darkMode ? "text-pink-400" : "text-purple-700"} mb-3`}>
 						Handmade
 					</h2>
 
-					<p className='text-lg text-gray-700 leading-relaxed'>
+					<p className='text-lg ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed'>
 						Every product is created with care, creativity,
 						and attention to detail.
 					</p>
 				</div>
 
-				<div className='backdrop-blur-md bg-white/40 border border-pink-100 rounded-3xl p-6'>
-					<h2 className='text-2xl font-bold text-purple-700 mb-3'>
+				<div className={`backdrop-blur-md rounded-3xl p-6 transition-all duration-300 ${darkMode
+					? "bg-[#18111f] border border-fuchsia-700"
+					: "bg-white/40 border border-pink-100"
+					}`}>
+					<h2 className={`text-2xl font-bold ${darkMode ? "text-pink-500" : "text-purple-700"} mb-3`}>
 						Affordable
 					</h2>
 
-					<p className='text-lg text-gray-700 leading-relaxed'>
+					<p className='text-lg ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed'>
 						Cute and aesthetic products should feel accessible
 						without losing quality or emotion.
 					</p>
 				</div>
 
-				<div className='backdrop-blur-md bg-white/40 border border-pink-100 rounded-3xl p-6'>
-					<h2 className='text-2xl font-bold text-purple-700 mb-3'>
+				<div className={`backdrop-blur-md rounded-3xl p-6 transition-all duration-300 ${darkMode
+					? "bg-[#18111f] border border-fuchsia-700"
+					: "bg-white/40 border border-pink-100"
+					}`}>
+					<h2 className={`text-2xl font-bold ${darkMode ? "text-pink-400" : "text-purple-700"} mb-3`}>
 						Fandom Love
 					</h2>
 
-					<p className='text-lg text-gray-700 leading-relaxed'>
+					<p className='text-lg ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed'>
 						Inspired by comfort, music, emotions,
 						and BTS inspired aesthetics loved by fans.
 					</p>
 				</div>
 
-				<div className='backdrop-blur-md bg-white/40 border border-pink-100 rounded-3xl p-6'>
-					<h2 className='text-2xl font-bold text-purple-700 mb-3'>
+				<div className={`backdrop-blur-md rounded-3xl p-6 transition-all duration-300 ${darkMode
+					? "bg-[#18111f] border border-fuchsia-700"
+					: "bg-white/40 border border-pink-100"
+					}`}>
+					<h2 className={`text-2xl font-bold ${darkMode ? "text-pink-400" : "text-purple-700"} mb-3`}>
 						Meaningful Gifts
 					</h2>
 
-					<p className='text-lg text-gray-700 leading-relaxed'>
+					<p className='text-lg ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed'>
 						Lovlit believes small gifts can create unforgettable memories
 						and make loved ones feel truly special.
 					</p>
@@ -117,11 +151,11 @@ const AboutPage = () => {
 
 
 			<div className='mt-28 text-center max-w-4xl mx-auto'>
-				<h2 className='text-5xl font-bold text-black/80 mb-8'>
+				<h2 className='text-5xl font-bold ${darkMode ? "text-gray-300" : "text-black/80"} mb-8'>
 					A vision beyond candles
 				</h2>
 
-				<p className='text-xl text-gray-700 leading-relaxed mb-6'>
+				<p className='text-xl ${darkMode ? "text-gray-300" : "text-gray-700"} leading-relaxed mb-6'>
 					Lovlit is currently working on special handmade candles
 					created with intention and positivity.
 					The vision is to create candles connected with
@@ -139,18 +173,26 @@ const AboutPage = () => {
 
 
 			<div className='mt-32 text-center'>
-				<h2 className='text-5xl font-bold text-purple-700 mb-6'>
+				<h2 className='text-5xl font-bold ${darkMode ? "text-pink-400" : "text-purple-700"} mb-6'>
 					Thank you for supporting a small business 💜
 				</h2>
 
-				<p className='text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-10'>
+				<p className='text-xl ${darkMode ? "text-gray-300" : "text-gray-700"} max-w-3xl mx-auto leading-relaxed mb-10'>
 					Every order supports a student dream,
 					a growing handmade brand,
 					and a journey built with love and creativity.
 				</p>
 				<Link
 					to='/'
-					className='inline-block rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-10 py-5 text-xl font-semibold text-white shadow-xl hover:scale-105 transition duration-300'
+					className='inline-block rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-10 py-5 text-xl font-semibold text-white shadow-xl hover:scale-105 transition duration-300' style={{
+						background: darkMode
+							? "linear-gradient(135deg,#0c090f,#660c5e)"
+							: "linear-gradient(to right,#9333ea,#db2777)",
+						color: "#fff",
+						border: darkMode
+							? "1px solid #f209e2"
+							: "1px solid #9333ea",
+					}}
 				>
 					Explore Lovlit
 				</Link>
