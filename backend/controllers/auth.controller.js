@@ -1,6 +1,7 @@
 import { redis } from "../lib/redis.js";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import axios from "axios";
 
 const generateTokens = (userId) => {
 	const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
@@ -34,8 +35,27 @@ const setCookies = (res, accessToken, refreshToken) => {
 };
 
 export const signup = async (req, res) => {
-	const { email, password, name } = req.body;
+	const { email, password, name, turnstileToken } = req.body;
 	try {
+		const verify = await axios.post(
+			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+			new URLSearchParams({
+				secret: process.env.TURNSTILE_SECRET_KEY,
+				response: turnstileToken,
+			}),
+			{
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			}
+		);
+		console.log(verify.data)
+
+		if (!verify.data.success) {
+			return res.status(400).json({
+				message: "dear user, Captcha verification failed.",
+			});
+		}
 		const userExists = await User.findOne({ email });
 
 		if (userExists) {

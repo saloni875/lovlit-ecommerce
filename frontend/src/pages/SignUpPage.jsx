@@ -4,6 +4,7 @@ import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 import { useThemeStore } from "../stores/useThemeStore";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const SignUpPage = () => {
 	const [formData, setFormData] = useState({
@@ -11,14 +12,23 @@ const SignUpPage = () => {
 		email: "",
 		password: "",
 		confirmPassword: "",
+		turnstileToken: "",
 	});
 
 	const { signup, loading } = useUserStore();
 	const { darkMode } = useThemeStore();
+	const [turnstileToken, setTurnstileToken] = useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		signup(formData);
+		if (!turnstileToken) {
+			return alert("Please complete the security verification.");
+		}
+
+		signup({
+			...formData,
+			turnstileToken,
+		});
 	};
 
 	return (
@@ -70,6 +80,8 @@ const SignUpPage = () => {
 				>
 
 					<form onSubmit={handleSubmit} className='space-y-6'>
+
+
 
 						<div>
 							<label htmlFor='name' className='block text-sm font-medium ${darkMode ? "text-white" : "text-gray-700"}'>
@@ -123,7 +135,11 @@ const SignUpPage = () => {
 										}`}
 									placeholder='you@example.com'
 								/>
+
 							</div>
+							<p className="mt-2 text-xs text-gray-500">
+								Make sure this is your real email address so we can contact you about your orders if needed.
+							</p>
 						</div>
 
 
@@ -177,14 +193,20 @@ const SignUpPage = () => {
 										})
 									}
 									className={`block w-full px-3 py-3 pl-10 rounded-xl shadow-sm placeholder-gray-500 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-all duration-300 ${darkMode
-											? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
-											: "bg-white border-2 border-purple-300 text-black"
+										? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+										: "bg-white border-2 border-purple-300 text-black"
 										}`}
 									placeholder='••••••••'
 								/>
 							</div>
 						</div>
-
+						<div className="flex justify-center">
+							<Turnstile
+								siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+								onSuccess={(token) => setTurnstileToken(token)}
+								onExpire={() => setTurnstileToken("")}
+							/>
+						</div>
 
 						<button
 							type="submit"

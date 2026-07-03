@@ -5,6 +5,7 @@ import FeaturedProducts from "../components/FeaturedProducts";
 import { Link } from "react-router-dom";
 import AnnouncementBanner from "../components/AnnouncementBanner";
 import { useThemeStore } from "../stores/useThemeStore";
+import ReviewsSection from "../components/ReviewsSection";
 
 const categories = [
 	{
@@ -240,6 +241,7 @@ const HomePage = () => {
 
 
 			</div>
+			<ReviewsSection />
 		</div >
 	);
 };

@@ -166,8 +166,7 @@ const AboutPage = () => {
 				</p>
 
 				<p className='text-2xl text-pink-600 font-semibold leading-relaxed'>
-					Because sometimes people don't just buy products —
-					they buy feelings, hope, and comfort.
+					Every collection is carefully handcrafted to bring together quality and creativity. We hope every Lovlit creation brings a smile to the people who receive it.
 				</p>
 			</div>
 

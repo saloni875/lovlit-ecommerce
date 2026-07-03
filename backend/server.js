@@ -11,7 +11,8 @@ import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
 import ideaRoutes from "./routes/idea.route.js";
-import announcementRoutes from "./routes/announcement.routes.js"
+import announcementRoutes from "./routes/announcement.routes.js";
+import reviewRoutes from "./routes/review.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -39,6 +40,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/ideas", ideaRoutes);
 app.use("/api/announcement", announcementRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "/frontend/dist")));
