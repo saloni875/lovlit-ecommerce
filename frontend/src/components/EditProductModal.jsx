@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useProductStore } from "../stores/useProductStore";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const EditProductModal = ({
 	product,
 	onClose,
 }) => {
 	const { updateProduct } = useProductStore();
+	const { darkMode } = useThemeStore();
 
 	const [formData, setFormData] = useState({
 		name: product.name || "",
@@ -40,9 +42,22 @@ const EditProductModal = ({
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
 
-			<div className="bg-white rounded-3xl p-6 w-full max-w-xl">
+			<div
+				className={`rounded-3xl p-6 w-full max-w-xl border ${darkMode
+					? "border-fuchsia-700"
+					: "border-purple-200"
+					}`}
+				style={{
+					background: darkMode
+						? "linear-gradient(135deg,#18111f,#3b0b39)"
+						: "#ffffff",
+				}}
+			>
 
-				<h2 className="text-2xl font-bold text-purple-700 mb-6">
+				<h2
+					className={`text-2xl font-bold mb-6 ${darkMode ? "text-white" : "text-purple-700"
+						}`}
+				>
 					Edit Product
 				</h2>
 
@@ -52,7 +67,8 @@ const EditProductModal = ({
 				>
 
 					<div>
-						<label className="block mb-2 font-medium">
+						<label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-700"
+							}`}>
 							Product Name
 						</label>
 
@@ -61,12 +77,16 @@ const EditProductModal = ({
 							name="name"
 							value={formData.name}
 							onChange={handleChange}
-							className="w-full border rounded-xl p-3"
+							className={`w-full rounded-xl p-3 border transition-all ${darkMode
+								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-purple-200 text-black"
+								}`}
 						/>
 					</div>
 
 					<div>
-						<label className="block mb-2 font-medium">
+						<label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-700"
+							}`}>
 							Price
 						</label>
 
@@ -75,12 +95,16 @@ const EditProductModal = ({
 							name="price"
 							value={formData.price}
 							onChange={handleChange}
-							className="w-full border rounded-xl p-3"
+							className={`w-full rounded-xl p-3 border transition-all ${darkMode
+								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-purple-200 text-black"
+								}`}
 						/>
 					</div>
 
 					<div>
-						<label className="block mb-2 font-medium">
+						<label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-700"
+							}`}>
 							Category
 						</label>
 
@@ -89,12 +113,16 @@ const EditProductModal = ({
 							name="category"
 							value={formData.category}
 							onChange={handleChange}
-							className="w-full border rounded-xl p-3"
+							className={`w-full rounded-xl p-3 border transition-all ${darkMode
+								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-purple-200 text-black"
+								}`}
 						/>
 					</div>
 
 					<div>
-						<label className="block mb-2 font-medium">
+						<label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-700"
+							}`}	>
 							Stock
 						</label>
 
@@ -103,12 +131,16 @@ const EditProductModal = ({
 							name="stock"
 							value={formData.stock}
 							onChange={handleChange}
-							className="w-full border rounded-xl p-3"
+							className={`w-full rounded-xl p-3 border transition-all ${darkMode
+								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-purple-200 text-black"
+								}`}
 						/>
 					</div>
 
 					<div>
-						<label className="block mb-2 font-medium">
+						<label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-700"
+							}`}>
 							Description
 						</label>
 
@@ -117,7 +149,10 @@ const EditProductModal = ({
 							rows="5"
 							value={formData.description}
 							onChange={handleChange}
-							className="w-full border rounded-xl p-3"
+							className={`w-full rounded-xl p-3 border transition-all ${darkMode
+								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-purple-200 text-black"
+								}`}
 						/>
 					</div>
 
@@ -126,14 +161,20 @@ const EditProductModal = ({
 						<button
 							type="button"
 							onClick={onClose}
-							className="px-5 py-3 rounded-xl border"
+							className={`px-5 py-3 rounded-xl border transition ${darkMode
+								? "border-fuchsia-700 text-white hover:bg-fuchsia-700"
+								: "border-purple-300 hover:bg-purple-100"
+								}`}
 						>
 							Cancel
 						</button>
 
 						<button
 							type="submit"
-							className="px-5 py-3 rounded-xl bg-purple-600 text-white"
+							className={`px-5 py-3 rounded-xl font-semibold transition ${darkMode
+									? "bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white"
+									: "bg-purple-600 hover:bg-purple-700 text-white"
+								}`}
 						>
 							Save Changes
 						</button>
