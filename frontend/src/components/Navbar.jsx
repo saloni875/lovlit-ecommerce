@@ -7,14 +7,15 @@ import {
 	LogOut,
 	Lock,
 	Heart,
+	Home,Sun, Moon
 } from "lucide-react";
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
-import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "../stores/useThemeStore";
+
 
 const Navbar = () => {
 	const { user, logout } = useUserStore();
@@ -22,13 +23,16 @@ const Navbar = () => {
 	const { cart } = useCartStore();
 	const { darkMode, toggleTheme } = useThemeStore();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const location = useLocation();
+
 	useEffect(() => {
 		if (localStorage.getItem("theme") === "dark") {
 			document.body.classList.add("dark-mode");
 		}
 	}, []);
 
-	return (
+return (
+	<>
 		<header
 			className='fixed top-0 left-0 w-full backdrop-blur-md shadow-md z-40 transition-all duration-300'
 			style={{
@@ -408,7 +412,99 @@ const Navbar = () => {
 				</div>
 			</div>
 		</header>
-	);
+
+		{/* Bottom Navigation - Mobile Only */}
+		<div
+			className="md:hidden fixed bottom-0 left-0 w-full z-50"
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg,#0c090f,#660c5e)"
+					: "#ffffff",
+				borderTop: darkMode
+					? "1px solid #c646b3"
+					: "1px solid #e5e7eb",
+			}}
+		>
+			<div className="grid grid-cols-4 py-2">
+
+				<Link
+					to="/"
+					className={`flex flex-col items-center ${location.pathname === "/"
+						? "text-purple-500"
+						: darkMode
+							? "text-white"
+							: "text-gray-600"
+						}`}
+				>
+					<Home size={22} />
+					<span className="text-xs mt-1">Home</span>
+				</Link>
+
+				<Link
+					to="/collections"
+					className={`flex flex-col items-center ${location.pathname === "/collections"
+						? "text-purple-500"
+						: darkMode
+							? "text-white"
+							: "text-gray-600"
+						}`}
+				>
+					<Heart size={22} />
+					<span className="text-xs mt-1">Collection</span>
+				</Link>
+
+				{user ? (
+					<Link
+						to="/cart"
+						className={`relative flex flex-col items-center ${location.pathname === "/cart"
+							? "text-purple-500"
+							: darkMode
+								? "text-white"
+								: "text-gray-600"
+							}`}
+					>
+						<ShoppingCart size={22} />
+
+						{cart.length > 0 && (
+							<span className="absolute -top-1 right-5 bg-pink-500 text-white text-[10px] px-1.5 rounded-full">
+								{cart.length}
+							</span>
+						)}
+
+						<span className="text-xs mt-1">Cart</span>
+					</Link>
+				) : (
+					<Link
+						to="/login"
+						className={`flex flex-col items-center ${location.pathname === "/login"
+							? "text-purple-500"
+							: darkMode
+								? "text-white"
+								: "text-gray-600"
+							}`}
+					>
+						<LogIn size={22} />
+						<span className="text-xs mt-1">Login</span>
+					</Link>
+				)}
+
+				<Link
+					to="/about"
+					className={`flex flex-col items-center ${location.pathname === "/about"
+						? "text-purple-500"
+						: darkMode
+							? "text-white"
+							: "text-gray-600"
+						}`}
+				>
+					<UserPlus size={22} />
+					<span className="text-xs mt-1">About</span>
+				</Link>
+
+			</div>
+		</div>
+	</>
+);
 };
 
 export default Navbar;

@@ -24,12 +24,11 @@ const CategoryPage = () => {
 					: "",
 			}}
 		>
-			<div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+			<div className="relative z-10 max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8 py-14">
 
 				<motion.h1
-					className={`text-center text-4xl sm:text-5xl font-bold mb-8 ${
-						darkMode ? "text-white" : "text-purple-600"
-					}`}
+					className={`text-center text-4xl sm:text-5xl font-bold mb-8 ${darkMode ? "text-white" : "text-purple-600"
+						}`}
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
@@ -38,16 +37,15 @@ const CategoryPage = () => {
 				</motion.h1>
 
 				<motion.div
-					className="explore-grid grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center"
+					className="explore-grid grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-5 justify-items-center"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 0.2 }}
 				>
 					{products?.length === 0 && (
 						<h2
-							className={`text-3xl font-semibold text-center col-span-full ${
-								darkMode ? "text-white" : "text-purple-700"
-							}`}
+							className={`text-3xl font-semibold text-center col-span-full ${darkMode ? "text-white" : "text-purple-700"
+								}`}
 						>
 							No products found, we will be adding more soon!
 							Stay tuned for updates and new arrivals in this category.
@@ -55,10 +53,12 @@ const CategoryPage = () => {
 					)}
 
 					{products?.map((product) => (
-						<ProductCard
-							key={product._id}
-							product={product}
-						/>
+						<div className="w-full">
+							<ProductCard
+								key={product._id}
+								product={product}
+							/>
+						</div>
 					))}
 				</motion.div>
 

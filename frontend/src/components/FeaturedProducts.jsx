@@ -37,14 +37,14 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	const isEndDisabled = currentIndex >= featuredProducts.length - itemsPerPage;
 
 	return (
-		<div className='py-10'>
-			<div className='container mx-auto px-4'>
-				<h2 className='text-center text-4xl sm:text-6xl font-bold text-pink-500 mb-3'>
+		<div className='py-3 sm:py-10'>
+			<div className='container mx-auto px-2'>
+				<h2 className='text-center text-3xl sm:text-6xl font-bold text-pink-500 mb-2'>
 					Best sellers
 				</h2>
 
 				<p
-					className='text-center mb-12'
+					className='text-center mb-4 text-sm sm:text-lg'
 					style={{
 						color: darkMode ? "#d8cde0" : "#2c3b53",
 					}}
@@ -63,11 +63,11 @@ const FeaturedProducts = ({ featuredProducts }) => {
 							{featuredProducts?.map((product) => (
 								<div
 									key={product._id}
-									className='w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-3'
+									className='w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2'
 								>
 									<Link
 										to={`/product/${product._id}`}
-										className='rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full group'
+										className='rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full group'
 										style={{
 											background: darkMode ? "#2b182c" : "#b03b83",
 											border: darkMode
@@ -87,7 +87,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 											</div>
 										</div>
 
-										<div className='p-5'>
+										<div className='p-3'>
 											<h3
 												className='text-xl font-bold mb-2 capitalize'
 												style={{
@@ -97,7 +97,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 												{product.name}
 											</h3>
 
-											<p className='text-lg font-semibold text-pink-500 mb-5'>
+											<p className='text-lg font-semibold text-pink-500 mb-3'>
 												₹{product.price}
 											</p>
 
@@ -106,7 +106,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 													e.preventDefault();
 													addToCart(product);
 												}}
-												className='w-full font-semibold py-3 px-4 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
+												className='w-full font-semibold py-2 px-2 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
 												style={{
 													background: darkMode
 														? "linear-gradient(135deg, #0d0a11, #660c5e)"
@@ -141,23 +141,23 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					<button
 						onClick={prevSlide}
 						disabled={isStartDisabled}
-						className={`absolute top-1/2 -left-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${isStartDisabled
+						className={`absolute top-1/2 -left-5 transform -translate-y-1/2 p-2 rounded-full shadow-lg transition-all duration-300 ${isStartDisabled
 							? "bg-gray-300 cursor-not-allowed"
 							: "bg-purple-600 hover:bg-purple-700 text-white"
 							}`}
 					>
-						<ChevronLeft className='w-6 h-6' />
+						<ChevronLeft className='w-3 h-3' />
 					</button>
 
 					<button
 						onClick={nextSlide}
 						disabled={isEndDisabled}
-						className={`absolute top-1/2 -right-5 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 ${isEndDisabled
+						className={`absolute top-1/2 -right-5 transform -translate-y-1/2 p-2 rounded-full shadow-lg transition-all duration-300 ${isEndDisabled
 							? "bg-gray-300 cursor-not-allowed"
 							: "bg-purple-600 hover:bg-purple-700 text-white"
 							}`}
 					>
-						<ChevronRight className='w-6 h-6' />
+						<ChevronRight className='w-3 h-3' />
 					</button>
 				</div>
 			</div>

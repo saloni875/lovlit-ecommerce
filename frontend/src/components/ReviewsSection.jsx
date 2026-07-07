@@ -33,16 +33,16 @@ const ReviewsSection = () => {
 
     return (
         <section
-            className="py-16 px-4 transition-all duration-300"
+            className="py-10 px-2 transition-all duration-300"
             style={{
                 background: darkMode
                     ? "linear-gradient(135deg,#0c090f,#660c5e)"
                     : "linear-gradient(to right,#e9d5ff,#ffffff,#fbcfe8)",
             }}
         >
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-3xl mx-auto">
 
-                <div className="text-center mb-10">
+                <div className="text-center mb-3">
 
                     <p
                         className={`uppercase tracking-[0.35em] text-xs font-semibold ${darkMode
@@ -54,7 +54,7 @@ const ReviewsSection = () => {
                     </p>
 
                     <h2
-                        className={`mt-3 text-3xl sm:text-4xl font-bold ${darkMode
+                        className={`mt-2 text-xl sm:text-2xl font-bold ${darkMode
                             ? "text-white"
                             : "text-purple-700"
                             }`}
@@ -79,7 +79,7 @@ const ReviewsSection = () => {
                                 className="w-full flex-shrink-0"
                             >
                                 <div
-                                    className={`rounded-3xl border shadow-xl p-6 sm:p-8 ${darkMode
+                                    className={`rounded-xl border shadow-xl p-3 sm:p-8 ${darkMode
                                         ? "border-fuchsia-700"
                                         : "border-purple-200"
                                         }`}
@@ -90,34 +90,35 @@ const ReviewsSection = () => {
                                     }}
                                 >
 
-                                    <div className="flex items-start gap-6">
+                                    <div className="flex items-start gap-3">
 
                                         <img
                                             src={review.image}
                                             alt={review.customerName}
-                                            className="w-28 h-72 sm:w-36 sm:h-96 rounded-3xl object-cover flex-shrink-0 shadow-lg"
+                                           className=" w-32 h-56 sm:w-44 sm:h-72 lg:w-64 lg:h-[420px] rounded-3xl object-cover flex-shrink-0 shadow-lg
+"
                                         />
 
-                                        <div className="flex-1 flex flex-col justify-start">
+                                        <div className="flex-1 flex flex-col justify-center">
 
                                             <p
-                                                className={`text-base sm:text-lg leading-8 ${darkMode ? "text-gray-300" : "text-gray-700"
+                                                className={`text-base sm:text-lg leading-7 ${darkMode ? "text-gray-300" : "text-gray-700"
                                                     }`}
                                             >
                                                 {review.caption}
                                             </p>
 
                                             <p
-                                                className={`mt-8 text-xl font-bold ${darkMode ? "text-white" : "text-purple-700"
+                                                className={`mt-2 text-xl font-bold ${darkMode ? "text-white" : "text-purple-700"
                                                     }`}
                                             >
-                                                — {review.customerName}
+                                                ~ {review.customerName}
                                             </p>
 
                                         </div>
 
                                     </div>
-                                    <div className="flex justify-center gap-3 mt-8">
+                                    <div className="flex justify-center gap-2 mt-4">
                                         {publishedReviews.map((_, index) => (
                                             <button
                                                 key={index}

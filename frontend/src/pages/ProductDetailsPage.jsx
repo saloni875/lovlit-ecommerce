@@ -89,7 +89,7 @@ const ProductDetailsPage = () => {
 		<>
 
 			<div
-				className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 sm:py-12 transition-all duration-300"
+				className="min-h-screen px-2 sm:px-6 lg:px-8 py-8 sm:py-12 transition-all duration-300"
 				style={{
 					background: darkMode
 						? "linear-gradient(135deg,#0c090f,#660c5e)"
@@ -97,7 +97,7 @@ const ProductDetailsPage = () => {
 				}}
 			>
 				<div
-					className={`max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 rounded-3xl shadow-xl p-5 sm:p-8 transition-all duration-300 ${darkMode
+					className={`max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-12 rounded-3xl shadow-xl p-3 sm:p-8 transition-all duration-300 ${darkMode
 						? "border border-fuchsia-700"
 						: "border border-purple-100"
 						}`}
@@ -135,48 +135,48 @@ const ProductDetailsPage = () => {
 
 					<div className="product-info flex flex-col justify-center">
 
-						<p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-pink-500 font-semibold mb-2">
+						<p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-pink-500 font-semibold mb-1">
 							{selectedProduct.category}
 						</p>
 
 						<h1
-							className={`product-title text-2xl sm:text-3xl lg:text-4xl font-bold capitalize leading-tight mb-4 ${darkMode ? "text-white" : "text-black"
+							className={`product-title text-2xl sm:text-3xl lg:text-4xl font-bold capitalize leading-tight mb-2 ${darkMode ? "text-white" : "text-black"
 								}`}
 						>
 							{selectedProduct.name}
 						</h1>
 
-						<p className=" product-price text-3xl sm:text-4xl font-bold text-pink-500 mb-5">
+						<p className=" product-price text-2xl sm:text-4xl font-bold text-pink-500 mb-3">
 							₹{selectedProduct.price}
 						</p>
 
 						<p
-							className={` product-description text-sm sm:text-base leading-7 mb-8 ${darkMode ? "text-gray-300" : "text-gray-600"
+							className={` product-description text-sm sm:text-base leading-7 mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"
 								}`}
 						>
 							{selectedProduct.description}
 						</p>
-						<div className="product-grid grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
+						<div className="product-grid grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-8 mb-4">
 
 							{selectedProduct.highlights?.length > 0 && (
 								<div
-									className={`product-box rounded-2xl p-5 border ${darkMode
+									className={`product-box rounded-2xl p-2 border ${darkMode
 										? "border-fuchsia-700 bg-black/20"
 										: "border-purple-200 bg-purple-50"
 										}`}
 								>
 									<h2
-										className={`product-box-title text-xl sm:text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-purple-700"
+										className={`product-box-title text-sm sm:text-2xl font-bold  ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
 										Product Highlights
 									</h2>
 
-									<div className="product-actions space-y-3">
+									<div className="product-actions space-y-1">
 										{selectedProduct.highlights.map((item, index) => (
 											<p
 												key={index}
-												className={`product-box-text text-sm sm:text-base leading-7 ${darkMode
+												className={`product-box-text text-sm sm:text-base leading-5 ${darkMode
 													? "text-gray-300"
 													: "text-gray-700"
 													}`}
@@ -190,23 +190,23 @@ const ProductDetailsPage = () => {
 
 							{selectedProduct.details?.length > 0 && (
 								<div
-									className={`product-box rounded-2xl p-5 border ${darkMode
+									className={`product-box rounded-2xl p-2 border ${darkMode
 										? "border-fuchsia-700 bg-black/20"
 										: "border-purple-200 bg-pink-50"
 										}`}
 								>
 									<h2
-										className={`product-box-title text-xl sm:text-2xl font-bold mb-4 ${darkMode ? "text-white" : "text-purple-700"
+										className={`product-box-title text-sm sm:text-2xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
 										Additional Details
 									</h2>
 
-									<div className="product-actions space-y-3">
+									<div className="product-actions space-y-1">
 										{selectedProduct.details.map((detail, index) => (
 											<p
 												key={index}
-												className={`product-box-text text-sm sm:text-base leading-7 ${darkMode
+												className={`product-box-text text-sm sm:text-base leading-5 ${darkMode
 													? "text-gray-300"
 													: "text-gray-700"
 													}`}
@@ -220,23 +220,23 @@ const ProductDetailsPage = () => {
 
 						</div>
 
-						<div className=" product-actions space-y-8 mb-10">
+						<div className=" product-actions space-y-5 mb-10 lg:mb-8">
 
 							{selectedProduct.optionValues?.length > 0 && (
 								<div>
 									<h2
-										className={`text-lg sm:text-xl font-bold mb-4 ${darkMode ? "text-white" : "text-purple-700"
+										className={`text-sm sm:text-xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
 										Select {selectedProduct.optionType}
 									</h2>
 
-									<div className="flex flex-wrap gap-3">
+									<div className="flex flex-wrap gap-2">
 										{selectedProduct.optionValues.map((option, index) => (
 											<button
 												key={index}
 												onClick={() => setSelectedOption(option)}
-												className="px-5 py-2 rounded-2xl font-medium transition-all duration-300"
+												className="px-3 py-1 rounded-xl font-medium transition-all duration-300"
 												style={{
 													background:
 														selectedOption === option
@@ -280,19 +280,19 @@ const ProductDetailsPage = () => {
 
 							<div>
 								<h2
-									className={`product-actions text-lg sm:text-xl font-bold mb-4 ${darkMode ? "text-white" : "text-purple-700"
+									className={`product-actions text-sm sm:text-sm font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
 										}`}
 								>
 									Quantity
 								</h2>
 
-								<div className="flex items-center gap-4">
+								<div className="flex items-center gap-2">
 
 									<button
 										onClick={() =>
 											setQuantity((prev) => Math.max(1, prev - 1))
 										}
-										className={`p-3 rounded-full transition ${darkMode
+										className={`p-2 rounded-full transition ${darkMode
 											? "border border-fuchsia-700 bg-[#18111f] hover:bg-fuchsia-600"
 											: "border border-purple-300 hover:bg-purple-100"
 											}`}
@@ -304,7 +304,7 @@ const ProductDetailsPage = () => {
 									</button>
 
 									<p
-										className={`text-2xl font-bold ${darkMode ? "text-white" : "text-purple-700"
+										className={`text-sm font-bold ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
 										{quantity}
@@ -321,7 +321,7 @@ const ProductDetailsPage = () => {
 												)
 											)
 										}
-										className={`p-3 rounded-full transition ${darkMode
+										className={`p-2 rounded-full transition ${darkMode
 											? "border border-fuchsia-700 bg-[#18111f] hover:bg-fuchsia-600"
 											: "border border-purple-300 hover:bg-purple-100"
 											}`}
@@ -338,7 +338,7 @@ const ProductDetailsPage = () => {
 							{selectedProduct.isCustomizable && (
 								<div>
 									<h2
-										className={`text-lg sm:text-xl font-bold mb-4 ${darkMode ? "text-white" : "text-purple-700"
+										className={`text-sm sm:text-xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
 										Custom Name / Text
@@ -350,14 +350,14 @@ const ProductDetailsPage = () => {
 										onChange={(e) => setCustomText(e.target.value)}
 										maxLength={selectedProduct.maxCustomTextLength}
 										placeholder="Enter custom text"
-										className={`w-full rounded-2xl px-5 py-4 text-base sm:text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+										className={`w-full rounded-xl px-3 py-2 text-base sm:text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
 											? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
 											: "bg-white border-2 border-purple-300 text-purple-700 shadow-sm"
 											}`}
 									/>
 
 									<p
-										className={`text-sm mt-2 ${darkMode ? "text-gray-400" : "text-gray-500"
+										className={`text-sm mt-1 ${darkMode ? "text-gray-400" : "text-gray-500"
 											}`}
 									>
 										Max {selectedProduct.maxCustomTextLength} characters
@@ -365,7 +365,10 @@ const ProductDetailsPage = () => {
 								</div>
 							)}
 
-							<div className="product-buttons grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<div
+								className="product-buttons fixed bottom-0 left-0 right-0 z-50 lg:static grid grid-cols-2 gap-3 p-3 lg:p-0 bg-white/95 dark:bg-[#18111f]/95 backdrop-blur-md border-t border-purple-200 lg:border-0
+"
+							>
 
 								<button
 									disabled={selectedProduct.stock <= 0}
@@ -381,7 +384,7 @@ const ProductDetailsPage = () => {
 
 										toast.success("Added to cart 💜");
 									}}
-									className="product-cart-btn rounded-2xl px-6 py-4 font-semibold transition-all duration-300"
+									className="product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300"
 									style={{
 										background: darkMode
 											? "linear-gradient(135deg,#0c090f,#660c5e)"
@@ -410,12 +413,12 @@ const ProductDetailsPage = () => {
 												"linear-gradient(135deg,#0c090f,#660c5e)";
 											e.currentTarget.style.color = "#ffffff";
 										} else {
-											e.currentTarget.style.background ="#6b21a8" ;
+											e.currentTarget.style.background = "#6b21a8";
 											e.currentTarget.style.color = "#ffffff";
 										}
 									}}
 								>
-									<ShoppingCart className="inline mr-2 w-5 h-5" />
+									<ShoppingCart className="inline mr-2 w-5 h-4" />
 									Add To Cart
 								</button>
 
@@ -433,7 +436,7 @@ const ProductDetailsPage = () => {
 
 										navigate("/checkout");
 									}}
-									className="product-buy-btn rounded-2xl px-6 py-4 font-semibold transition-all duration-300"
+									className="product-buy-btn rounded-xl px-3 py-2 font-semibold transition-all duration-300"
 									style={{
 										background:
 											selectedProduct.stock <= 0
