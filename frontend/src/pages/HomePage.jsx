@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AnnouncementBanner from "../components/AnnouncementBanner";
 import { useThemeStore } from "../stores/useThemeStore";
 import ReviewsSection from "../components/ReviewsSection";
+import FAQSection from "../components/FQASection";
 
 const categories = [
 	{
@@ -242,6 +243,7 @@ const HomePage = () => {
 
 			</div>
 			<ReviewsSection />
+			<FAQSection />
 		</div >
 	);
 };

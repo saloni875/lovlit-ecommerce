@@ -26,6 +26,8 @@ import ShippingPolicyPage from "./pages/ShippingPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
 import { useThemeStore } from "./stores/useThemeStore";
 import NotFoundPage from "./pages/NotFoundPage";
+import ContactPage from "./pages/ContactPage";
+
 
 
 function App() {
@@ -96,6 +98,8 @@ function App() {
 					<Route path="/refund-policy" element={<RefundPolicyPage />} />
 
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
+
+					<Route path='/contact' element={<ContactPage />} />
 
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
