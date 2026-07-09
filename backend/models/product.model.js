@@ -18,6 +18,25 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
+		salePrice: {
+			type: Number,
+			min: 0,
+			default: null,
+		},
+
+		discount: {
+			type: Number,
+			default: 0,
+			min: 0,
+			max: 100,
+		},
+
+		discountType: {
+			type: String,
+			enum: ["none", "product", "category", "festival"],
+			default: "none",
+		},
+
 		image: {
 			type: String,
 			required: [true, "Image is required"],
@@ -43,31 +62,31 @@ const productSchema = new mongoose.Schema(
 			default: [],
 		},
 
-		
+
 		optionType: {
 			type: String,
 			default: "",
 		},
 
-		
+
 		optionValues: {
 			type: [String],
 			default: [],
 		},
 
-		
+
 		stock: {
 			type: Number,
 			default: 1,
 		},
 
-		
+
 		isCustomizable: {
 			type: Boolean,
 			default: false,
 		},
 
-		
+
 		maxCustomTextLength: {
 			type: Number,
 			default: 7,

@@ -1,14 +1,68 @@
 import { redis } from "../lib/redis.js";
 import cloudinary from "../lib/cloudinary.js";
 import Product from "../models/product.model.js";
+import CategorySale from "../models/categorySale.model.js";
+import FestivalSale from "../models/festivalSale.model.js";
+
+
+const applyDiscount = async (product) => {
+	let finalDiscount = 0;
+
+	// 1. Product Discount (Highest Priority)
+	if (product.productDiscount > 0) {
+		finalDiscount = product.productDiscount;
+	} else {
+		// 2. Category Discount
+		const categorySale = await CategorySale.findOne({
+			category: product.category,
+			active: true,
+		});
+
+		if (categorySale) {
+			finalDiscount = categorySale.discount;
+		} else {
+			// 3. Festival Discount
+			const festivalSale = await FestivalSale.findOne({
+				active: true,
+				$or: [
+					{ categories: { $size: 0 } }, // all categories
+					{ categories: product.category },
+				],
+			});
+
+			if (festivalSale) {
+				finalDiscount = festivalSale.discount;
+			}
+		}
+	}
+
+	const finalPrice = Number(
+		(product.price * (100 - finalDiscount) / 100).toFixed(2)
+	);
+
+	return {
+		...product.toObject(),
+		discount: finalDiscount,
+		finalPrice,
+		originalPrice: product.price,
+	};
+};
 
 export const getAllProducts = async (req, res) => {
 	try {
-		const products = await Product.find({}); // find all products
-		res.json({ products });
+		const products = await Product.find({});
+
+		const discountedProducts = await Promise.all(
+			products.map((product) => applyDiscount(product))
+		);
+
+		res.json({ products: discountedProducts });
 	} catch (error) {
 		console.log("Error in getAllProducts controller", error.message);
-		res.status(500).json({ message: "Server error", error: error.message });
+		res.status(500).json({
+			message: "Server error",
+			error: error.message,
+		});
 	}
 };
 
@@ -25,16 +79,25 @@ export const getFeaturedProducts = async (req, res) => {
 		// .lean() is gonna return a plain javascript object instead of a mongodb document
 		// which is good for performance when we just want to read data and not use any mongoose methods on it
 
-		featuredProducts = await Product.find({ isFeatured: true }).lean();
-		console.log("fmongodb data:", featuredProducts);
+		const featured = await Product.find({
+			isFeatured: true,
+		});
 
-		if (!featuredProducts) {
-			return res.status(404).json({ message: "No featured products found" });
+		if (!featured.length) {
+			return res.status(404).json({
+				message: "No featured products found",
+			});
 		}
 
-		// store in redis for quick access
+		const featuredProducts = await Promise.all(
+			featured.map((product) => applyDiscount(product))
+		);
 
-		await redis.set("featured_products", JSON.stringify(featuredProducts));
+		// Store discounted products in Redis
+		await redis.set(
+			"featured_products",
+			JSON.stringify(featuredProducts)
+		);
 
 		res.json(featuredProducts);
 	} catch (error) {
@@ -174,15 +237,29 @@ export const getRecommendedProducts = async (req, res) => {
 
 export const getProductsByCategory = async (req, res) => {
 	const { category } = req.params;
+
 	try {
 		const products = await Product.find({ category });
-		res.json({ products });
+
+		const discountedProducts = await Promise.all(
+			products.map((product) => applyDiscount(product))
+		);
+
+		res.json({
+			products: discountedProducts,
+		});
 	} catch (error) {
-		console.log("Error in getProductsByCategory controller", error.message);
-		res.status(500).json({ message: "Server error", error: error.message });
+		console.log(
+			"Error in getProductsByCategory controller",
+			error.message
+		);
+
+		res.status(500).json({
+			message: "Server error",
+			error: error.message,
+		});
 	}
 };
-
 
 export const getSingleProduct = async (req, res) => {
 	try {
@@ -194,7 +271,9 @@ export const getSingleProduct = async (req, res) => {
 			});
 		}
 
-		res.json(product);
+		const discountedProduct = await applyDiscount(product);
+
+		res.json(discountedProduct);
 	} catch (error) {
 		console.log(
 			"Error in getSingleProduct controller",
@@ -246,6 +325,47 @@ async function updateFeaturedProductsCache() {
 		console.log(error);
 	}
 }
+
+export const updateProductDiscount = async (req, res) => {
+	try {
+		const { productDiscount } = req.body;
+
+		if (productDiscount < 0 || productDiscount > 60) {
+			return res.status(400).json({
+				success: false,
+				message: "Discount must be between 0 and 60%",
+			});
+		}
+
+		const product = await Product.findByIdAndUpdate(
+			req.params.id,
+			{ productDiscount },
+			{ new: true }
+		);
+
+		if (!product) {
+			return res.status(404).json({
+				success: false,
+				message: "Product not found",
+			});
+		}
+
+		await updateFeaturedProductsCache();
+
+		res.status(200).json({
+			success: true,
+			product,
+		});
+	} catch (error) {
+		console.log(error);
+
+		res.status(500).json({
+			success: false,
+			message: "Server Error",
+		});
+	}
+};
+
 
 export const updateProduct = async (req, res) => {
 	try {
