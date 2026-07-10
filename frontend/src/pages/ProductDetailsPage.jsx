@@ -146,9 +146,36 @@ const ProductDetailsPage = () => {
 							{selectedProduct.name}
 						</h1>
 
-						<p className=" product-price text-2xl sm:text-4xl font-bold text-pink-500 mb-3">
+						{/* <p className=" product-price text-2xl sm:text-4xl font-bold text-pink-500 mb-3">
 							₹{selectedProduct.price}
-						</p>
+						</p> */}
+
+						<div className="mt-1 flex flex-wrap items-center gap-2">
+
+							{selectedProduct.discount > 0 ? (
+								<>
+									<p
+										className={`text-sm sm:text-lg line-through ${darkMode ? "text-gray-400" : "text-gray-500"
+											}`}
+									>
+										₹{selectedProduct.originalPrice}
+									</p>
+
+									<p className="text-xl sm:text-3xl font-bold text-pink-500">
+										₹{selectedProduct.finalPrice}
+									</p>
+
+									<span className="rounded-full bg-green-100 px-2 py-1 text-xs sm:text-sm font-bold text-green-700">
+										{selectedProduct.discount}% OFF
+									</span>
+								</>
+							) : (
+								<p className="text-xl sm:text-3xl font-bold text-pink-500">
+									₹{selectedProduct.price}
+								</p>
+							)}
+
+						</div>
 
 						<p
 							className={` product-description text-sm sm:text-base leading-7 mb-4 ${darkMode ? "text-gray-300" : "text-gray-600"
@@ -366,8 +393,12 @@ const ProductDetailsPage = () => {
 							)}
 
 							<div
-								className="product-buttons fixed bottom-0 left-0 right-0 z-50 lg:static grid grid-cols-2 gap-3 p-3 lg:p-0 bg-white/95 dark:bg-[#18111f]/95 backdrop-blur-md border-t border-purple-200 lg:border-0
-"
+								className="product-buttons fixed bottom-0 left-0 right-0 z-50 lg:static grid grid-cols-2 gap-3 p-3 lg:p-0 bg-white/95 dark:bg-[#18111f]/95 backdrop-blur-md border-t border-purple-200 lg:border-0"
+								style={{
+									background: darkMode
+										? "linear-gradient(135deg, #10070d, #440840)"
+										: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+								}}
 							>
 
 								<button

@@ -68,7 +68,7 @@ export const getAllProducts = async (req, res) => {
 
 export const getFeaturedProducts = async (req, res) => {
 	try {
-		let featuredProducts = await redis.get("featured_products");
+		let cachedProducts = await redis.get("featured_products");
 		console.log("redis data:", featuredProducts);
 		// if (featuredProducts) {
 		// 	return res.json(JSON.parse(featuredProducts));
@@ -330,7 +330,7 @@ export const updateProductDiscount = async (req, res) => {
 	try {
 		const { productDiscount } = req.body;
 
-		if (productDiscount < 0 || productDiscount > 60) {
+		if (productDiscount < 0 || productDiscount > 80) {
 			return res.status(400).json({
 				success: false,
 				message: "Discount must be between 0 and 60%",

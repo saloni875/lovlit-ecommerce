@@ -69,9 +69,36 @@ const ProductCard = ({ product }) => {
 					{product.name}
 				</h3>
 
-				<p className="mt-1 text-xl sm:text-3xl font-bold text-pink-500">
+				{/* <p className="mt-1 text-xl sm:text-3xl font-bold text-pink-500">
 					₹{product.price}
-				</p>
+				</p> */}
+
+				<div className="mt-1 flex flex-wrap items-center gap-2">
+
+					{product.discount > 0 ? (
+						<>
+							<p
+								className={`text-sm sm:text-lg line-through ${darkMode ? "text-gray-400" : "text-gray-500"
+									}`}
+							>
+								₹{product.originalPrice}
+							</p>
+
+							<p className="text-xl sm:text-3xl font-bold text-pink-500">
+								₹{product.finalPrice}
+							</p>
+
+							<span className="rounded-full bg-green-100 px-2 py-1 text-xs sm:text-sm font-bold text-green-700">
+								{product.discount}% OFF
+							</span>
+						</>
+					) : (
+						<p className="text-xl sm:text-3xl font-bold text-pink-500">
+							₹{product.price}
+						</p>
+					)}
+
+				</div>
 
 				<p
 					className={`mt-1 text-xs sm:text-sm leading-5 line-clamp-2 ${darkMode ? "text-gray-300" : "text-gray-600"

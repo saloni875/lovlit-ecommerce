@@ -1,4 +1,4 @@
-import { BarChart, PlusCircle, ShoppingBasket, Megaphone, MessageSquare, Star } from "lucide-react";
+import { BarChart, PlusCircle, ShoppingBasket, Megaphone, MessageSquare, Star, BadgePercent } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -12,6 +12,7 @@ import IdeasList from "../components/IdeasList";
 import { useThemeStore } from "../stores/useThemeStore";
 import  ReviewForm  from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewList";
+import DiscountsTab from "../components/DiscountsTab";
 
 const tabs = [
 	{ id: "create", label: "Create Product", icon: PlusCircle },
@@ -20,6 +21,7 @@ const tabs = [
 	{ id: "announcement", label: "Banner", icon: Megaphone },
 	{ id: "ideas", label: "Ideas", icon: MessageSquare },
 	{ id: "reviews", label: "Reviews", icon: Star },
+	{ id: "discounts", label:"Discounts", icon: BadgePercent}
 ];
 
 const AdminPage = () => {
@@ -127,6 +129,7 @@ const AdminPage = () => {
 							<ReviewsList />
 						</>
 					)}
+					{activeTab === "discounts" && <DiscountsTab/>}
 				</div>
 			</div>
 		</div>

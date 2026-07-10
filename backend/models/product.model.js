@@ -18,18 +18,19 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
+		productDiscount:{
+			type: Number,
+			default :0,
+			min:0,
+			max:80,
+		},
+
 		salePrice: {
 			type: Number,
 			min: 0,
 			default: null,
 		},
 
-		discount: {
-			type: Number,
-			default: 0,
-			min: 0,
-			max: 100,
-		},
 
 		discountType: {
 			type: String,
