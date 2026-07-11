@@ -3,7 +3,8 @@ import FestivalSale from "../models/festivalSale.model.js";
 // Create or Update Festival Sale
 export const createOrUpdateFestivalSale = async (req, res) => {
 	try {
-		const { festivalName, discount, categories, active } = req.body;
+		const { festivalName, discount, categories, active,startDate,
+				endDAte, } = req.body;
 
 		if (!festivalName) {
 			return res.status(400).json({
@@ -26,6 +27,7 @@ export const createOrUpdateFestivalSale = async (req, res) => {
 				discount,
 				categories,
 				active,
+				
 			},
 			{
 				new: true,

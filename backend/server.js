@@ -43,8 +43,12 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/ideas", ideaRoutes);
 app.use("/api/announcement", announcementRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("api/category-sale" , categorySaleRoutes);
+app.use("/api/category-sale" , categorySaleRoutes);
 app.use("/api/festival-sale", festivalSaleRoutes);
+
+app.get("/api/test", (req, res) => {
+	res.send("Backend is working");
+});
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "/frontend/dist")));

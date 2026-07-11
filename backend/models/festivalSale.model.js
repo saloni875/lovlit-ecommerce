@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const festivalSaleSchema = new mongoose.Schema(
     {
-        name: {
+        festivalName: {
             type: String,
             required: true,
             unique: true,

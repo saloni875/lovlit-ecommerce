@@ -3,6 +3,7 @@ import CategorySale from "../models/categorySale.model.js";
 // Create or Update Category Sale
 export const createOrUpdateCategorySale = async (req, res) => {
 	try {
+		console.log("catogry sale req", req.body);
 		const { category, discount, active } = req.body;
 
 		if (!category) {
@@ -12,10 +13,10 @@ export const createOrUpdateCategorySale = async (req, res) => {
 			});
 		}
 
-		if (discount < 0 || discount > 60) {
+		if (discount < 0 || discount > 80) {
 			return res.status(400).json({
 				success: false,
-				message: "Discount must be between 0 and 60%",
+				message: "Discount must be between 0 and 80%",
 			});
 		}
 
