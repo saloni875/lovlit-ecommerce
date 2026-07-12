@@ -73,7 +73,7 @@ const SearchBar = () => {
 			{/* Search Box */}
 
 			<div
-				className="flex items-center border-purple rounded-full px-4 py-3"
+				className="flex items-center  rounded-full px-4 py-3"
 				style={{
 					background: darkMode
 						? "#1d1025"
