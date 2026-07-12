@@ -81,6 +81,7 @@ const FestivalDiscountTab = () => {
             discount,
             startDate,
             endDate,
+            applyToAll,
             active: true,
             categories: applyToAll
                 ? []
@@ -471,90 +472,96 @@ const FestivalDiscountTab = () => {
                         return (
 
                             <div
-                                key={sale._id}
-                                className="rounded-2xl p-5 mb-4"
-                                style={{
-                                    background: darkMode
-                                        ? "#211129"
-                                        : "#faf5ff",
-                                    border: darkMode
-                                        ? "1px solid #9333ea"
-                                        : "1px solid #ddd6fe",
-                                }}
-                            >
+	key={sale._id}
+	className="rounded-2xl p-5 mb-5 shadow-lg"
+	style={{
+		background: darkMode ? "#211129" : "#faf5ff",
+		border: darkMode
+			? "1px solid #9333ea"
+			: "1px solid #ddd6fe",
+	}}
+>
+	<div className="flex justify-between items-start flex-wrap gap-5">
 
-                                <div className="flex flex-col lg:flex-row justify-between gap-4">
+		<div>
 
-                                    <div>
+			<h3
+				className="text-2xl font-bold mb-2"
+				style={{
+					color: darkMode ? "#fff" : "#6b21a8",
+				}}
+			>
+				🎉 {sale.festivalName}
+			</h3>
 
-                                        <h4
-                                            className="text-xl font-bold"
-                                            style={{
-                                                color: darkMode
-                                                    ? "#fff"
-                                                    : "#6b21a8",
-                                            }}
-                                        >
-                                            🎉 {sale.name}
-                                        </h4>
+			<p className="text-green-500 font-bold text-lg">
+				💸 {sale.discount}% OFF
+			</p>
 
-                                        <p className="mt-2 text-green-500 font-semibold">
-                                            {sale.discount}% OFF
-                                        </p>
+			<p
+				className="mt-3"
+				style={{
+					color: darkMode
+						? "#d1d5db"
+						: "#6b7280",
+				}}
+			>
+				📅
+				{" "}
+				{new Date(sale.startDate).toLocaleDateString()}
+				{" "}
+				→
+				{" "}
+				{new Date(sale.endDate).toLocaleDateString()}
+			</p>
 
-                                        <p
-                                            className="mt-2"
-                                            style={{
-                                                color: darkMode
-                                                    ? "#d1d5db"
-                                                    : "#6b7280",
-                                            }}
-                                        >
-                                            📅 {sale.startDate?.slice(0, 10)} → {sale.endDate?.slice(0, 10)}
-                                        </p>
+			<p
+				className="mt-2"
+				style={{
+					color: darkMode
+						? "#d1d5db"
+						: "#6b7280",
+				}}
+			>
+				🏷️ Applies To :
+				{" "}
 
-                                        <p
-                                            className="mt-2"
-                                            style={{
-                                                color: darkMode
-                                                    ? "#d1d5db"
-                                                    : "#6b7280",
-                                            }}
-                                        >
-                                            🏷️ {sale.categories.length === 0
-                                                ? "Entire Store"
-                                                : sale.categories.join(", ")}
-                                        </p>
+				{sale.applyToAll
+					? "Entire Store"
+					: sale.categories.join(", ")}
+			</p>
 
-                                    </div>
+		</div>
 
-                                    <div className="flex flex-col items-start lg:items-end gap-3">
+		<div className="flex flex-col gap-3">
 
-                                        <span
-                                            className="px-4 py-2 rounded-full font-bold text-white"
-                                            style={{
-                                                background: color,
-                                            }}
-                                        >
-                                            {status}
-                                        </span>
+			<span
+				className="px-4 py-2 rounded-full text-white font-bold text-center"
+				style={{
+					background:
+						status === "Active"
+							? "#10b981"
+							: status === "Upcoming"
+							? "#f59e0b"
+							: "#ef4444",
+				}}
+			>
+				{status}
+			</span>
 
-                                        <button
-                                            onClick={() =>
-                                                deleteFestivalSale(
-                                                    sale._id
-                                                )
-                                            }
-                                            className="bg-red-500 hover:bg-red-600 text-white rounded-xl px-5 py-2 font-semibold"
-                                        >
-                                            Delete
-                                        </button>
+			<button
+				onClick={() =>
+					deleteFestivalSale(sale._id)
+				}
+				className="bg-red-500 hover:bg-red-600 rounded-xl px-5 py-2 text-white font-semibold"
+			>
+				Delete
+			</button>
 
-                                    </div>
+		</div>
 
-                                </div>
-
-                            </div>
+	</div>
+</div>
 
                         );
 

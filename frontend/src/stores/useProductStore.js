@@ -6,6 +6,8 @@ export const useProductStore = create((set) => ({
 	products: [],
 	selectedProduct: null,
 	loading: false,
+	searchResults: [],
+	searchLoading: false,
 
 	setProducts: (products) => set({ products }),
 	createProduct: async (productData) => {
@@ -166,4 +168,33 @@ export const useProductStore = create((set) => ({
 			console.log("Error fetching featured products:", error);
 		}
 	},
+
+	searchProducts: async (query) => {
+		try {
+			set({
+				searchLoading: true,
+			});
+
+			const res = await axios.get(
+				`/products/search?query=${query}`
+			);
+
+			set({
+				searchResults: res.data.products,
+				searchLoading: false,
+			});
+		} catch (error) {
+			console.log(error);
+
+			set({
+				searchResults: [],
+				searchLoading: false,
+			});
+		}
+	},
+
+	clearSearch: () =>
+	set({
+		searchResults: [],
+	}),
 }));

@@ -16,6 +16,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import { useThemeStore } from "../stores/useThemeStore";
+import SearchBar from "./SearchBox";
+
 
 
 const Navbar = () => {
@@ -59,6 +61,8 @@ const Navbar = () => {
 								className='h-14 md:h-16 w-auto'
 							/>
 						</Link>
+
+						<SearchBar/>
 
 						<div className="flex items-center gap-2 md:hidden">
 

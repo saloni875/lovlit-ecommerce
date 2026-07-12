@@ -3,8 +3,8 @@ import FestivalSale from "../models/festivalSale.model.js";
 // Create or Update Festival Sale
 export const createOrUpdateFestivalSale = async (req, res) => {
 	try {
-		const { festivalName, discount, categories, active,startDate,
-				endDAte, } = req.body;
+		const { festivalName, discount, categories, active, startDate,endDate, applyToAll,
+			} = req.body;
 
 		if (!festivalName) {
 			return res.status(400).json({
@@ -25,9 +25,13 @@ export const createOrUpdateFestivalSale = async (req, res) => {
 			{
 				festivalName,
 				discount,
+				startDate,
+				endDate,
+				applyToAll,
 				categories,
 				active,
-				
+
+
 			},
 			{
 				new: true,
@@ -41,12 +45,17 @@ export const createOrUpdateFestivalSale = async (req, res) => {
 		});
 	} catch (error) {
 		console.log("Festival Sale Error:", error.message);
+		console.error(error);
 
 		res.status(500).json({
 			success: false,
-			message: "Server Error",
+			message: error.message,
 		});
 	}
+
+
+
+
 };
 
 // Get All Festival Sales

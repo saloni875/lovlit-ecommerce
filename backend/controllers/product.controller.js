@@ -36,8 +36,8 @@ const applyDiscount = async (product) => {
 		}
 	}
 
-	const finalPrice = Number(
-		(product.price * (100 - finalDiscount) / 100).toFixed(2)
+	const finalPrice = Math.round(
+		(product.price * (100 - finalDiscount) / 100)
 	);
 
 	return {
@@ -105,8 +105,6 @@ export const getFeaturedProducts = async (req, res) => {
 		res.status(500).json({ message: "Server error", error: error.message });
 	}
 };
-
-
 
 export const createProduct = async (req, res) => {
 	try {
@@ -395,6 +393,55 @@ export const updateProduct = async (req, res) => {
 		res.status(500).json({
 			message: "Server error",
 			error: error.message,
+		});
+	}
+};
+
+export const searchProducts = async (req, res) => {
+	try {
+		const { query } = req.query;
+
+		if (!query) {
+			return res.json({
+				products: [],
+			});
+		}
+
+		const products = await Product.find({
+			$or: [
+				{
+					name: {
+						$regex: query,
+						$options: "i",
+					},
+				},
+				{
+					category: {
+						$regex: query,
+						$options: "i",
+					},
+				},
+				{
+					description: {
+						$regex: query,
+						$options: "i",
+					},
+				},
+			],
+		});
+
+		const discountedProducts = await Promise.all(
+			products.map((product) => applyDiscount(product))
+		);
+
+		res.json({
+			products: discountedProducts,
+		});
+	} catch (error) {
+		console.log("Search Error:", error);
+
+		res.status(500).json({
+			message: "Server Error",
 		});
 	}
 };

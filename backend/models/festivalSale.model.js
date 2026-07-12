@@ -13,6 +13,15 @@ const festivalSaleSchema = new mongoose.Schema(
             min: 0,
             max: 60
         },
+        startDate:{
+            type: Date,
+            required: true,
+        },
+        endDate: {
+            type: Date,
+            require: true,
+        }
+        ,
         applyToAll: {
             type: Boolean,
             default: false,
@@ -25,6 +34,7 @@ const festivalSaleSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
+
 
     },
     { timestamps: true }

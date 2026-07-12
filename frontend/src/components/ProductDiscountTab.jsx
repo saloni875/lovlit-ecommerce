@@ -91,7 +91,7 @@ const ProductDiscountTab = () => {
                                     setDiscount(product.productDiscount || 0);
                                 }}
                                 className="w-full flex items-center gap-3 p-3 transition  dark:hover:bg-purple-900"
-                                className="w-full flex items-center gap-3 p-3 transition"
+                                
                                 style={{
                                     background:
                                         selectedProduct?._id === product._id
