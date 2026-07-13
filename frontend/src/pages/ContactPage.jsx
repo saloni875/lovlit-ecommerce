@@ -1,8 +1,52 @@
 import { Mail, Phone, MapPin, Instagram } from "lucide-react";
 import { useThemeStore } from "../stores/useThemeStore";
+import { useState } from "react";
+import axios from "../lib/axios";
+import toast from "react-hot-toast";
 
 const ContactPage = () => {
   const { darkMode } = useThemeStore();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const res = await axios.post("/contact", formData);
+
+      toast.success(res.data.message);
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+        "Failed to send message."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -116,9 +160,15 @@ const ContactPage = () => {
               Send Us a Message
             </h2>
 
-            <form className="space-y-4">
+            <form
+              className="space-y-4"
+              onSubmit={handleSubmit}
+            >
 
               <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 type="text"
                 placeholder="Your Name"
                 className={`w-full rounded-xl border p-2 outline-none transition ${darkMode
@@ -128,6 +178,10 @@ const ContactPage = () => {
               />
 
               <input
+
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 type="email"
                 placeholder="Email Address"
                 className={`w-full rounded-xl border p-2 outline-none transition ${darkMode
@@ -137,6 +191,9 @@ const ContactPage = () => {
               />
 
               <input
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
                 type="text"
                 placeholder="Subject"
                 className={`w-full rounded-xl border p-2 outline-none transition ${darkMode
@@ -146,6 +203,9 @@ const ContactPage = () => {
               />
 
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 rows="5"
                 placeholder="Write your message..."
                 className={`w-full rounded-xl border p-2 outline-none transition ${darkMode
@@ -178,20 +238,20 @@ const ContactPage = () => {
                   }
                 }}
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </button>
 
             </form>
 
           </div>
-          
+
         </div><p
-            className={`mt-4 text-center text-xl ${darkMode ? "text-gray-300" : "text-gray-600"
-              }`}
-          >
-            We usually respond within <span className="font-semibold text-pink-500">24 hours</span>.
-            Thank you for contacting Lovlit!
-          </p>
+          className={`mt-4 text-center text-xl ${darkMode ? "text-gray-300" : "text-gray-600"
+            }`}
+        >
+          We usually respond within <span className="font-semibold text-pink-500">24 hours</span>.
+          Thank you for contacting Lovlit!
+        </p>
       </div>
     </div>
   );

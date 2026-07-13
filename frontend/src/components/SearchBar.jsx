@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useProductStore } from "../stores/useProductStore";
 import { useThemeStore } from "../stores/useThemeStore";
 
-const SearchBar = () => {
+const SearchBar = ( {mobile = false, closeSearch}) => {
 
 	/*
 		This stores whatever
@@ -68,20 +68,19 @@ const SearchBar = () => {
 
 	return (
 
-		<div className="relative w-full max-w-xl">
+		<div className="relative w-full ">
 
 			{/* Search Box */}
 
 			<div
-				className="flex items-center  rounded-full px-4 py-3"
+				className="flex items-center rounded-full px-4 py-3"
 				style={{
 					background: darkMode
-						? "#1d1025"
-						: "#ffffff",
-
+						? "linear-gradient(135deg, #10070d, #440840)"
+						: "linear-gradient(to right, rgb(233 213 255), white, rgb(253, 226, 241))",
 					border: darkMode
-						? "1px solid #9333ea"
-						: "1px solid #ddd6fe",
+						? "1px solid #ac70e3"
+						: "1px solid #c295d5",
 				}}
 			>
 
@@ -108,7 +107,13 @@ const SearchBar = () => {
 							? "#ffffff"
 							: "#111827",
 					}}
+					
 				/>
+				{mobile && (
+					<button onClick={closeSearch}>
+						✖
+					</button>
+				)}
 
 			</div>
 
@@ -165,10 +170,13 @@ const SearchBar = () => {
 										setSearch("");
 
 										clearSearch();
+										if(closeSearch){
+											closeSearch();
+										}
 
 									}}
 
-									className="flex items-center gap-3 p-3 hover:bg-purple-100 dark:hover:bg-purple-900 transition"
+									className="flex items-center gap-3 p-3 cursor-pointer transition"
 
 								>
 
@@ -216,3 +224,5 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+
+

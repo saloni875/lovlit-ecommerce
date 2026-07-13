@@ -15,6 +15,7 @@ import announcementRoutes from "./routes/announcement.routes.js";
 import reviewRoutes from "./routes/review.route.js";
 import categorySaleRoutes from "./routes/categorySale.routes.js";
 import festivalSaleRoutes from "./routes/festivalsales.routes.js";
+import contactRoutes from "./routes/contact.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -45,6 +46,7 @@ app.use("/api/announcement", announcementRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/category-sale" , categorySaleRoutes);
 app.use("/api/festival-sale", festivalSaleRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.get("/api/test", (req, res) => {
 	res.send("Backend is working");

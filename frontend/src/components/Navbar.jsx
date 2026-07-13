@@ -8,7 +8,7 @@ import {
 	Lock,
 	Heart,
 	Home, Sun, Moon,
-	LayoutGrid
+	LayoutGrid, Search,
 } from "lucide-react";
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom";
@@ -16,7 +16,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import { useThemeStore } from "../stores/useThemeStore";
-import SearchBar from "./SearchBox";
+import SearchBar from "./SearchBar";
 
 
 
@@ -28,6 +28,8 @@ const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const location = useLocation();
 	const [showCollectionDrawer, setShowCollectionDrawer] = useState(false);
+	const [showSearch, setShowSearch] = useState(false);
+	const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
 	useEffect(() => {
 		if (localStorage.getItem("theme") === "dark") {
@@ -61,14 +63,27 @@ const Navbar = () => {
 								className='h-14 md:h-16 w-auto'
 							/>
 						</Link>
+						{/* searchbar */}
+						<div className="hidden md:flex flex-1 justify-center px-6">
+							<div className="w-full max-w-lg">
+								<SearchBar />
+							</div>
+						</div>
 
-						<SearchBar/>
 
 						<div className="flex items-center gap-2 md:hidden">
 
+							{/* Mobile Search */}
+							<button
+								className="md:hidden"
+								onClick={() => setMobileSearchOpen(true)}
+							>
+								<Search size={22} />
+							</button>
+
 							<button
 								onClick={toggleTheme}
-								className="p-2 rounded-full"
+								className="p-1 rounded-full"
 								style={{
 									background: darkMode
 										? "linear-gradient(135deg, #0c090f, #660c5e)"
@@ -80,9 +95,9 @@ const Navbar = () => {
 								}}
 							>
 								{darkMode ? (
-									<Sun size={20} />
+									<Sun size={18} />
 								) : (
-									<Moon size={20} />
+									<Moon size={18} />
 								)}
 							</button>
 
@@ -96,6 +111,7 @@ const Navbar = () => {
 							</button>
 
 						</div>
+
 						<nav className='hidden md:flex flex-wrap items-center gap-4 '>
 
 
@@ -342,6 +358,7 @@ const Navbar = () => {
 							)}
 
 						</nav>
+
 						{isMenuOpen && (
 							<div className='md:hidden mt-4  flex flex-col gap-4 border-t border-purple-200 pt-4'>
 
@@ -643,6 +660,23 @@ const Navbar = () => {
 							</Link>
 
 						</div>
+					</div>
+				</div>
+			)}
+
+			{mobileSearchOpen && (
+				<div
+					className="fixed inset-0 bg-black/50 z-[100] flex items-start justify-center pt-20 px-4"
+					onClick={() => setMobileSearchOpen(false)}
+				>
+					<div
+						className="w-full max-w-md"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<SearchBar
+							mobile={true}
+							closeSearch={() => setMobileSearchOpen(false)}
+						/>
 					</div>
 				</div>
 			)}

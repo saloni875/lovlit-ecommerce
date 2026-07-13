@@ -25,16 +25,43 @@ const FeaturedProducts = ({ featuredProducts }) => {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
+	// 
+
+	useEffect(() => {
+		if (featuredProducts.length <= itemsPerPage) return;
+
+		const interval = setInterval(() => {
+			setCurrentIndex((prev) => {
+				if (prev >= featuredProducts.length - itemsPerPage) {
+					return 0;
+				}
+				return prev + itemsPerPage;
+			});
+		}, 3000);
+
+		return () => clearInterval(interval);
+
+	}, [featuredProducts.length, itemsPerPage]);
+
 	const nextSlide = () => {
-		setCurrentIndex((prevIndex) => prevIndex + itemsPerPage);
+		setCurrentIndex((prev) => {
+			if (prev >= featuredProducts.length - itemsPerPage) {
+				return 0;
+			}
+			return prev + itemsPerPage;
+		});
 	};
 
 	const prevSlide = () => {
-		setCurrentIndex((prevIndex) => prevIndex - itemsPerPage);
+		setCurrentIndex((prev) => {
+			if (prev === 0) {
+				return featuredProducts.length - itemsPerPage;
+			}
+			return prev - itemsPerPage;
+		});
 	};
 
-	const isStartDisabled = currentIndex === 0;
-	const isEndDisabled = currentIndex >= featuredProducts.length - itemsPerPage;
+
 
 	return (
 		<div className='py-3 sm:py-10'>
@@ -70,9 +97,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 										className='rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full group'
 										style={{
 											background: darkMode ? "#2b182c" : "#b03b83",
-											border: darkMode
-												? "1px solid #d22ab9"
-												: "1px solid #e9d5ff",
+											
 										}}
 									>
 										<div className='relative overflow-hidden'>
@@ -167,22 +192,16 @@ const FeaturedProducts = ({ featuredProducts }) => {
 
 					<button
 						onClick={prevSlide}
-						disabled={isStartDisabled}
-						className={`absolute top-1/2 -left-5 transform -translate-y-1/2 p-2 rounded-full shadow-lg transition-all duration-300 ${isStartDisabled
-							? "bg-gray-300 cursor-not-allowed"
-							: "bg-purple-600 hover:bg-purple-700 text-white"
-							}`}
+						className="hidden md:block absolute top-1/2 -left-5 -translate-y-1/2 p-2 z-30 rounded-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg"
+
 					>
 						<ChevronLeft className='w-3 h-3' />
 					</button>
 
 					<button
 						onClick={nextSlide}
-						disabled={isEndDisabled}
-						className={`absolute top-1/2 -right-5 transform -translate-y-1/2 p-2 rounded-full shadow-lg transition-all duration-300 ${isEndDisabled
-							? "bg-gray-300 cursor-not-allowed"
-							: "bg-purple-600 hover:bg-purple-700 text-white"
-							}`}
+						className="hidden md:block absolute top-1/2 -right-5 -translate-y-1/2 p-2 z-30 rounded-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg"
+
 					>
 						<ChevronRight className='w-3 h-3' />
 					</button>
