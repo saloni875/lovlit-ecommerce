@@ -1,15 +1,24 @@
 import toast from "react-hot-toast";
 import { Heart } from "lucide-react";
+
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import { Link, useNavigate } from "react-router-dom";
 import { useThemeStore } from "../stores/useThemeStore";
-
+import { useEffect } from "react";
+import { useWishlistStore } from "../stores/useWishlistStore";
 const ProductCard = ({ product }) => {
 	const { user } = useUserStore();
 	const { addToCart } = useCartStore();
 	const { darkMode } = useThemeStore();
 	const navigate = useNavigate();
+	const {
+		wishlist,
+		getWishlist,
+		toggleWishlist,
+	} = useWishlistStore();
+
+	;
 
 	const handleAddToCart = () => {
 		if (!user) {
@@ -27,6 +36,18 @@ const ProductCard = ({ product }) => {
 		addToCart(product);
 		navigate("/checkout");
 	};
+
+	// load the wishlist
+	useEffect(() => {
+		if (user) {
+			getWishlist();
+		}
+	}, [user]);
+	// weather product is added or mot check jere
+	const isWishlisted = wishlist.some(
+		(item) => item.product?._id === product._id
+	);
+
 	return (
 		<div
 			className="h-full w-full min-h-[295px] sm:min-h-[430px] rounded-lg overflow-hidden flex flex-col transition-all duration-300"
@@ -56,7 +77,22 @@ const ProductCard = ({ product }) => {
 				/>
 
 				<div className="absolute top-2 right-2 rounded-full bg-white p-1 shadow">
-					<Heart className="h-3 w-3 text-purple-600" />
+					<Heart
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+
+							if (!user) {
+								return toast.error("Please login first.");
+							}
+
+							toggleWishlist(product._id);
+						}}
+						className={`h-5 w-5 cursor-pointer transition-all duration-300 ${isWishlisted
+								? "fill-red-500 text-red-500"
+								: "text-purple-600"
+							}`}
+					/>
 				</div>
 			</Link>
 

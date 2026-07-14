@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 import authRoutes from "./routes/auth.route.js";
 import productRoutes from "./routes/product.route.js";
@@ -16,6 +18,7 @@ import reviewRoutes from "./routes/review.route.js";
 import categorySaleRoutes from "./routes/categorySale.routes.js";
 import festivalSaleRoutes from "./routes/festivalsales.routes.js";
 import contactRoutes from "./routes/contact.route.js";
+import wishlistRoutes from "./routes/wishlist.routes.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -23,10 +26,20 @@ dotenv.config();
 // console.log("process.env.MONGO_URI", process.env.MONGO_URI);
 
 const app = express();
+app.use(helmet());
 app.use(cors({
 	origin: "http://localhost:5173",
 	credentials: true,
 }));
+
+
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+});
+
+app.use(limiter);
 const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
@@ -47,6 +60,11 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/category-sale" , categorySaleRoutes);
 app.use("/api/festival-sale", festivalSaleRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+
+
+
+
 
 app.get("/api/test", (req, res) => {
 	res.send("Backend is working");

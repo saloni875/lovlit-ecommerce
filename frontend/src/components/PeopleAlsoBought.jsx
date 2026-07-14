@@ -32,22 +32,28 @@ const PeopleAlsoBought = () => {
 	if (isLoading) return <LoadingSpinner />;
 
 	return (
-		<div className='mt-14'>
+		<div className='mt-10'
+		style={{
+				background: darkMode
+					? "linear-gradient(135deg,#10070d,#440840)"
+					: "linear-gradient(to right,#e9d5ff,#ffffff,#fbcfe8)",
+				
+			}}>
 			<div className="text-center mb-8">
 
-				<div
+				{/* <div
 					className={`inline-flex items-center justify-center w-14 h-14 rounded-full mb-4 ${darkMode
 							? "bg-[#18111f] border border-fuchsia-700"
 							: "bg-purple-100"
 						}`}
 				>
-					<Heart
+					{/* <Heart
 						className={`w-7 h-7 ${darkMode
 								? "text-pink-400"
 								: "text-purple-600"
 							}`}
-					/>
-				</div>
+					/> 
+				</div> */}
 
 				<h2
 					className={`text-xl sm:text-3xl font-bold ${darkMode
@@ -70,7 +76,7 @@ const PeopleAlsoBought = () => {
 
 			</div>
 
-			<div className='grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+			<div className='grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
 				{recommendations.map((product) => (
 					<ProductCard key={product._id} product={product} />
 				))}

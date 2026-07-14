@@ -27,6 +27,7 @@ import RefundPolicyPage from "./pages/RefundPolicyPage";
 import { useThemeStore } from "./stores/useThemeStore";
 import NotFoundPage from "./pages/NotFoundPage";
 import ContactPage from "./pages/ContactPage";
+import WishlistPage from "./pages/WishlistPage";
 
 
 
@@ -58,14 +59,14 @@ function App() {
 		// 	}}
 		// >
 		<div
-	className="min-h-screen relative overflow-hidden"
-	style={{
-		background: darkMode
-			? "linear-gradient(135deg, #0c090f, #330530)"
-			: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
-		color: darkMode ? "#ffffff" : "#000000",
-	}}
->
+			className="min-h-screen relative overflow-hidden"
+			style={{
+				background: darkMode
+					? "linear-gradient(135deg, #0c090f, #330530)"
+					: "linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
+				color: darkMode ? "#ffffff" : "#000000",
+			}}
+		>
 			{/* Background gradient */}
 			<div className='absolute inset-0 overflow-hidden'>
 				<div className='absolute inset-0'>
@@ -100,6 +101,10 @@ function App() {
 					<Route path='/purchase-cancel' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
 
 					<Route path='/contact' element={<ContactPage />} />
+					<Route
+						path="/wishlist"
+						element={user ? <WishlistPage /> : <Navigate to="/login" />}
+					/>
 
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>

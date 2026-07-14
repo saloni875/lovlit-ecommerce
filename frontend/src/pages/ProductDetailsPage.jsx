@@ -4,6 +4,10 @@ import { useCartStore } from "../stores/useCartStore";
 import { useThemeStore } from "../stores/useThemeStore";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useUserStore } from "../stores/useUserStore";
+import { useWishlistStore } from "../stores/useWishlistStore";
+import PeopleAlsoBought from "../components/PeopleAlsoBought";
+
 import {
 	ShoppingCart,
 	Heart,
@@ -23,6 +27,19 @@ const ProductDetailsPage = () => {
 
 	const { addToCart } = useCartStore();
 	const { darkMode } = useThemeStore();
+
+	const { user } = useUserStore();
+
+	const {
+		wishlist,
+		getWishlist,
+		toggleWishlist,
+	} = useWishlistStore();
+	useEffect(() => {
+		if (user) {
+			getWishlist();
+		}
+	}, [user]);
 
 	const [selectedOption, setSelectedOption] = useState("");
 	const [quantity, setQuantity] = useState(1);
@@ -85,6 +102,10 @@ const ProductDetailsPage = () => {
 		);
 	}
 
+	const isWishlisted = wishlist.some(
+		(item) => item.product?._id === selectedProduct?._id
+	);
+
 	return (
 		<>
 
@@ -126,10 +147,24 @@ const ProductDetailsPage = () => {
 									: "1px solid #e9d5ff",
 							}}
 						>
-							<Heart
-								className={`w-6 h-6 ${darkMode ? "text-pink-400" : "text-purple-600"
-									}`}
-							/>
+							<div className="absolute top-2 right-2 rounded-full bg-white p-1 shadow">
+								<Heart
+									onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+
+										if (!user) {
+											return toast.error("Please login first.");
+										}
+
+										toggleWishlist(selectedProduct._id);
+									}}
+									className={`h-5 w-5 cursor-pointer transition-all duration-300 ${isWishlisted
+										? "fill-red-500 text-red-500"
+										: "text-purple-600"
+										}`}
+								/>
+							</div>
 						</div>
 					</div>
 
@@ -521,6 +556,10 @@ const ProductDetailsPage = () => {
 					</div>
 				</div>
 			</div>
+
+			<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pb-10">
+	<PeopleAlsoBought />
+</div>
 		</>
 	);
 };

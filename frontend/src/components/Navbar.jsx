@@ -139,6 +139,30 @@ const Navbar = () => {
 								Contact
 							</Link>
 
+							{user ? (
+								<Link
+									to="/wishlist"
+									className={`flex flex-col items-center ${location.pathname === "/wishlist"
+										? "text-purple-500"
+										: darkMode
+											? "text-white"
+											: "text-gray-600"
+										}`}
+								>
+									<Heart size={22} />
+
+								</Link>
+							) : (
+								<Link
+									to="/login"
+									className={`flex flex-col items-center ${darkMode ? "text-white" : "text-gray-600"
+										}`}
+								>
+									<Heart size={22} />
+
+								</Link>
+							)}
+
 
 
 							{user && (
@@ -463,7 +487,7 @@ const Navbar = () => {
 						: "1px solid #e5e7eb",
 				}}
 			>
-				<div className="grid grid-cols-4 py-2">
+				<div className="grid grid-cols-5 py-2">
 
 					<Link
 						to="/"
@@ -487,6 +511,30 @@ const Navbar = () => {
 						<LayoutGrid size={22} />
 						<span className="text-xs mt-1">Collection</span>
 					</button>
+
+					{user ? (
+						<Link
+							to="/wishlist"
+							className={`flex flex-col items-center ${location.pathname === "/wishlist"
+									? "text-purple-500"
+									: darkMode
+										? "text-white"
+										: "text-gray-600"
+								}`}
+						>
+							<Heart size={22} />
+							<span className="text-xs mt-1">Wishlist</span>
+						</Link>
+					) : (
+						<Link
+							to="/login"
+							className={`flex flex-col items-center ${darkMode ? "text-white" : "text-gray-600"
+								}`}
+						>
+							<Heart size={22} />
+							<span className="text-xs mt-1">Wishlist</span>
+						</Link>
+					)}
 
 					{user ? (
 						<Link
@@ -522,6 +570,8 @@ const Navbar = () => {
 							<span className="text-xs mt-1">Login</span>
 						</Link>
 					)}
+
+					
 
 					<Link
 						to="/about"
