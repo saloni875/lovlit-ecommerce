@@ -26,6 +26,7 @@ dotenv.config();
 // console.log("process.env.MONGO_URI", process.env.MONGO_URI);
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
 app.use(cookieParser());
 app.use(helmet());
