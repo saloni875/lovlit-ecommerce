@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
-import helmet from "helmet";
+import helmet, { contentSecurityPolicy } from "helmet";
 import rateLimit from "express-rate-limit";
 
 import authRoutes from "./routes/auth.route.js";
@@ -29,7 +29,9 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
 app.use(cookieParser());
-app.use(helmet());
+app.use(helmet(
+	{contentSecurityPolicy: false,}
+));
 app.use(cors({
 	origin:
 		process.env.NODE_ENV === "production"
