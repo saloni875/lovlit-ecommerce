@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
+import { useUserStore } from "./useUserStore";
 
 export const useCartStore = create((set, get) => ({
 	cart: [],
@@ -47,6 +48,13 @@ export const useCartStore = create((set, get) => ({
 		set({ cart: [], coupon: null, total: 0, subtotal: 0 });
 	},
 	addToCart: async (product) => {
+
+		const user = useUserStore.getState().user;
+
+		if (!user) {
+			toast.error("Please login first");
+			return;
+		}
 		try {
 			await axios.post("/cart", {
 				productId: product._id,
@@ -103,7 +111,7 @@ export const useCartStore = create((set, get) => ({
 			);
 		}
 	},
-	
+
 	removeFromCart: async (productId) => {
 		await axios.delete(`/cart`, { data: { productId } });
 		set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));

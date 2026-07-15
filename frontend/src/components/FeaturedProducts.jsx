@@ -12,6 +12,9 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	const [itemsPerPage, setItemsPerPage] = useState(4);
 	const { darkMode } = useThemeStore();
 
+	const [touchStart, setTouchStart] = useState(null);
+	const [touchEnd, setTouchEnd] = useState(null);
+
 	const { addToCart } = useCartStore();
 
 	useEffect(() => {
@@ -28,6 +31,8 @@ const FeaturedProducts = ({ featuredProducts }) => {
 
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
+
+
 
 	const {
 		wishlist,
@@ -78,7 +83,30 @@ const FeaturedProducts = ({ featuredProducts }) => {
 		}
 	}, [user]);
 
+	const minSwipeDistance = 50;
 
+	const onTouchStart = (e) => {
+		setTouchEnd(null);
+		setTouchStart(e.targetTouches[0].clientX);
+	};
+
+	const onTouchMove = (e) => {
+		setTouchEnd(e.targetTouches[0].clientX);
+	};
+
+	const onTouchEnd = () => {
+		if (!touchStart || !touchEnd) return;
+
+		const distance = touchStart - touchEnd;
+
+		if (distance > minSwipeDistance) {
+			nextSlide();
+		}
+
+		if (distance < -minSwipeDistance) {
+			prevSlide();
+		}
+	};
 
 
 	return (
@@ -101,6 +129,9 @@ const FeaturedProducts = ({ featuredProducts }) => {
 					<div className='overflow-hidden'>
 						<div
 							className='flex transition-transform duration-300 ease-in-out'
+							onTouchStart={onTouchStart}
+							onTouchMove={onTouchMove}
+							onTouchEnd={onTouchEnd}
 							style={{
 								transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)`,
 							}}

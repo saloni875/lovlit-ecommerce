@@ -29,9 +29,36 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
 app.use(cookieParser());
-app.use(helmet(
-	{contentSecurityPolicy: false,}
-));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://challenges.cloudflare.com",
+        ],
+        frameSrc: [
+          "'self'",
+          "https://challenges.cloudflare.com",
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://res.cloudinary.com",
+        ],
+        connectSrc: [
+          "'self'",
+          "https://challenges.cloudflare.com",
+        ],
+      },
+    },
+  })
+);
 app.use(cors({
 	origin:
 		process.env.NODE_ENV === "production"
