@@ -26,6 +26,8 @@ dotenv.config();
 // console.log("process.env.MONGO_URI", process.env.MONGO_URI);
 
 const app = express();
+app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
+app.use(cookieParser());
 app.use(helmet());
 app.use(cors({
 	origin:
@@ -43,19 +45,13 @@ const limiter = rateLimit({
 	standardHeaders: true,
 	legacyHeaders: false,
 });
-
 app.use("/api/auth", limiter,authRoutes);
-
 
 const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
 
-app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
-app.use(cookieParser());
-
-app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/coupons", couponRoutes);
