@@ -9,9 +9,9 @@ import { protectRoute, adminRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-console.log("Category sale  is lodded");
+
 router.post("/test", (req, res) => {
-	console.log("✅ POST test reached");
+	console.log(" POST test reached");
 	res.json({ success: true });
 });
 

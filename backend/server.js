@@ -28,18 +28,25 @@ dotenv.config();
 const app = express();
 app.use(helmet());
 app.use(cors({
-	origin: "http://localhost:5173",
+	origin:
+		process.env.NODE_ENV === "production"
+			? process.env.CLIENT_URL
+			: "http://localhost:5173",
 	credentials: true,
 }));
 
 
 
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
+	windowMs: 15 * 60 * 1000,
+	max: process.env.NODE_ENV === "production" ? 1000 : 10000,
+	standardHeaders: true,
+	legacyHeaders: false,
 });
 
-app.use(limiter);
+app.use("/api/auth", limiter,authRoutes);
+
+
 const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
@@ -57,7 +64,7 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/ideas", ideaRoutes);
 app.use("/api/announcement", announcementRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("/api/category-sale" , categorySaleRoutes);
+app.use("/api/category-sale", categorySaleRoutes);
 app.use("/api/festival-sale", festivalSaleRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/wishlist", wishlistRoutes);

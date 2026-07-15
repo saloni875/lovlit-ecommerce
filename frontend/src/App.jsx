@@ -34,7 +34,6 @@ import WishlistPage from "./pages/WishlistPage";
 function App() {
 	const { user, checkAuth, checkingAuth } = useUserStore();
 	const { darkMode } = useThemeStore();
-	console.log("Dark mode in App.jsx:", darkMode); // Log the darkMode value
 	const { getCartItems } = useCartStore();
 	useEffect(() => {
 		checkAuth();

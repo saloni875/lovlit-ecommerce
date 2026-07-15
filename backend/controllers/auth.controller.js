@@ -23,7 +23,10 @@ const setCookies = (res, accessToken, refreshToken) => {
 	res.cookie("accessToken", accessToken, {
 		httpOnly: true, // prevent XSS attacks, cross site scripting attack
 		secure: process.env.NODE_ENV === "production",
-		sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
+		sameSite:
+			process.env.NODE_ENV === "production"
+				? "none"
+				: "strict", // prevents CSRF attack, cross-site request forgery attack
 		maxAge: 15 * 60 * 1000, // 15 minutes
 	});
 	res.cookie("refreshToken", refreshToken, {
@@ -36,6 +39,19 @@ const setCookies = (res, accessToken, refreshToken) => {
 
 export const signup = async (req, res) => {
 	const { email, password, name, turnstileToken } = req.body;
+	// some input validation
+	if (!name || !email || !password) {
+		return res.status(400).json({
+			message: "All fields are required",
+		});
+	}
+
+	if (password.length < 8) {
+		return res.status(400).json({
+			message: "Password must be at least 8 characters",
+		});
+	}
+
 	try {
 		const verify = await axios.post(
 			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -49,7 +65,7 @@ export const signup = async (req, res) => {
 				},
 			}
 		);
-		console.log(verify.data)
+		
 
 		if (!verify.data.success) {
 			return res.status(400).json({
@@ -84,6 +100,11 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
+		if (!email || !password) {
+	return res.status(400).json({
+		message: "Email and password are required",
+	});
+}
 		const user = await User.findOne({ email });
 
 		if (user && (await user.comparePassword(password))) {

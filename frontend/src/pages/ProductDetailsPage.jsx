@@ -448,7 +448,7 @@ const ProductDetailsPage = () => {
 											customText,
 										});
 
-										toast.success("Added to cart 💜");
+										
 									}}
 									className="product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300"
 									style={{

@@ -48,7 +48,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 				}
 				return prev + itemsPerPage;
 			});
-		}, 3000);
+		}, 3500);
 
 		return () => clearInterval(interval);
 
