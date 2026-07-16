@@ -342,7 +342,8 @@ Thank you , kindly share your payment details.`;
 
 						<p>🧵 <b>Every Lovlit product is <i>handmade</i>  with care.</b></p>
 
-						<p>🚚 <b>Dispatch & delivery may take 3-10 days (based on location and shipping method).</b></p>
+						<p>🚚 <b>Pan India Delivery 🇮🇳
+Your order will usually arrive within 3 - 10 business days, depending on your location.</b></p>
 
 						<p> <b>Please record an unboxing video for any damage, return, or refund claim.</b></p>
 					</div>

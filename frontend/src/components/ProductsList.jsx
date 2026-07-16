@@ -3,14 +3,21 @@ import { Trash, Star, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useProductStore } from "../stores/useProductStore";
 import EditProductModal from "./EditProductModal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { useThemeStore } from "../stores/useThemeStore";
 
 const ProductsList = () => {
 	const { deleteProduct, toggleFeaturedProduct, updateProduct, products } = useProductStore();
 	const [selectedProduct, setSelectedProduct] = useState(null);
+	const [productToDelete, setProductToDelete] = useState(null);
+	const { darkMode } = useThemeStore();
 
 	return (
 		<motion.div
-			className='bg-white shadow-2xl rounded-3xl overflow-hidden max-w-6xl mx-auto border border-purple-200'
+			className={`bg-white shadow-2xl rounded-3xl overflow-hidden max-w-[1500px] mx-auto border border-purple-20${darkMode
+				? "bg-[#18111f] border-purple-700"
+				: "bg-white border-purple-200"
+				}`}
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8 }}
@@ -20,7 +27,10 @@ const ProductsList = () => {
 				{products?.map((product) => (
 					<div
 						key={product._id}
-						className='bg-white rounded-2xl p-3 shadow border border-purple-100'
+						className={`rounded-2xl p-3 shadow border ${darkMode
+								? "bg-[#18111f] border-purple-700"
+								: "bg-white border-purple-100"
+							}`}
 					>
 						<img
 							src={product.image}
@@ -28,7 +38,8 @@ const ProductsList = () => {
 							className='w-full aspect-square object-cover rounded-xl'
 						/>
 
-						<h3 className='mt-2 text-sm font-semibold text-purple-700 truncate'>
+						<h3 className={`text-lg font-semibold capitalize min-h-[45px] lime-clamp-2 ${darkMode ? "text-white" : "text-purple-700"
+							}`}>
 							{product.name}
 						</h3>
 
@@ -36,7 +47,8 @@ const ProductsList = () => {
 							₹{product.price}
 						</p>
 
-						<p className='text-xs text-gray-500 capitalize'>
+						<p className={`text-sm font-semibold  ${darkMode ? "text-white" : "text-purple-700"
+							}`}>
 							{product.category}
 						</p>
 						<p
@@ -67,9 +79,7 @@ const ProductsList = () => {
 							</button>
 
 							<button
-								onClick={() =>
-									deleteProduct(product._id)
-								}
+								onClick={() => setProductToDelete(product)}
 								className='p-2 rounded-full bg-red-100 text-red-500'
 							>
 								<Trash className='h-4 w-4' />
@@ -81,8 +91,8 @@ const ProductsList = () => {
 
 			{/* Desktop View */}
 
-			<div className="hidden lg:block">
-				<table className='min-w-[700px] w-full'>
+			<div className="hidden lg:block overflow-x-auto">
+				<table className='min-w-[1200px] w-full'>
 					<thead className='bg-gradient-to-r from-purple-600 to-pink-500'>
 						<tr>
 							<th
@@ -129,11 +139,19 @@ const ProductsList = () => {
 						</tr>
 					</thead>
 
-					<tbody className='divide-y divide-purple-100 bg-white'>
+					<tbody
+						className={`divide-y ${darkMode
+							? "divide-purple-800 bg-[#18111f]"
+							: "divide-purple-100 bg-white"
+							}`}
+					>
 						{products?.map((product) => (
 							<tr
 								key={product._id}
-								className='hover:bg-purple-50 transition-colors duration-300'
+								className={`transition-colors duration-300 ${darkMode
+									? "hover:bg-[#2b1d35]"
+									: "hover:bg-purple-50"
+									}`}
 							>
 								<td className='px-6 py-5 whitespace-nowrap'>
 									<div className='flex items-center'>
@@ -146,7 +164,8 @@ const ProductsList = () => {
 										</div>
 
 										<div className='ml-4'>
-											<div className='text-lg font-semibold text-purple-700 capitalize'>
+											<div className={`text-lg font-semibold capitalize ${darkMode ? "text-white" : "text-purple-700"
+												}`}>
 												{product.name}
 											</div>
 										</div>
@@ -160,15 +179,16 @@ const ProductsList = () => {
 								</td>
 
 								<td className='px-6 py-4 whitespace-nowrap'>
-									<div className='text-sm font-medium text-gray-700 capitalize'>
+									<div className={`text-sm font-medium capitalize ${darkMode ? "text-gray-300" : "text-gray-700"
+										}`}>
 										{product.category}
 									</div>
 								</td>
 
 								<td className='px-6 py-4 whitespace-nowrap'>
 									<div
-										className={`font-semibold ${product.stock > 0
-											? "text-green-600"
+										className={`font-bold text-xl ${product.stock > 0
+											? "text-green-700"
 											: "text-red-500"
 											}`}
 									>
@@ -189,7 +209,7 @@ const ProductsList = () => {
 									</button>
 								</td>
 
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium min-w-[140px]'>
 									<button
 										onClick={() => setSelectedProduct(product)}
 										className='bg-blue-100 hover:bg-blue-200 text-blue-600 p-2 rounded-full transition-all duration-300 mr-2'
@@ -197,7 +217,7 @@ const ProductsList = () => {
 										<Pencil className='h-5 w-5' />
 									</button>
 									<button
-										onClick={() => deleteProduct(product._id)}
+										onClick={() => setProductToDelete(product)}
 										className='bg-red-100 hover:bg-red-200 text-red-500 p-2 rounded-full transition-all duration-300'
 									>
 										<Trash className='h-5 w-5' />
@@ -217,6 +237,18 @@ const ProductsList = () => {
 				/>
 			)}
 
+			{productToDelete && (
+				<DeleteConfirmationModal
+					isOpen={true}
+					title="Delete Product"
+					message={productToDelete.name}
+					onClose={() => setProductToDelete(null)}
+					onConfirm={() => {
+						deleteProduct(productToDelete._id);
+						setProductToDelete(null);
+					}}
+				/>
+			)}
 
 
 		</motion.div>

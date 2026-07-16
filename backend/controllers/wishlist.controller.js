@@ -45,11 +45,14 @@ export const getWishlist = async (req, res) => {
 	try {
 		const wishlist = await Wishlist.find({
 			user: req.user._id,
-		}).populate("product");
+		})
+			.populate("product")
+			.lean();
 
+		const validWishlist = wishlist.filter(item => item.product);
 		res.json({
 			success: true,
-			wishlist,
+			wishlist: validWishlist,
 		});
 	} catch (error) {
 		console.log("Wishlist Error:", error);

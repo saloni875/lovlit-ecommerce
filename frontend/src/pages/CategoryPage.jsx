@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import ProductCard from "../components/ProductCard";
 
 const CategoryPage = () => {
-	const { fetchProductsByCategory, products } = useProductStore();
+	const { fetchProductsByCategory, products, loading } = useProductStore();
 	const { darkMode } = useThemeStore();
 
 	const { category } = useParams();
@@ -36,8 +36,22 @@ const CategoryPage = () => {
 					{category.charAt(0).toUpperCase() + category.slice(1)}
 				</motion.h1>
 
-				<motion.div
-					className="explore-grid grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-5 justify-items-center"
+				{loading && (
+					<div className="text-center py-20">
+						<h2 className="text-2xl font-semibold text-purple-600">
+							Loading products...
+						</h2>
+					</div>
+				)}{loading && (
+					<div className="text-center py-20">
+						<h2 className="text-2xl font-semibold text-purple-600">
+							Loading products...
+						</h2>
+					</div>
+				)}
+
+				{!loading && (<motion.div
+					className="explore-grid grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 justify-items-center"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,14 +67,15 @@ const CategoryPage = () => {
 					)}
 
 					{products?.map((product) => (
-						<div className="w-full">
+						<div key={product._id} className="w-full">
 							<ProductCard
-								key={product._id}
+								
 								product={product}
 							/>
 						</div>
 					))}
 				</motion.div>
+				)}
 
 			</div>
 		</div>

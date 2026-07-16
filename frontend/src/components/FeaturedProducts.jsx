@@ -110,8 +110,8 @@ const FeaturedProducts = ({ featuredProducts }) => {
 
 
 	return (
-		<div className='py-3 sm:py-10'>
-			<div className='container mx-auto px-2'>
+		<div className='py-4 sm:py-10'>
+			<div className='container mx-auto px-3'>
 				<h2 className='text-center text-3xl sm:text-6xl font-bold text-pink-500 mb-2'>
 					Best sellers
 				</h2>
@@ -149,9 +149,10 @@ const FeaturedProducts = ({ featuredProducts }) => {
 									>
 										<Link
 											to={`/product/${product._id}`}
-											className='rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full group'
+											
+											className='rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col group'
 											style={{
-												background: darkMode ? "#2b182c" : "#b03b83",
+												background: darkMode ? "#2b182c" : "#ffffff",
 
 											}}
 										>
@@ -182,9 +183,9 @@ const FeaturedProducts = ({ featuredProducts }) => {
 												</div>
 											</div>
 
-											<div className='p-3'>
+											<div className='p-3 flex flex-col flex-1'>
 												<h3
-													className='text-xl font-bold mb-2 capitalize'
+													className='text-sm font-bold  capitalize min-h-[50] line-clamp-2'
 													style={{
 														color: darkMode ? "#f3e8ff" : "#7617c4",
 													}}
@@ -207,7 +208,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 																₹{product.originalPrice}
 															</p>
 
-															<p className="text-xl sm:text-3xl font-bold text-pink-500">
+															<p className="text-sm sm:text-3xl font-bold text-pink-500">
 																₹{product.finalPrice}
 															</p>
 
@@ -216,12 +217,14 @@ const FeaturedProducts = ({ featuredProducts }) => {
 															</span>
 														</>
 													) : (
-														<p className="text-xl sm:text-3xl font-bold text-pink-500">
+														<p className="text-sm sm:text-3xl font-bold text-pink-500">
 															₹{product.price}
 														</p>
 													)}
 
 												</div>
+
+												<div className="mt-auto">
 
 												<button
 													onClick={(e) => {
@@ -252,7 +255,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 												>
 													<ShoppingCart className='w-5 h-5 mr-2' />
 													Add to Cart
-												</button>
+												</button></div>
 											</div>
 										</Link>
 									</div>

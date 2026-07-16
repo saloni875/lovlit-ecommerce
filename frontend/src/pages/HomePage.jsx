@@ -51,7 +51,7 @@ const categories = [
 	},
 	{
 		href: "chocolatebouquets",
-		name: "Chocolate Bouquets",
+		name: " Bouquets",
 		imageUrl: "/chocolatebouquet1.jpeg",
 	},
 	{
@@ -72,7 +72,7 @@ const categories = [
 ];
 
 const HomePage = () => {
-	const { fetchFeaturedProducts, products, isLoading } =
+	const { fetchFeaturedProducts, products, loading } =
 		useProductStore();
 
 
@@ -110,7 +110,7 @@ const HomePage = () => {
 
 				</div>
 
-				{!isLoading && products.length > 0 && (
+				{!loading && products.length > 0 && (
 					<div className='mt-4'>
 						<FeaturedProducts
 							featuredProducts={products}

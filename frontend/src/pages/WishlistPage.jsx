@@ -84,16 +84,17 @@ const WishlistPage = () => {
 
                 ) : (
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
 
-
-                        {wishlist.map((item) => (
-                            <ProductCard
-                                key={item.product._id}
-                                product={item.product}
-                            />
-                        ))}
+                        {wishlist
+                            .filter((item) => item.product)
+                            .map((item) => (
+                                <ProductCard
+                                    key={item.product._id}
+                                    product={item.product}
+                                />
+                            ))}
 
 
 
