@@ -7,10 +7,19 @@ import FestivalSale from "../models/festivalSale.model.js";
 
 const applyDiscount = async (product) => {
 	let finalDiscount = 0;
+	let finalPrice = product.price;
 
-	// 1. Product Discount (Highest Priority)
-	if (product.productDiscount > 0) {
-		finalDiscount = product.productDiscount;
+	// 1. Product Sale Price (Highest Priority)
+	if (
+		product.salePrice !== null &&
+		product.salePrice > 0 &&
+		product.salePrice < product.price
+	) {
+		finalPrice = product.salePrice;
+
+		finalDiscount = Math.round(
+			((product.price - product.salePrice) / product.price) * 100
+		);
 	} else {
 		// 2. Category Discount
 		const categorySale = await CategorySale.findOne({
@@ -20,31 +29,35 @@ const applyDiscount = async (product) => {
 
 		if (categorySale) {
 			finalDiscount = categorySale.discount;
+
+			finalPrice = Math.round(
+				product.price * (100 - finalDiscount) / 100
+			);
 		} else {
 			// 3. Festival Discount
 			const festivalSale = await FestivalSale.findOne({
 				active: true,
 				$or: [
-					{ categories: { $size: 0 } }, // all categories
+					{ categories: { $size: 0 } }, // All categories
 					{ categories: product.category },
 				],
 			});
 
 			if (festivalSale) {
 				finalDiscount = festivalSale.discount;
+
+				finalPrice = Math.round(
+					product.price * (100 - finalDiscount) / 100
+				);
 			}
 		}
 	}
 
-	const finalPrice = Math.round(
-		(product.price * (100 - finalDiscount) / 100)
-	);
-
 	return {
 		...product.toObject(),
-		discount: finalDiscount,
-		finalPrice,
 		originalPrice: product.price,
+		finalPrice,
+		discount: finalDiscount,
 	};
 };
 
@@ -69,7 +82,7 @@ export const getAllProducts = async (req, res) => {
 export const getFeaturedProducts = async (req, res) => {
 	try {
 		let cachedProducts = await redis.get("featured_products");
-		
+
 		// if (cachedProducts) {
 		// 	return res.json(JSON.parse(cachedProducts));
 		// 	console.log("featured from redis:" , cachedProducts);
@@ -112,12 +125,14 @@ export const createProduct = async (req, res) => {
 			name,
 			description,
 			price,
+			salePrice,
 			image,
 			category,
 			highlights,
 			details,
-			optionType,
-			optionValues,
+			colors,
+			sizes,
+			scents,
 			stock,
 			isCustomizable,
 			maxCustomTextLength,
@@ -155,9 +170,24 @@ export const createProduct = async (req, res) => {
 					.map((item) => item.trim())
 					.filter(Boolean)
 				: [],
-			optionType,
-			optionValues: optionValues
-				? optionValues
+			
+
+			colors: colors
+				? colors
+					.split("\n")
+					.map((item) => item.trim())
+					.filter(Boolean)
+				: [],
+
+			sizes: sizes
+				? sizes
+					.split("\n")
+					.map((item) => item.trim())
+					.filter(Boolean)
+				: [],
+
+			scents: scents
+				? scents
 					.split("\n")
 					.map((item) => item.trim())
 					.filter(Boolean)
@@ -323,45 +353,46 @@ async function updateFeaturedProductsCache() {
 	}
 }
 
-export const updateProductDiscount = async (req, res) => {
-	try {
-		const { productDiscount } = req.body;
+// export const updateProductDiscount = async (req, res) => {
+// 	try {
+// 		const { productDiscount } = req.body;
 
-		if (productDiscount < 0 || productDiscount > 80) {
-			return res.status(400).json({
-				success: false,
-				message: "Discount must be between 0 and 60%",
-			});
-		}
+// 		if (productDiscount < 0 || productDiscount > 80) {
+// 			return res.status(400).json({
+// 				success: false,
+// 				message: "Discount must be between 0 and 60%",
+// 			});
+// 		}
 
-		const product = await Product.findByIdAndUpdate(
-			req.params.id,
-			{ productDiscount },
-			{ new: true }
-		);
+// 		const product = await Product.findByIdAndUpdate(
+// 			req.params.id,
+// 			{ productDiscount },
+// 			{ new: true }
+// 		);
 
-		if (!product) {
-			return res.status(404).json({
-				success: false,
-				message: "Product not found",
-			});
-		}
+// 		if (!product) {
+// 			return res.status(404).json({
+// 				success: false,
+// 				message: "Product not found",
+// 			});
+// 		}
 
-		await updateFeaturedProductsCache();
+// 		await updateFeaturedProductsCache();
 
-		res.status(200).json({
-			success: true,
-			product,
-		});
-	} catch (error) {
-		console.log(error);
+// 		res.status(200).json({
+// 			success: true,
+// 			product,
+// 		});
+// 	} catch (error) {
+// 		console.log(error);
 
-		res.status(500).json({
-			success: false,
-			message: "Server Error",
-		});
-	}
-};
+// 		res.status(500).json({
+// 			success: false,
+// 			message: "Server Error",
+// 		});
+// 	}
+// };
+
 
 
 export const updateProduct = async (req, res) => {

@@ -41,7 +41,9 @@ const ProductDetailsPage = () => {
 		}
 	}, [user]);
 
-	const [selectedOption, setSelectedOption] = useState("");
+	const [selectedColor, setSelectedColor] = useState("");
+	const [selectedSize, setSelectedSize] = useState("");
+	const [selectedScent, setSelectedScent] = useState("");
 	const [quantity, setQuantity] = useState(1);
 	const [customText, setCustomText] = useState("");
 
@@ -49,13 +51,19 @@ const ProductDetailsPage = () => {
 		fetchSingleProduct(id);
 	}, [id, fetchSingleProduct]);
 
+	// useEffect(() => {
+	// 	if (!selectedProduct) return;
+
+	// 	setSelectedColor(selectedProduct.colors?.[0] || "");
+	// 	setSelectedSize(selectedProduct.sizes?.[0] || "");
+	// 	setSelectedScent(selectedProduct.scents?.[0] || "");
+	// }, [selectedProduct]);
 	useEffect(() => {
-		if (
-			selectedProduct &&
-			selectedProduct.optionValues?.length > 0
-		) {
-			setSelectedOption(selectedProduct.optionValues[0]);
-		}
+		if (!selectedProduct) return;
+
+		setSelectedColor("");
+		setSelectedSize("");
+		setSelectedScent("");
 	}, [selectedProduct]);
 
 	if (loading) {
@@ -284,56 +292,84 @@ const ProductDetailsPage = () => {
 
 						<div className=" product-actions space-y-5 mb-10 lg:mb-8">
 
-							{selectedProduct.optionValues?.length > 0 && (
+
+							{/* COLOR OPTIONS */}
+							{selectedProduct.colors?.length > 0 && (
 								<div>
 									<h2
 										className={`text-sm sm:text-xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
 											}`}
 									>
-										Select {selectedProduct.optionType}
+										Select Color
 									</h2>
 
 									<div className="flex flex-wrap gap-2">
-										{selectedProduct.optionValues.map((option, index) => (
+										{selectedProduct.colors.map((color, index) => (
 											<button
 												key={index}
-												onClick={() => setSelectedOption(option)}
-												className="px-3 py-1 rounded-xl font-medium transition-all duration-300"
-												style={{
-													background:
-														selectedOption === option
-															? darkMode
-																? "linear-gradient(135deg,#0c090f,#660c5e)"
-																: "#9333ea"
-															: darkMode
-																? "#18111f"
-																: "#ffffff",
-
-													color:
-														selectedOption === option
-															? "#ffffff"
-															: darkMode
-																? "#ffffff"
-																: "#6b21a8",
-
-													border: darkMode
-														? "1px solid #c646b3"
-														: "1px solid #d8b4fe",
-												}}
-												onMouseEnter={(e) => {
-													if (darkMode && selectedOption !== option) {
-														e.currentTarget.style.background = "#e100ff";
-														e.currentTarget.style.color = "#000";
-													}
-												}}
-												onMouseLeave={(e) => {
-													if (darkMode && selectedOption !== option) {
-														e.currentTarget.style.background = "#18111f";
-														e.currentTarget.style.color = "#ffffff";
-													}
-												}}
+												onClick={() => setSelectedColor(color)}
+												className={`px-3 py-2 rounded-xl font-medium border transition-all duration-300 ${selectedColor === color
+													? "!bg-pink-500 !text-white !border-pink-500"
+													: "!bg-purple-600 !text-white !border-purple-600"
+													}`}
 											>
-												{option}
+												{color}
+											</button>
+										))}
+									</div>
+								</div>
+							)}
+
+
+							{/* SIZE OPTIONS */}
+							{selectedProduct.sizes?.length > 0 && (
+								<div>
+									<h2
+										className={`text-sm sm:text-xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
+											}`}
+									>
+										Select Size
+									</h2>
+
+									<div className="flex flex-wrap gap-2">
+										{selectedProduct.sizes.map((size, index) => (
+											<button
+												key={index}
+												onClick={() => setSelectedSize(size)}
+												className={`px-3 py-2 rounded-xl font-medium border transition-all duration-300 ${selectedSize === size
+													? "!bg-pink-500 !text-white !border-pink-500"
+													: "!bg-purple-600 !text-white !border-purple-600"
+													}`}
+											>
+												{size}
+											</button>
+										))}
+									</div>
+								</div>
+							)}
+
+
+							{/* SCENT OPTIONS */}
+							{selectedProduct.scents?.length > 0 && (
+								<div>
+									<h2
+										className={`text-sm sm:text-xl font-bold mb-2 ${darkMode ? "text-white" : "text-purple-700"
+											}`}
+									>
+										Select Scent
+									</h2>
+
+									<div className="flex flex-wrap gap-2">
+										{selectedProduct.scents.map((scent, index) => (
+											<button
+												key={index}
+												onClick={() => setSelectedScent(scent)}
+												className={`px-3 py-2 rounded-xl font-medium border transition-all duration-300 ${selectedScent === scent
+													? "!bg-pink-500 !text-white !border-pink-500"
+													: "!bg-purple-600 !text-white !border-purple-600"
+													}`}
+											>
+												{scent}
 											</button>
 										))}
 									</div>
@@ -443,12 +479,14 @@ const ProductDetailsPage = () => {
 
 										addToCart({
 											...selectedProduct,
-											selectedOption,
+											selectedColor,
+											selectedSize,
+											selectedScent,
 											quantity,
 											customText,
 										});
 
-										
+
 									}}
 									className="product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300"
 									style={{
@@ -495,7 +533,9 @@ const ProductDetailsPage = () => {
 
 										addToCart({
 											...selectedProduct,
-											selectedOption,
+											selectedColor,
+											selectedSize,
+											selectedScent,
 											quantity,
 											customText,
 										});
@@ -558,8 +598,8 @@ const ProductDetailsPage = () => {
 			</div>
 
 			<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pb-10">
-	<PeopleAlsoBought />
-</div>
+				<PeopleAlsoBought />
+			</div>
 		</>
 	);
 };

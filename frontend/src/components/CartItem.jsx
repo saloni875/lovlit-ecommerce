@@ -54,16 +54,30 @@ const CartItem = ({ item }) => {
 								{item.description}
 							</p>
 
-							{item.selectedOption && (
-								<p
-									className={`mt-1 text-sm ${darkMode
-										? "text-pink-400"
-										: "text-purple-600"
-										}`}
-								>
-									{item.optionType}: {item.selectedOption}
-								</p>
-							)}
+							<div className="mt-1 space-y-1">
+
+								{item.selectedColor && (
+									<p className={`text-sm font-medium ${darkMode ? "text-pink-400" : "text-purple-600"
+										}`}>
+										Color: {item.selectedColor}
+									</p>
+								)}
+
+								{item.selectedSize && (
+									<p className={`text-sm font-medium ${darkMode ? "text-pink-400" : "text-purple-600"
+										}`}>
+										Size: {item.selectedSize}
+									</p>
+								)}
+
+								{item.selectedScent && (
+									<p className={`text-sm font-medium ${darkMode ? "text-pink-400" : "text-purple-600"
+										}`}>
+										Scent: {item.selectedScent}
+									</p>
+								)}
+
+							</div>
 
 							{item.customText && (
 								<p className="text-sm text-pink-500">
@@ -162,21 +176,24 @@ const CartItem = ({ item }) => {
 							{item.name}
 						</p>
 
-						{item.optionType === "Color" && (
-							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"} font-medium`}>
-								Color: {item.selectedOption}
+						{item.selectedColor && (
+							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"
+								} font-medium`}>
+								Color: {item.selectedColor}
 							</p>
 						)}
 
-						{item.optionType === "Scent" && (
-							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"} font-medium`}>
-								Scent: {item.selectedOption}
+						{item.selectedSize && (
+							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"
+								} font-medium`}>
+								Size: {item.selectedSize}
 							</p>
 						)}
 
-						{item.optionType === "Size" && (
-							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"} font-medium`}>
-								Size: {item.selectedOption}
+						{item.selectedScent && (
+							<p className={`text-sm ${darkMode ? "text-pink-400" : "text-purple-600"
+								} font-medium`}>
+								Scent: {item.selectedScent}
 							</p>
 						)}
 

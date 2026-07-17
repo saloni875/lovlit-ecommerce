@@ -4,22 +4,26 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 
-const ProductDiscountTab = () => {
+const ProductSaleTab = () => {
     const { darkMode } = useThemeStore();
     const {
         products,
         fetchAllProducts,
-        updateProductDiscount,
+        updateProduct
     } = useProductStore();
 
     const [search, setSearch] = useState("");
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [discount, setDiscount] = useState(0);
+    const [salePrice, setSalePrice] = useState("");
+
 
 
     useEffect(() => {
         fetchAllProducts();
     }, []);
+
+
+
     return (
         <div
             className="rounded-3xl shadow-xl border p-6 transition-all duration-300"
@@ -46,7 +50,7 @@ const ProductDiscountTab = () => {
                     ? "#ffffff"
                     : "#6b21a8",
             }}>
-                Choose one product and apply a discount only to that product.
+                Set a sale price for a product. The discount percentage will be calculated automatically.
             </p>
 
             {/* <p
@@ -88,10 +92,10 @@ const ProductDiscountTab = () => {
                                 key={product._id}
                                 onClick={() => {
                                     setSelectedProduct(product);
-                                    setDiscount(product.productDiscount || 0);
+                                    setSalePrice(product.salePrice ?? "");
                                 }}
                                 className="w-full flex items-center gap-3 p-3 transition  dark:hover:bg-purple-900"
-                                
+
                                 style={{
                                     background:
                                         selectedProduct?._id === product._id
@@ -194,17 +198,15 @@ const ProductDiscountTab = () => {
                                     </span>
                                 </p>
 
+                                {/* CURRENT PRICE */}
                                 <p
                                     className="mt-2"
                                     style={{
-                                        color: darkMode
-                                            ? "#d1d5db"
-                                            : "#4b5563",
+                                        color: darkMode ? "#d1d5db" : "#4b5563",
                                     }}
                                 >
-                                    Current Price :
+                                    Current Price:{" "}
                                     <span className="font-bold text-pink-500">
-                                        {" "}
                                         ₹{selectedProduct.price}
                                     </span>
                                 </p>
@@ -212,19 +214,29 @@ const ProductDiscountTab = () => {
                                 <p
                                     className="mt-2"
                                     style={{
-                                        color: darkMode
-                                            ? "#d1d5db"
-                                            : "#4b5563",
+                                        color: darkMode ? "#d1d5db" : "#4b5563",
                                     }}
                                 >
-                                    Current Product Discount :
-
-                                    <span className="font-bold text-green-500">
-                                        {" "}
-                                        {selectedProduct.productDiscount || 0}%
+                                    Sale Price:{" "}
+                                    <span className="font-bold">
+                                        {selectedProduct.salePrice
+                                            ? `₹${selectedProduct.salePrice}`
+                                            : "No Sale"}
                                     </span>
 
+                                    {selectedProduct.salePrice && (
+                                        <span className="font-bold text-green-500 ml-2">
+                                            {Math.round(
+                                                ((selectedProduct.price - selectedProduct.salePrice) /
+                                                    selectedProduct.price) *
+                                                100
+                                            )}% OFF
+                                        </span>
+                                    )}
+                                    
                                 </p>
+
+
 
                             </div>
 
@@ -232,9 +244,11 @@ const ProductDiscountTab = () => {
                     </div>
                 )}
 
+
+
                 {selectedProduct && (
                     <div
-                        className="rounded-2xl p-5 mt-5"
+                        className="rounded-2xl p-4 sm:p-6 mt-5"
                         style={{
                             background: darkMode ? "#1a1020" : "#ffffff",
                             border: darkMode
@@ -243,192 +257,159 @@ const ProductDiscountTab = () => {
                         }}
                     >
                         <h3
-                            className="text-xl font-bold mb-5"
+                            className="text-xl sm:text-2xl font-bold text-center mb-6"
                             style={{
-                                color: darkMode ? "#fff" : "#6b21a8",
+                                color: darkMode ? "#ffffff" : "#6b21a8",
                             }}
                         >
-                            Apply Product Discount
+                            Live Calculation
                         </h3>
 
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="space-y-5 max-w-md mx-auto">
 
-                            <select
-                                value={discount}
-                                onChange={(e) => setDiscount(Number(e.target.value))}
-                                className="flex-1 rounded-xl p-3 outline-none"
-                                style={{
-                                    background: darkMode ? "#0c090f" : "#ffffff",
-                                    color: darkMode ? "#ffffff" : "#111827",
-                                    border: darkMode
-                                        ? "1px solid #c646b3"
-                                        : "1px solid #d8b4fe",
-                                }}
-                            >
-                                {Array.from({ length: 81 }, (_, i) => (
-                                    <option key={i} value={i}>
-                                        {i}%
-                                    </option>
-                                ))}
-                            </select>
+                            {/* CURRENT PRICE */}
+                            <div className="flex items-center justify-between gap-4">
+                                <label
+                                    className="font-semibold"
+                                    style={{
+                                        color: darkMode ? "#d1d5db" : "#4b5563",
+                                    }}
+                                >
+                                    Current Price
+                                </label>
 
-                            {discount > 60 && (
-                            <p className="mt-4 text-red-500 font-medium">
-                                ⚠ Discounts above 60% may remove most or all of your profit. Check before applying.
-                            </p>)}
-
-                            <button
-                                onClick={async () => {
-                                    await updateProductDiscount(
-                                        selectedProduct._id,
-                                        discount
-                                    );
-
-                                    await fetchAllProducts();
-
-                                    setSelectedProduct((prev) => ({
-                                        ...prev,
-                                        productDiscount: discount,
-                                    }));
-                                }}
-                                className="px-6 py-3 rounded-xl font-semibold text-white bg-purple-600 hover:purple transition"
-                                style={{
-                                    background: darkMode
-                                        ? "linear-gradient(135deg, #0c090f, #660c5e)"
-                                        : "",
-                                    color: darkMode ? "#ffffff" : "",
-                                    border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (darkMode) {
-                                        e.currentTarget.style.background = "#e100ff";
-                                        e.currentTarget.style.color = "#000000";
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (darkMode) {
-                                        e.currentTarget.style.background =
-                                            "linear-gradient(135deg, #0c090f, #660c5e)";
-                                        e.currentTarget.style.color = "#ffffff";
-                                    }
-                                }}
-                            >
-                                Save Discount
-                            </button>
-
-                            <button
-                                onClick={async () => {
-                                    await updateProductDiscount(
-                                        selectedProduct._id,
-                                        0
-                                    );
-
-                                    await fetchAllProducts();
-
-                                    setSelectedProduct((prev) => ({
-                                        ...prev,
-                                        productDiscount: 0,
-                                    }));
-                                }}
-                                className="px-6 py-3 rounded-xl font-semibold transition"
-                                style={{
-                                    background: "#ec0606",
-                                    color: "#ffffff",
-                                }}
-                            >
-                                Remove
-                            </button>
-
-                        </div>
-
-                        <div
-                            className="mt-6 rounded-2xl p-5"
-                            style={{
-                                background: darkMode
-                                    ? "#15101d"
-                                    : "#faf5ff",
-                                border: darkMode
-                                    ? "1px solid #c646b3"
-                                    : "1px solid #d8b4fe",
-                            }}
-                        >
-                            <h3
-                                className="text-lg font-bold mb-4"
-                                style={{
-                                    color: darkMode ? "#ffffff" : "#6b21a8",
-                                }}
-                            >
-                                Price Preview
-                            </h3>
-
-                            <div className="space-y-3">
-
-                                <div className="flex justify-between">
-                                    <span
-                                        style={{
-                                            color: darkMode ? "#d1d5db" : "#6b7280",
-                                        }}
-                                    >
-                                        Original Price
-                                    </span>
-
-                                    <strong
-                                        style={{
-                                            color: darkMode ? "#ffffff" : "#111827",
-                                        }}
-                                    >
-                                        ₹{selectedProduct.price}
-                                    </strong>
+                                <div className="text-xl font-bold text-pink-500">
+                                    ₹{selectedProduct.price}
                                 </div>
+                            </div>
 
-                                <div className="flex justify-between">
-                                    <span
-                                        style={{
-                                            color: darkMode ? "#d1d5db" : "#6b7280",
-                                        }}
-                                    >
-                                        Selected Discount
-                                    </span>
+                            {/* SALE PRICE */}
+                            <div className="flex items-center justify-between gap-4">
+                                <label
+                                    className="font-semibold"
+                                    style={{
+                                        color: darkMode ? "#d1d5db" : "#4b5563",
+                                    }}
+                                >
+                                    Sale Price
+                                </label>
 
-                                    <strong className="text-green-500">
-                                        {discount}%
-                                    </strong>
-                                </div>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max={selectedProduct.price}
+                                    value={salePrice}
+                                    onChange={(e) => setSalePrice(e.target.value)}
+                                    placeholder="Enter price"
+                                    className="w-36 rounded-xl px-3 py-2 outline-none text-right font-bold"
+                                    style={{
+                                        background: darkMode ? "#0c090f" : "#faf5ff",
+                                        color: darkMode ? "#ffffff" : "#111827",
+                                        border: darkMode
+                                            ? "1px solid #c646b3"
+                                            : "1px solid #d8b4fe",
+                                    }}
+                                />
+                            </div>
 
-                                <hr />
+                            {/* LIVE DISCOUNT */}
+                            <div className="flex items-center justify-between gap-4">
+                                <span
+                                    className="font-semibold"
+                                    style={{
+                                        color: darkMode ? "#d1d5db" : "#4b5563",
+                                    }}
+                                >
+                                    Discount
+                                </span>
 
-                                <div className="flex justify-between items-center">
-
-                                    <span
-                                        className="font-semibold"
-                                        style={{
-                                            color: darkMode ? "#ffffff" : "#6b21a8",
-                                        }}
-                                    >
-                                        Final Selling Price
-                                    </span>
-
-                                    <span className="text-2xl font-bold text-pink-500">
-                                        ₹
-                                        {(
-                                            selectedProduct.price *
-                                            (100 - discount) /
+                                <span className="text-lg font-bold text-green-500">
+                                    {salePrice &&
+                                        Number(salePrice) > 0 &&
+                                        Number(salePrice) < selectedProduct.price
+                                        ? Math.round(
+                                            ((selectedProduct.price - Number(salePrice)) /
+                                                selectedProduct.price) *
                                             100
-                                        ).toFixed(2)}
-                                    </span>
+                                        )
+                                        : 0}
+                                    % OFF
+                                </span>
+                            </div>
 
-                                </div>
+                            {/* VALIDATION */}
+                            {salePrice &&
+                                Number(salePrice) >= selectedProduct.price && (
+                                    <p className="text-sm text-red-500 text-center">
+                                        Sale price must be less than original price.
+                                    </p>
+                                )}
+
+                            {salePrice && Number(salePrice) <= 0 && (
+                                <p className="text-sm text-red-500 text-center">
+                                    Sale price must be greater than 0.
+                                </p>
+                            )}
+
+                            {/* BUTTONS */}
+                            <div className="grid grid-cols-2 gap-3 pt-3">
+
+                                <button
+                                    disabled={
+                                        !salePrice ||
+                                        Number(salePrice) <= 0 ||
+                                        Number(salePrice) >= selectedProduct.price
+                                    }
+                                    onClick={async () => {
+                                        await updateProduct(
+                                            selectedProduct._id,
+                                            {
+                                                salePrice: Number(salePrice),
+                                            }
+                                        );
+
+                                        await fetchAllProducts();
+
+                                        setSelectedProduct((prev) => ({
+                                            ...prev,
+                                            salePrice: Number(salePrice),
+                                        }));
+                                    }}
+                                    className="py-3 px-3 rounded-xl font-semibold text-white bg-purple-600 hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Save Changes
+                                </button>
+
+                                <button
+                                    onClick={async () => {
+                                        await updateProduct(
+                                            selectedProduct._id,
+                                            {
+                                                salePrice: null,
+                                            }
+                                        );
+
+                                        await fetchAllProducts();
+
+                                        setSalePrice("");
+
+                                        setSelectedProduct((prev) => ({
+                                            ...prev,
+                                            salePrice: null,
+                                        }));
+                                    }}
+                                    className="py-3 px-3 rounded-xl font-semibold text-white bg-red-600 hover:bg-red-700 transition"
+                                >
+                                    Remove Sale
+                                </button>
 
                             </div>
                         </div>
-
-                        
                     </div>
                 )}
-
             </div>
         </div>
     );
 };
 
-export default ProductDiscountTab;
+export default ProductSaleTab;

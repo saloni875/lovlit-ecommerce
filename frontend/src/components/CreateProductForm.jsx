@@ -25,10 +25,11 @@ const CreateProductForm = () => {
 		price: "",
 		category: "",
 		image: "",
-		highlight: "",
+		highlights: "",
 		details: "",
-		optionType: "",
-		optionValues: "",
+		colors: "",
+		sizes: "",
+		scents: "",
 		stock: 1,
 		isCustomizable: false,
 		maxCustomTextLength: 7,
@@ -51,8 +52,9 @@ const CreateProductForm = () => {
 				image: "",
 				highlights: "",
 				details: "",
-				optionType: "",
-				optionValues: "",
+				colors: "",
+				sizes: "",
+				scents: "",
 				stock: 1,
 				isCustomizable: false,
 				maxCustomTextLength: 7,
@@ -164,8 +166,12 @@ const CreateProductForm = () => {
 					/>
 				</div>
 
-				<div>
-					<label
+				
+
+				
+
+				{/*<div>
+					 <label
 						htmlFor='optionType'
 						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
 							}`}
@@ -192,40 +198,104 @@ const CreateProductForm = () => {
 						<option value='Scent'>Scent</option>
 						<option value='Size'>Size</option>
 					</select>
-				</div>
+				</div> */}
 
-				{newProduct.optionType && (
-					<div>
-						<label
-							htmlFor='optionValues'
-							className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
-								}`}
-						>
-							{newProduct.optionType} Options
-						</label>
 
-						<textarea
-							id='optionValues'
-							value={newProduct.optionValues}
-							onChange={(e) =>
-								setNewProduct({
-									...newProduct,
-									optionValues: e.target.value,
-								})
-							}
-							rows='4'
-							placeholder='Write each option on a new line'
-							className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+
+				<div>
+					<label
+						htmlFor="colors"
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
+					>
+						Color Options
+					</label>
+
+					<textarea
+						id="colors"
+						value={newProduct.colors}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								colors: e.target.value,
+							})
+						}
+						rows="3"
+						placeholder={"Pink\nPurple\nBlack"}
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
 								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
 								: "bg-white border-2 border-purple-300 text-black"
-								}`}
-						/>
+							}`}
+					/>
 
-						<p className='text-sm text-gray-500 mt-2'>
-							Write one option per line
-						</p>
-					</div>
-				)}
+					<p className="text-sm text-gray-500 mt-2">
+						Optional — write one color per line
+					</p>
+				</div>
+
+				<div>
+					<label
+						htmlFor="sizes"
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
+					>
+						Size Options
+					</label>
+
+					<textarea
+						id="sizes"
+						value={newProduct.sizes}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								sizes: e.target.value,
+							})
+						}
+						rows="3"
+						placeholder={"Small\nMedium\nLarge"}
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-2 border-purple-300 text-black"
+							}`}
+					/>
+
+					<p className="text-sm text-gray-500 mt-2">
+						Optional — write one size per line
+					</p>
+				</div>
+
+				<div>
+					<label
+						htmlFor="scents"
+						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
+							}`}
+					>
+						Scent Options
+					</label>
+
+					<textarea
+						id="scents"
+						value={newProduct.scents}
+						onChange={(e) =>
+							setNewProduct({
+								...newProduct,
+								scents: e.target.value,
+							})
+						}
+						rows="3"
+						placeholder={"Rose\nVanilla\nLavender"}
+						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
+								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+								: "bg-white border-2 border-purple-300 text-black"
+							}`}
+					/>
+
+					<p className="text-sm text-gray-500 mt-2">
+						Optional - write one scent per line
+					</p>
+				</div>
+
+
 
 				<div className='flex items-center gap-3'>
 					<input
@@ -446,8 +516,8 @@ const CreateProductForm = () => {
 					<label
 						htmlFor="image"
 						className={`cursor-pointer inline-flex items-center py-3 px-4 rounded-xl shadow-sm text-sm font-medium transition-all duration-300 ${darkMode
-								? "bg-[#18111f] border border-fuchsia-700 text-white hover:bg-fuchsia-700"
-								: "bg-purple-100 border border-purple-200 text-purple-700 hover:bg-purple-200"
+							? "bg-[#18111f] border border-fuchsia-700 text-white hover:bg-fuchsia-700"
+							: "bg-purple-100 border border-purple-200 text-purple-700 hover:bg-purple-200"
 							}`}
 					>
 						<Upload className="h-5 w-5 mr-2" />

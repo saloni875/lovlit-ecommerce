@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProductDiscountTab from "./ProductDiscountTab.jsx";
+import ProductSaleTab from "./ProductSaleTab.jsx";
 import CategoryDiscountTab from "./CategoryDiscountTab.jsx";
 import FestivalDiscountTab from "./FestivalDiscountTab.jsx";
 import { useThemeStore } from "../stores/useThemeStore.js";
@@ -88,7 +88,7 @@ const DiscountsTab = () => {
 
             </div>
 
-            {activeTab === "product" && <ProductDiscountTab />}
+            {activeTab === "product" && <ProductSaleTab />}
 
             {activeTab === "category" && <CategoryDiscountTab />}
 

@@ -14,6 +14,7 @@ import  ReviewForm  from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewList";
 import DiscountsTab from "../components/DiscountsTab";
 
+
 const tabs = [
 	{ id: "create", label: "Create Product", icon: PlusCircle },
 	{ id: "products", label: "Products", icon: ShoppingBasket },

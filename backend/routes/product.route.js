@@ -9,7 +9,7 @@ import {
 	toggleFeaturedProduct,
 	getSingleProduct,
 	updateProduct,
-	updateProductDiscount,
+	
 	searchProducts,
 } from "../controllers/product.controller.js";
 import { adminRoute, protectRoute } from "../middleware/auth.middleware.js";
@@ -25,7 +25,7 @@ router.get("/:id", getSingleProduct);
 router.post("/", protectRoute, adminRoute, createProduct);
 router.patch("/:id", protectRoute, adminRoute, toggleFeaturedProduct);
 router.put("/:id", protectRoute, adminRoute, updateProduct);
-router.put("/:id/discount", protectRoute, adminRoute, updateProductDiscount);
+router.put("/:id/discount", protectRoute, adminRoute);
 router.delete("/:id", protectRoute, adminRoute, deleteProduct);
 
 

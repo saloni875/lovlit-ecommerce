@@ -240,35 +240,30 @@ const CategoryDiscountTab = () => {
 
                 {/* Save */}
 
-                <button
-                    onClick={handleSave}
-                    disabled={loading}
-                    className="w-full rounded-xl py-3 text-white font-bold transition hover:scale-[1.01]"
-                    style={{
-                        background: darkMode
-                            ? "linear-gradient(135deg, #0c090f, #660c5e)"
-                            : "",
-                        color: darkMode ? "#ffffff" : "",
-                        border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
-                    }}
-                    onMouseEnter={(e) => {
-                        if (darkMode) {
-                            e.currentTarget.style.background = "#e100ff";
-                            e.currentTarget.style.color = "#000000";
-                        }
-                    }}
-                    onMouseLeave={(e) => {
-                        if (darkMode) {
-                            e.currentTarget.style.background =
-                                "linear-gradient(135deg, #0c090f, #660c5e)";
-                            e.currentTarget.style.color = "#ffffff";
-                        }
-                    }}
-                >
-                    {loading
-                        ? "Saving..."
-                        : "Save Category Discount"}
-                </button>
+               <button
+    onClick={handleSave}
+    disabled={loading}
+    className="w-full rounded-xl py-3 font-bold transition hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed"
+    style={{
+        background: darkMode
+            ? "linear-gradient(135deg, #0c090f, #660c5e)"
+            : "linear-gradient(135deg, #9333ea, #c026d3)", // added purple for light
+        color: "#ffffff", // always white text
+        border: darkMode ? "1px solid #c646b3" : "1px solid #9333ea",
+    }}
+    onMouseEnter={(e) => {
+        e.currentTarget.style.background = darkMode 
+            ? "#e100ff" 
+            : "linear-gradient(135deg, #7e22ce, #a21caf)"; // darker on hover
+    }}
+    onMouseLeave={(e) => {
+        e.currentTarget.style.background = darkMode
+            ? "linear-gradient(135deg, #0c090f, #660c5e)"
+            : "linear-gradient(135deg, #9333ea, #c026d3)";
+    }}
+>
+    {loading ? "Saving..." : "Save Category Discount"}
+</button>
 
                 {/* Active Discounts */}
 

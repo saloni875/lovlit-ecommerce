@@ -58,7 +58,9 @@ export const useCartStore = create((set, get) => ({
 		try {
 			await axios.post("/cart", {
 				productId: product._id,
-				selectedOption: product.selectedOption,
+				selectedColor: product.selectedColor,
+				selectedSize: product.selectedSize,
+				selectedScent: product.selectedScent,
 				customText: product.customText,
 				quantity: product.quantity,
 			});
@@ -69,7 +71,9 @@ export const useCartStore = create((set, get) => ({
 				const existingItem = prevState.cart.find(
 					(item) =>
 						item._id === product._id &&
-						item.selectedOption === product.selectedOption &&
+						item.selectedColor === product.selectedColor &&
+						item.selectedSize === product.selectedSize &&
+						item.selectedScent === product.selectedScent &&
 						item.customText === product.customText
 				);
 
@@ -77,7 +81,9 @@ export const useCartStore = create((set, get) => ({
 					return {
 						cart: prevState.cart.map((item) =>
 							item._id === product._id &&
-								item.selectedOption === product.selectedOption &&
+								item.selectedColor === product.selectedColor &&
+								item.selectedSize === product.selectedSize &&
+								item.selectedScent === product.selectedScent &&
 								item.customText === product.customText
 								? {
 									...item,
@@ -94,29 +100,33 @@ export const useCartStore = create((set, get) => ({
 					cart: [
 						...prevState.cart,
 						{
+
 							...product,
-							selectedOption: product.selectedOption,
+							selectedColor: product.selectedColor,
+							selectedSize: product.selectedSize,
+							selectedScent: product.selectedScent,
 							customText: product.customText,
 							quantity: product.quantity || 1,
-						},
+						}
+						,
 					],
 				};
 			});
 
-			get().calculateTotals();
+get().calculateTotals();
 		} catch (error) {
-			toast.error(
-				error.response?.data?.message ||
-				"An error occurred"
-			);
-		}
+	toast.error(
+		error.response?.data?.message ||
+		"An error occurred"
+	);
+}
 	},
 
-	removeFromCart: async (productId) => {
-		await axios.delete(`/cart`, { data: { productId } });
-		set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));
-		get().calculateTotals();
-	},
+removeFromCart: async (productId) => {
+	await axios.delete(`/cart`, { data: { productId } });
+	set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));
+	get().calculateTotals();
+},
 	updateQuantity: async (productId, quantity) => {
 		if (quantity === 0) {
 			get().removeFromCart(productId);
@@ -129,16 +139,16 @@ export const useCartStore = create((set, get) => ({
 		}));
 		get().calculateTotals();
 	},
-	calculateTotals: () => {
-		const { cart, coupon } = get();
-		const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-		let total = subtotal;
+		calculateTotals: () => {
+			const { cart, coupon } = get();
+			const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+			let total = subtotal;
 
-		if (coupon) {
-			const discount = subtotal * (coupon.discountPercentage / 100);
-			total = subtotal - discount;
-		}
+			if (coupon) {
+				const discount = subtotal * (coupon.discountPercentage / 100);
+				total = subtotal - discount;
+			}
 
-		set({ subtotal, total });
-	},
+			set({ subtotal, total });
+		},
 }));

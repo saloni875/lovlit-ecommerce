@@ -18,12 +18,7 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
-		productDiscount:{
-			type: Number,
-			default :0,
-			min:0,
-			max:80,
-		},
+
 
 		salePrice: {
 			type: Number,
@@ -34,7 +29,7 @@ const productSchema = new mongoose.Schema(
 
 		discountType: {
 			type: String,
-			enum: ["none", "product", "category", "festival"],
+			enum: ["none", "productSale", "category", "festival"],
 			default: "none",
 		},
 
@@ -64,13 +59,17 @@ const productSchema = new mongoose.Schema(
 		},
 
 
-		optionType: {
-			type: String,
-			default: "",
+		colors: {
+			type: [String],
+			default: [],
 		},
 
+		sizes: {
+			type: [String],
+			default: [],
+		},
 
-		optionValues: {
+		scents: {
 			type: [String],
 			default: [],
 		},
