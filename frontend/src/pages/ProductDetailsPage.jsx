@@ -460,8 +460,19 @@ const ProductDetailsPage = () => {
 									>
 										Max {selectedProduct.maxCustomTextLength} characters
 									</p>
+
+
 								</div>
-							)}
+							)}<p
+								className={`text-sm font-medium ${selectedProduct.stock > 0
+									? "text-green-600"
+									: "text-red-500"
+									}`}
+							>
+								{selectedProduct.stock > 0
+									? `${selectedProduct.stock} in stock`
+									: "Out of Stock"}
+							</p>
 
 							<div
 								className="product-buttons fixed bottom-0 left-0 right-0 z-50 lg:static grid grid-cols-2 gap-3 p-3 lg:p-0 bg-white/95 dark:bg-[#18111f]/95 backdrop-blur-md border-t border-purple-200 lg:border-0"
@@ -477,6 +488,21 @@ const ProductDetailsPage = () => {
 									onClick={() => {
 										if (selectedProduct.stock <= 0) return;
 
+										if (selectedProduct.colors?.length > 0 && !selectedColor) {
+											toast.error("Please select a color");
+											return;
+										}
+
+										if (selectedProduct.sizes?.length > 0 && !selectedSize) {
+											toast.error("Please select a size");
+											return;
+										}
+
+										if (selectedProduct.scents?.length > 0 && !selectedScent) {
+											toast.error("Please select a scent");
+											return;
+										}
+
 										addToCart({
 											...selectedProduct,
 											selectedColor,
@@ -485,25 +511,37 @@ const ProductDetailsPage = () => {
 											quantity,
 											customText,
 										});
-
-
 									}}
-									className="product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300"
+									className={`product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300 ${selectedProduct.stock <= 0
+											? "opacity-50 cursor-not-allowed"
+											: ""
+										}`}
 									style={{
-										background: darkMode
-											? "linear-gradient(135deg,#0c090f,#660c5e)"
-											: "#9333ea",
-										color: "#fff",
-										border: darkMode
-											? "1px solid #c646b3"
-											: "2px solid #9333ea",
+										background:
+											selectedProduct.stock <= 0
+												? "#d1d5db"
+												: darkMode
+													? "linear-gradient(135deg,#0c090f,#660c5e)"
+													: "#9333ea",
+
+										color:
+											selectedProduct.stock <= 0
+												? "#5a5a5c"
+												: "#ffffff",
+
+										border:
+											selectedProduct.stock <= 0
+												? "1px solid #d1d5db"
+												: darkMode
+													? "1px solid #c646b3"
+													: "2px solid #9333ea",
 									}}
 									onMouseEnter={(e) => {
 										if (selectedProduct.stock <= 0) return;
 
 										if (darkMode) {
 											e.currentTarget.style.background = "#e100ff";
-											e.currentTarget.style.color = "#000000";
+											e.currentTarget.style.color = "#000";
 										} else {
 											e.currentTarget.style.background = "#b281e7";
 											e.currentTarget.style.color = "#6b21a8";
@@ -515,21 +553,42 @@ const ProductDetailsPage = () => {
 										if (darkMode) {
 											e.currentTarget.style.background =
 												"linear-gradient(135deg,#0c090f,#660c5e)";
-											e.currentTarget.style.color = "#ffffff";
+											e.currentTarget.style.color = "#fff";
 										} else {
-											e.currentTarget.style.background = "#6b21a8";
-											e.currentTarget.style.color = "#ffffff";
+											e.currentTarget.style.background = "#9333ea";
+											e.currentTarget.style.color = "#fff";
 										}
 									}}
 								>
-									<ShoppingCart className="inline mr-2 w-5 h-4" />
-									Add To Cart
+									{selectedProduct.stock > 0 ? (
+										<>
+											<ShoppingCart className="inline mr-2 w-5 h-4" />
+											Add To Cart
+										</>
+									) : (
+										"Out of Stock"
+									)}
 								</button>
 
 								<button
 									disabled={selectedProduct.stock <= 0}
 									onClick={() => {
 										if (selectedProduct.stock <= 0) return;
+
+										if (selectedProduct.colors?.length > 0 && !selectedColor) {
+											toast.error("Please select a color");
+											return;
+										}
+
+										if (selectedProduct.sizes?.length > 0 && !selectedSize) {
+											toast.error("Please select a size");
+											return;
+										}
+
+										if (selectedProduct.scents?.length > 0 && !selectedScent) {
+											toast.error("Please select a scent");
+											return;
+										}
 
 										addToCart({
 											...selectedProduct,
@@ -542,7 +601,10 @@ const ProductDetailsPage = () => {
 
 										navigate("/checkout");
 									}}
-									className="product-buy-btn rounded-xl px-3 py-2 font-semibold transition-all duration-300"
+									className={`product-buy-btn rounded-xl px-3 py-2 font-semibold transition-all duration-300 ${selectedProduct.stock <= 0
+											? "opacity-50 cursor-not-allowed"
+											: ""
+										}`}
 									style={{
 										background:
 											selectedProduct.stock <= 0
@@ -553,7 +615,7 @@ const ProductDetailsPage = () => {
 
 										color:
 											selectedProduct.stock <= 0
-												? "#6b7280"
+												? "#5a5a5c"
 												: darkMode
 													? "#ffffff"
 													: "#6b21a8",
@@ -570,10 +632,10 @@ const ProductDetailsPage = () => {
 
 										if (darkMode) {
 											e.currentTarget.style.background = "#e100ff";
-											e.currentTarget.style.color = "#000000";
+											e.currentTarget.style.color = "#000";
 										} else {
-											e.currentTarget.style.background = "#f3e8ff";
-											e.currentTarget.style.color = "#6b21a8";
+											e.currentTarget.style.background = "#c1a3e2";
+											e.currentTarget.style.color = "#7502d3";
 										}
 									}}
 									onMouseLeave={(e) => {
@@ -582,14 +644,14 @@ const ProductDetailsPage = () => {
 										if (darkMode) {
 											e.currentTarget.style.background =
 												"linear-gradient(135deg,#0c090f,#660c5e)";
-											e.currentTarget.style.color = "#ffffff";
+											e.currentTarget.style.color = "#fff";
 										} else {
 											e.currentTarget.style.background = "#ffffff";
 											e.currentTarget.style.color = "#6b21a8";
 										}
 									}}
 								>
-									💜 Buy Now
+									{selectedProduct.stock > 0 ? "💜 Buy Now" : "Out of Stock"}
 								</button>
 							</div>
 						</div>
