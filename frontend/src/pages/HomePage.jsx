@@ -11,28 +11,18 @@ import FAQSection from "../components/FQASection";
 const categories = [
 	{
 		href: "necklaces",
-		name: "Necklaces",
-		imageUrl: "/necklace.jpeg",
-	},
-	{
-		href: "bracelets",
-		name: "Bracelets",
-		imageUrl: "/bracelets.jpeg",
-	},
-	{
-		href: "bodychains",
-		name: "Body Chains",
-		imageUrl: "/bodychain.jpeg",
+		name: "Jewelry",
+		imageUrl: "/jewelry.jpeg",
 	},
 	{
 		href: "scrunchies",
-		name: "Scrunchies",
-		imageUrl: "/scrunchie.jpeg",
+		name: "Phonecharms",
+		imageUrl: "/phonecharms.png",
 	},
 	{
-		href: "phonecharms",
-		name: "Phone Charms",
-		imageUrl: "/phonecharm.jpeg",
+		href: "bracelets",
+		name: "Army-zone",
+		imageUrl: "/fan-zone.png",
 	},
 	{
 		href: "candles",
@@ -40,35 +30,16 @@ const categories = [
 		imageUrl: "/candles.jpeg",
 	},
 	{
-		href: "photocards",
-		name: "Photocards",
-		imageUrl: "/photocard1.jpeg",
+		href: "bodychains",
+		name: "gift & bouqutes",
+		imageUrl: "/gift&bouqutes.png",
 	},
 	{
-		href: "actionfigures",
-		name: "Action Figures",
-		imageUrl: "/actionfigure.jpeg",
+		href: "phonecharms",
+		name: "trinklets and more",
+		imageUrl: "/trinklets and more.jpeg",
 	},
-	{
-		href: "chocolatebouquets",
-		name: " Bouquets",
-		imageUrl: "/chocolatebouquet1.jpeg",
-	},
-	{
-		href: "gifthampers",
-		name: "Gift Hampers",
-		imageUrl: "/gifthamper.jpeg",
-	},
-	{
-		href: "specialboxes",
-		name: "Special Occasion Boxes",
-		imageUrl: "/specialbox.jpeg",
-	},
-	{
-		href: "scoops",
-		name: "Mystery Scoops",
-		imageUrl: "/scoops1.jpeg",
-	},
+	
 ];
 
 const HomePage = () => {
