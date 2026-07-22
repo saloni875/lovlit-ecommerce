@@ -170,7 +170,7 @@ export const createProduct = async (req, res) => {
 					.map((item) => item.trim())
 					.filter(Boolean)
 				: [],
-			
+
 
 			colors: colors
 				? colors
@@ -266,7 +266,9 @@ export const getProductsByCategory = async (req, res) => {
 	const { category } = req.params;
 
 	try {
-		const products = await Product.find({ category });
+		const products = await Product.find({ category }).sort({
+			displayOrder: 1,
+		});
 
 		const discountedProducts = await Promise.all(
 			products.map((product) => applyDiscount(product))

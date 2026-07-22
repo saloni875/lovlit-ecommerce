@@ -3,19 +3,14 @@ import { motion } from "framer-motion";
 import { PlusCircle, Upload, Loader } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
 import { useThemeStore } from "../stores/useThemeStore";
+
 const categories = [
-	"bracelets",
-	"necklaces",
-	"bodychains",
-	"scrunchies",
-	"phonecharms",
+	"jewelry",
+	"phone-charms",
+	"army-zone",
 	"candles",
-	"photocards",
-	"actionfigures",
-	"chocolatebouquets",
-	"gifthampers",
-	"specialboxes",
-	"scoops",
+	"gifts-bouquets",
+	"trinkets-more",
 ];
 
 const CreateProductForm = () => {
@@ -166,39 +161,8 @@ const CreateProductForm = () => {
 					/>
 				</div>
 
-				
 
-				
 
-				{/*<div>
-					 <label
-						htmlFor='optionType'
-						className={`block text-sm font-medium mb-2 ${darkMode ? "text-white" : "text-gray-700"
-							}`}
-					>
-						Product Option Type
-					</label>
-
-					<select
-						id='optionType'
-						value={newProduct.optionType}
-						onChange={(e) =>
-							setNewProduct({
-								...newProduct,
-								optionType: e.target.value,
-							})
-						}
-						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
-							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
-							: "bg-white border-2 border-purple-300 text-black"
-							}`}
-					>
-						<option value=''>No Options</option>
-						<option value='Color'>Color</option>
-						<option value='Scent'>Scent</option>
-						<option value='Size'>Size</option>
-					</select>
-				</div> */}
 
 
 
@@ -223,8 +187,8 @@ const CreateProductForm = () => {
 						rows="3"
 						placeholder={"Pink\nPurple\nBlack"}
 						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
-								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
-								: "bg-white border-2 border-purple-300 text-black"
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
 							}`}
 					/>
 
@@ -254,8 +218,8 @@ const CreateProductForm = () => {
 						rows="3"
 						placeholder={"Small\nMedium\nLarge"}
 						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
-								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
-								: "bg-white border-2 border-purple-300 text-black"
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
 							}`}
 					/>
 
@@ -285,8 +249,8 @@ const CreateProductForm = () => {
 						rows="3"
 						placeholder={"Rose\nVanilla\nLavender"}
 						className={`mt-1 block w-full rounded-2xl px-4 py-3 shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode
-								? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
-								: "bg-white border-2 border-purple-300 text-black"
+							? "bg-[#18111f] border border-fuchsia-700 text-white placeholder:text-gray-400"
+							: "bg-white border-2 border-purple-300 text-black"
 							}`}
 					/>
 
@@ -494,15 +458,14 @@ const CreateProductForm = () => {
 
 						{categories.map((category) => (
 							<option key={category} value={category}>
-								{category}
+								{category
+									.split("-")
+									.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+									.join(" ")}
 							</option>
 						))}
 					</select>
 				</div>
-
-
-
-
 
 				<div className='mt-1 flex items-center'>
 					<input

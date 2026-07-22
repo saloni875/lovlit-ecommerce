@@ -10,18 +10,18 @@ import FAQSection from "../components/FQASection";
 
 const categories = [
 	{
-		href: "necklaces",
+		href: "jewelry",
 		name: "Jewelry",
 		imageUrl: "/jewelry.jpeg",
 	},
 	{
-		href: "scrunchies",
-		name: "Phonecharms",
+		href: "phone-charms",
+		name: "Phone Charms",
 		imageUrl: "/phonecharms.png",
 	},
 	{
-		href: "bracelets",
-		name: "Army-zone",
+		href: "army-zone",
+		name: "ARMY Zone",
 		imageUrl: "/fan-zone.png",
 	},
 	{
@@ -30,16 +30,15 @@ const categories = [
 		imageUrl: "/candles.jpeg",
 	},
 	{
-		href: "bodychains",
-		name: "gift & bouqutes",
+		href: "gifts-bouquets",
+		name: "Gifts & Bouquets",
 		imageUrl: "/gift&bouqutes.png",
 	},
 	{
-		href: "phonecharms",
-		name: "trinklets and more",
+		href: "trinkets-more",
+		name: "Trinkets & More",
 		imageUrl: "/trinklets and more.jpeg",
 	},
-	
 ];
 
 const HomePage = () => {

@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useProductStore } from "../stores/useProductStore";
 import { useThemeStore } from "../stores/useThemeStore";
 
+const categories = [
+	"jewelry",
+	"phone-charms",
+	"army-zone",
+	"candles",
+	"gifts-bouquets",
+	"trinkets-more",
+];
+
 const EditProductModal = ({
 	product,
 	onClose,
@@ -38,6 +47,7 @@ const EditProductModal = ({
 
 		onClose();
 	};
+
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
@@ -108,16 +118,24 @@ const EditProductModal = ({
 							Category
 						</label>
 
-						<input
-							type="text"
+						<select
 							name="category"
 							value={formData.category}
 							onChange={handleChange}
 							className={`w-full rounded-xl p-3 border transition-all ${darkMode
-								? "bg-[#18111f] border-fuchsia-700 text-white placeholder:text-gray-400"
+								? "bg-[#18111f] border-fuchsia-700 text-white"
 								: "bg-white border-purple-200 text-black"
 								}`}
-						/>
+						>
+							{categories.map((category) => (
+								<option key={category} value={category}>
+									{category
+										.split("-")
+										.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+										.join(" ")}
+								</option>
+							))}
+						</select>
 					</div>
 
 					<div>
@@ -172,8 +190,8 @@ const EditProductModal = ({
 						<button
 							type="submit"
 							className={`px-5 py-3 rounded-xl font-semibold transition ${darkMode
-									? "bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white"
-									: "bg-purple-600 hover:bg-purple-700 text-white"
+								? "bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white"
+								: "bg-purple-600 hover:bg-purple-700 text-white"
 								}`}
 						>
 							Save Changes

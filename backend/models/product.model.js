@@ -43,6 +43,11 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
+		displayOrder : {
+			type: Number,
+			default : 0,
+		},
+
 		isFeatured: {
 			type: Boolean,
 			default: false,
@@ -57,7 +62,6 @@ const productSchema = new mongoose.Schema(
 			type: [String],
 			default: [],
 		},
-
 
 		colors: {
 			type: [String],
@@ -74,18 +78,15 @@ const productSchema = new mongoose.Schema(
 			default: [],
 		},
 
-
 		stock: {
 			type: Number,
 			default: 1,
 		},
 
-
 		isCustomizable: {
 			type: Boolean,
 			default: false,
 		},
-
 
 		maxCustomTextLength: {
 			type: Number,

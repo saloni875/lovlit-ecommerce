@@ -12,6 +12,11 @@ const CategoryPage = () => {
 	const { category } = useParams();
 
 	useEffect(() => {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+
 		fetchProductsByCategory(category);
 	}, [fetchProductsByCategory, category]);
 
@@ -69,7 +74,7 @@ const CategoryPage = () => {
 					{products?.map((product) => (
 						<div key={product._id} className="w-full">
 							<ProductCard
-								
+
 								product={product}
 							/>
 						</div>
