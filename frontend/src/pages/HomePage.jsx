@@ -12,17 +12,17 @@ const categories = [
 	{
 		href: "jewelry",
 		name: "Jewelry",
-		imageUrl: "/jewelry.jpeg",
+		imageUrl: "/jwerly2.jpeg",
 	},
 	{
 		href: "phone-charms",
 		name: "Phone Charms",
-		imageUrl: "/phonecharms.png",
+		imageUrl: "/phonecharm1.png",
 	},
 	{
 		href: "army-zone",
-		name: "ARMY Zone",
-		imageUrl: "/fan-zone.png",
+		name: "Fan Zone",
+		imageUrl: "/fan-zone.jpeg",
 	},
 	{
 		href: "candles",
