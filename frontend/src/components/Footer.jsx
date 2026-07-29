@@ -33,8 +33,7 @@ const Footer = () => {
                                 color: darkMode ? "#ffffff" : "#374151",
                             }}
                         >
-                            Handmade BTS inspired jewelry,
-                            accessories and aesthetic collectibles.
+                            Thoughtfully handmade for every milestone, celebration and small win. Because the right gift becomes a memory.
                         </p>
                     </div>
 
@@ -54,8 +53,18 @@ const Footer = () => {
                                 <p>lovlitshop@gmail.com</p>
                             </a>
 
-                            <a
+                            {/* <a
                                 href="https://wa.me/918583094531"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 hover:text-purple-700 transition"
+                            >
+                                <MessageCircle size={16} />
+                                <p>+91 85830 94531</p>
+                            </a> */}
+
+                            <a
+                                href="https://wa.me/918583094531?text=Hello Lovlit, I'm interested in your handmade gifts. Could you share more details and options?"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 hover:text-purple-700 transition"
