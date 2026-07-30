@@ -26,6 +26,7 @@
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.5.3",
 		"nodemailer": "^9.0.3",
+		"react-zoom-pan-pinch": "^4.0.3",
 		"stripe": "^16.8.0"
 	},
 	"devDependencies": {

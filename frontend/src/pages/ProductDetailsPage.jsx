@@ -7,6 +7,10 @@ import toast from "react-hot-toast";
 import { useUserStore } from "../stores/useUserStore";
 import { useWishlistStore } from "../stores/useWishlistStore";
 import PeopleAlsoBought from "../components/PeopleAlsoBought";
+import {
+	TransformWrapper,
+	TransformComponent,
+} from "react-zoom-pan-pinch";
 
 import {
 	ShoppingCart,
@@ -46,24 +50,27 @@ const ProductDetailsPage = () => {
 	const [selectedScent, setSelectedScent] = useState("");
 	const [quantity, setQuantity] = useState(1);
 	const [customText, setCustomText] = useState("");
+	const [selectedImage, setSelectedImage] = useState("");
+	const [isImageOpen, setIsImageOpen] = useState(false);
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
 
 	useEffect(() => {
 		fetchSingleProduct(id);
 	}, [id, fetchSingleProduct]);
 
-	// useEffect(() => {
-	// 	if (!selectedProduct) return;
-
-	// 	setSelectedColor(selectedProduct.colors?.[0] || "");
-	// 	setSelectedSize(selectedProduct.sizes?.[0] || "");
-	// 	setSelectedScent(selectedProduct.scents?.[0] || "");
-	// }, [selectedProduct]);
 	useEffect(() => {
 		if (!selectedProduct) return;
 
 		setSelectedColor("");
 		setSelectedSize("");
 		setSelectedScent("");
+
+		setSelectedImage(
+			selectedProduct.images?.[0] || selectedProduct.image || ""
+		);
+		setCurrentImageIndex(0);
+
 	}, [selectedProduct]);
 
 	if (loading) {
@@ -139,23 +146,35 @@ const ProductDetailsPage = () => {
 
 					<div className="relative overflow-hidden rounded-3xl">
 						<img
-							src={selectedProduct.image}
+							src={selectedImage}
 							alt={selectedProduct.name}
-							className="product-image w-full h-[320px] sm:h-[450px] lg:h-[580px] object-cover rounded-3xl transition duration-500 hover:scale-105"
+							onClick={() => setIsImageOpen(true)}
+							className="product-image w-full h-[320px] sm:h-[450px] lg:h-[580px] object-cover rounded-3xl transition duration-500 hover:scale-105 cursor-zoom-in"
 						/>
+						{/* thumbnail */}
+						{selectedProduct.images?.length > 0 && (
+							<div className="mt-4 flex gap-3 overflow-x-auto">
+								{selectedProduct.images.map((image, index) => (
+									<img
+										key={index}
+										src={image}
+										alt={`Product ${index + 1}`}
+										onClick={() => {
+											setSelectedImage(image);
+											setCurrentImageIndex(index);
+											setZoom(1);
+										}}
+										className={`h-20 w-20 rounded-xl object-cover cursor-pointer border-2 transition ${selectedImage === image
+											? "border-pink-500"
+											: "border-transparent"
+											}`}
+									/>
+								))}
+							</div>
+						)}
 
-						<div
-							className="absolute top-4 right-4 p-3 rounded-full shadow-lg backdrop-blur-md"
-							style={{
-								background: darkMode
-									? "rgba(12,9,15,0.75)"
-									: "rgba(255,255,255,0.85)",
-								border: darkMode
-									? "1px solid #d946ef"
-									: "1px solid #e9d5ff",
-							}}
-						>
-							<div className="absolute top-2 right-2 rounded-full bg-white p-1 shadow">
+						
+							<div className="absolute top-2 right-2">
 								<Heart
 									onClick={(e) => {
 										e.preventDefault();
@@ -165,15 +184,17 @@ const ProductDetailsPage = () => {
 											return toast.error("Please login first.");
 										}
 
-										toggleWishlist(selectedProduct._id);
+										toggleWishlist(product._id);
 									}}
-									className={`h-5 w-5 cursor-pointer transition-all duration-300 ${isWishlisted
-										? "fill-red-500 text-red-500"
-										: "text-purple-600"
+									className={`h-7 w-7 cursor-pointer drop-shadow-lg transition-all duration-300 ${isWishlisted
+											? "fill-red-500 text-red-500"
+											: darkMode
+												? "text-white"
+												: "text-purple-600"
 										}`}
 								/>
 							</div>
-						</div>
+						
 					</div>
 
 					<div className="product-info flex flex-col justify-center">
@@ -513,8 +534,8 @@ const ProductDetailsPage = () => {
 										});
 									}}
 									className={`product-cart-btn rounded-xl px-2 py-1 font-semibold transition-all duration-300 ${selectedProduct.stock <= 0
-											? "opacity-50 cursor-not-allowed"
-											: ""
+										? "opacity-50 cursor-not-allowed"
+										: ""
 										}`}
 									style={{
 										background:
@@ -602,8 +623,8 @@ const ProductDetailsPage = () => {
 										navigate("/checkout");
 									}}
 									className={`product-buy-btn rounded-xl px-3 py-2 font-semibold transition-all duration-300 ${selectedProduct.stock <= 0
-											? "opacity-50 cursor-not-allowed"
-											: ""
+										? "opacity-50 cursor-not-allowed"
+										: ""
 										}`}
 									style={{
 										background:
@@ -662,6 +683,81 @@ const ProductDetailsPage = () => {
 			<div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pb-10">
 				<PeopleAlsoBought />
 			</div>
+
+			{isImageOpen && (
+				<div
+					className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center"
+					onClick={() => setIsImageOpen(false)}
+				>
+					<button
+						className="absolute top-6 right-6 text-white text-4xl"
+						onClick={() => setIsImageOpen(false)}
+					>
+						×
+					</button>
+
+					<button
+						className="absolute left-5 text-white text-5xl"
+						onClick={(e) => {
+							e.stopPropagation();
+
+							const prev =
+								(currentImageIndex -
+									1 +
+									selectedProduct.images.length) %
+								selectedProduct.images.length;
+
+							setCurrentImageIndex(prev);
+							setSelectedImage(selectedProduct.images[prev]);
+							setZoom(1);
+						}}
+					>
+						❮
+					</button>
+
+					<TransformWrapper
+						initialScale={1}
+						minScale={1}
+						maxScale={5}
+						doubleClick={{
+							disabled: false,
+						}}
+						wheel={{
+							step: 0.2,
+						}}
+					>
+						<TransformComponent>
+							<img
+								src={selectedImage}
+								alt=""
+								className="max-h-[90vh] max-w-[90vw] object-contain"
+								onClick={(e) => e.stopPropagation()}
+							/>
+						</TransformComponent>
+					</TransformWrapper>
+
+					<button
+						className="absolute right-5 text-white text-5xl"
+						onClick={(e) => {
+							e.stopPropagation();
+
+							const next =
+								(currentImageIndex + 1) %
+								selectedProduct.images.length;
+
+							setCurrentImageIndex(next);
+							setSelectedImage(selectedProduct.images[next]);
+							setZoom(1);
+						}}
+					>
+						❯
+					</button>
+
+					<div className="absolute bottom-6 text-white text-lg">
+						{currentImageIndex + 1} / {selectedProduct.images.length}
+					</div>
+				</div>
+			)}
 		</>
 	);
 };

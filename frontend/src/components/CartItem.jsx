@@ -25,7 +25,7 @@ const CartItem = ({ item }) => {
 
 						<div className="relative shrink-0">
 							<img
-								src={item.image}
+								src={item.images?.[0] || "/placeholder.png"}
 								alt={item.name}
 								className="h-28 w-28 rounded-2xl object-cover"
 							/>
@@ -139,6 +139,8 @@ const CartItem = ({ item }) => {
 					</div>
 				</div>
 			</div>
+
+
 			{/* for desktop */}
 			<div
 				className={`hidden md:block rounded-3xl shadow-lg p-5 md:p-6 hover:shadow-2xl transition-all duration-300 ${darkMode
@@ -159,7 +161,7 @@ const CartItem = ({ item }) => {
 								? "border-fuchsia-700"
 								: "border-purple-200"
 								}`}
-							src={item.image}
+							src={item.images?.[0] || "/placeholder.png"}
 							alt={item.name}
 						/>
 

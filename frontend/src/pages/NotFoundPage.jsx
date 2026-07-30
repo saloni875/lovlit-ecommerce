@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useThemeStore } from "../stores/useThemeStore";
 
+
 const NotFoundPage = () => {
 	const { darkMode } = useThemeStore();
 

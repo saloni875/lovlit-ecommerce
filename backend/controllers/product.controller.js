@@ -63,11 +63,12 @@ const applyDiscount = async (product) => {
 
 export const getAllProducts = async (req, res) => {
 	try {
-		const products = await Product.find({});
+		const products = await Product.find({}).sort({ displayOrder: 1 });
 
 		const discountedProducts = await Promise.all(
 			products.map((product) => applyDiscount(product))
 		);
+		console.log(discountedProducts);
 
 		res.json({ products: discountedProducts });
 	} catch (error) {
@@ -126,7 +127,7 @@ export const createProduct = async (req, res) => {
 			description,
 			price,
 			salePrice,
-			image,
+			images,
 			category,
 			highlights,
 			details,
@@ -138,25 +139,37 @@ export const createProduct = async (req, res) => {
 			maxCustomTextLength,
 		} = req.body;
 
-		let cloudinaryResponse = null;
+		let uploadedImages = [];
 
-		if (image) {
-			cloudinaryResponse = await cloudinary.uploader.upload(image, {
-				folder: "products",
-			});
+		if (images && images.length > 0) {
+			uploadedImages = await Promise.all(
+				images.map(async (image) => {
+					const result = await cloudinary.uploader.upload(image, {
+						folder: "products",
+					});
+
+					return result.secure_url;
+				})
+			);
 		}
+
+		const lastProduct = await Product.findOne({
+			category,
+		}).sort({ displayOrder: -1 });
+
+		const displayOrder = lastProduct
+			? lastProduct.displayOrder + 1
+			: 1;
 
 		const product = await Product.create({
 			name,
 			description,
 			price,
 
-			image: cloudinaryResponse?.secure_url
-				? cloudinaryResponse.secure_url
-				: "",
+			images: uploadedImages,
 
 			category,
-
+			displayOrder,
 			highlights: highlights
 				? highlights
 					.split("\n")
@@ -262,6 +275,7 @@ export const getRecommendedProducts = async (req, res) => {
 		});
 	}
 };
+
 export const getProductsByCategory = async (req, res) => {
 	const { category } = req.params;
 
@@ -429,6 +443,228 @@ export const updateProduct = async (req, res) => {
 	}
 };
 
+// move product to top
+export const moveProductToTop = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+
+		if (!product) {
+			return res.status(404).json({
+				success: false,
+				message: "Product not found",
+			});
+		}
+
+		// Already at top
+		if (product.displayOrder === 1) {
+			return res.status(200).json({
+				success: true,
+				message: "Product is already at the top",
+			});
+		}
+
+		// Shift all products above it down by one
+		await Product.updateMany(
+			{
+				category: product.category,
+				displayOrder: {
+					$gte: 1,
+					$lt: product.displayOrder,
+				},
+			},
+			{
+				$inc: { displayOrder: 1 },
+			}
+		);
+
+		// Move selected product to top
+		product.displayOrder = 1;
+		await product.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Product moved to top successfully",
+		});
+	} catch (error) {
+		console.log("Error moving product to top:", error);
+
+		res.status(500).json({
+			success: false,
+			message: "Server Error",
+		});
+	}
+};
+
+// move down
+export const moveProductDown = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+
+		if (!product) {
+			return res.status(404).json({
+				success: false,
+				message: "Product not found",
+			});
+		}
+
+		const lastProduct = await Product.findOne({
+			category: product.category,
+		}).sort({ displayOrder: -1 });
+
+		// Already at bottom
+		if (product.displayOrder === lastProduct.displayOrder) {
+			return res.status(200).json({
+				success: true,
+				message: "Product is already at the bottom",
+			});
+		}
+
+		// Find the product below it
+		const lowerProduct = await Product.findOne({
+			category: product.category,
+			displayOrder: product.displayOrder + 1,
+		});
+
+		if (!lowerProduct) {
+			return res.status(404).json({
+				success: false,
+				message: "Lower product not found",
+			});
+		}
+
+		// Swap displayOrder
+		const temp = product.displayOrder;
+
+		product.displayOrder = lowerProduct.displayOrder;
+		lowerProduct.displayOrder = temp;
+
+		await product.save();
+		await lowerProduct.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Product moved down successfully",
+		});
+	} catch (error) {
+		console.log("Error moving product down:", error);
+
+		res.status(500).json({
+			success: false,
+			message: "Server Error",
+		});
+	}
+};
+
+// two product swap with up product
+export const moveProductUp = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+
+		if (!product) {
+			return res.status(404).json({
+				message: "Product not found",
+			});
+		}
+
+		// Already at the top
+		if (product.displayOrder === 1) {
+			return res.status(400).json({
+				message: "Product is already at the top",
+			});
+		}
+
+		// Find the product just above it in the same category
+		const upperProduct = await Product.findOne({
+			category: product.category,
+			displayOrder: product.displayOrder - 1,
+		});
+
+		if (!upperProduct) {
+			return res.status(404).json({
+				message: "Upper product not found",
+			});
+		}
+
+		// Swap displayOrder values
+		const temp = product.displayOrder;
+
+		product.displayOrder = upperProduct.displayOrder;
+		upperProduct.displayOrder = temp;
+
+		await product.save();
+		await upperProduct.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Product moved up successfully",
+		});
+	} catch (error) {
+		console.log("Error moving product up:", error);
+
+		res.status(500).json({
+			success: false,
+			message: "Server Error",
+		});
+	}
+};
+
+// product swap with bottom
+export const moveProductToBottom = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+
+		if (!product) {
+			return res.status(404).json({
+				success: false,
+				message: "Product not found",
+			});
+		}
+
+		const lastProduct = await Product.findOne({
+			category: product.category,
+		}).sort({ displayOrder: -1 });
+
+		// Already at bottom
+		if (product.displayOrder === lastProduct.displayOrder) {
+			return res.status(200).json({
+				success: true,
+				message: "Product is already at the bottom",
+			});
+		}
+
+		// Shift all products below it up by one
+		await Product.updateMany(
+			{
+				category: product.category,
+				displayOrder: {
+					$gt: product.displayOrder,
+					$lte: lastProduct.displayOrder,
+				},
+			},
+			{
+				$inc: { displayOrder: -1 },
+			}
+		);
+
+		// Move selected product to bottom
+		product.displayOrder = lastProduct.displayOrder;
+
+		await product.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Product moved to bottom successfully",
+		});
+	} catch (error) {
+		console.log("Error moving product to bottom:", error);
+
+		res.status(500).json({
+			success: false,
+			message: "Server Error",
+		});
+	}
+};
+
 export const searchProducts = async (req, res) => {
 	try {
 		const { query } = req.query;
@@ -477,3 +713,4 @@ export const searchProducts = async (req, res) => {
 		});
 	}
 };
+

@@ -142,6 +142,86 @@ export const useProductStore = create((set) => ({
 		}
 	},
 
+	moveProductUp: async (productId) => {
+		set({ loading: true });
+
+		try {
+			await axios.put(`/products/${productId}/move-up`);
+
+			await useProductStore.getState().fetchAllProducts();
+
+			set({ loading: false });
+
+			toast.success("Product moved up");
+		} catch (error) {
+			set({ loading: false });
+
+			toast.error(
+				error.response?.data?.message || "Failed to move product"
+			);
+		}
+	},
+
+	moveProductDown: async (productId) => {
+		set({ loading: true });
+
+		try {
+			await axios.put(`/products/${productId}/move-down`);
+
+			await useProductStore.getState().fetchAllProducts();
+
+			set({ loading: false });
+
+			toast.success("Product moved down");
+		} catch (error) {
+			set({ loading: false });
+
+			toast.error(
+				error.response?.data?.message || "Failed to move product"
+			);
+		}
+	},
+
+	moveProductToTop: async (productId) => {
+		set({ loading: true });
+
+		try {
+			await axios.put(`/products/${productId}/move-top`);
+
+			await useProductStore.getState().fetchAllProducts();
+
+			set({ loading: false });
+
+			toast.success("Moved to top");
+		} catch (error) {
+			set({ loading: false });
+
+			toast.error(
+				error.response?.data?.message || "Failed to move product"
+			);
+		}
+	},
+
+	moveProductToBottom: async (productId) => {
+		set({ loading: true });
+
+		try {
+			await axios.put(`/products/${productId}/move-bottom`);
+
+			await useProductStore.getState().fetchAllProducts();
+
+			set({ loading: false });
+
+			toast.success("Moved to bottom");
+		} catch (error) {
+			set({ loading: false });
+
+			toast.error(
+				error.response?.data?.message || "Failed to move product"
+			);
+		}
+	},
+
 	updateProductDiscount: async (productId, productDiscount) => {
 		set({ loading: true });
 

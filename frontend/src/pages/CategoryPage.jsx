@@ -18,7 +18,7 @@ const CategoryPage = () => {
 		});
 
 		fetchProductsByCategory(category);
-	}, [fetchProductsByCategory, category]);
+	}, [ category]);
 
 	return (
 		<div
@@ -43,15 +43,9 @@ const CategoryPage = () => {
 
 				{loading && (
 					<div className="text-center py-20">
-						<h2 className="text-2xl font-semibold text-purple-600">
+						<h4 className="text-2xl font-semibold text-purple-600">
 							Loading products...
-						</h2>
-					</div>
-				)}{loading && (
-					<div className="text-center py-20">
-						<h2 className="text-2xl font-semibold text-purple-600">
-							Loading products...
-						</h2>
+						</h4>
 					</div>
 				)}
 

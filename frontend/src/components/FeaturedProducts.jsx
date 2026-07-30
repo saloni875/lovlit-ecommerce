@@ -149,7 +149,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 									>
 										<Link
 											to={`/product/${product._id}`}
-											
+
 											className='rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col group'
 											style={{
 												background: darkMode ? "#2b182c" : "#ffffff",
@@ -158,12 +158,12 @@ const FeaturedProducts = ({ featuredProducts }) => {
 										>
 											<div className='relative overflow-hidden'>
 												<img
-													src={product.image}
+													src={product.images?.[0] || "/placeholder.png"}
 													alt={product.name}
 													className='w-full h-72 object-cover transition-transform duration-500 group-hover:scale-105'
 												/>
 
-												<div className="absolute top-2 right-2 rounded-full bg-white p-1 shadow">
+												<div className="absolute top-2 right-2">
 													<Heart
 														onClick={(e) => {
 															e.preventDefault();
@@ -175,9 +175,11 @@ const FeaturedProducts = ({ featuredProducts }) => {
 
 															toggleWishlist(product._id);
 														}}
-														className={`h-5 w-5 cursor-pointer transition-all duration-300 ${isWishlisted
-															? "fill-red-500 text-red-500"
-															: "text-purple-600"
+														className={`h-7 w-7 cursor-pointer drop-shadow-lg transition-all duration-300 ${isWishlisted
+																? "fill-red-500 text-red-500"
+																: darkMode
+																	? "text-white"
+																	: "text-purple-600"
 															}`}
 													/>
 												</div>
@@ -226,36 +228,36 @@ const FeaturedProducts = ({ featuredProducts }) => {
 
 												<div className="mt-auto">
 
-												<button
-													onClick={(e) => {
-														e.preventDefault();
-														addToCart(product);
-													}}
-													className='w-full font-semibold py-2 px-2 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
-													style={{
-														background: darkMode
-															? "linear-gradient(135deg, #0d0a11, #660c5e)"
-															: "",
-														color: darkMode ? "#ffffff" : "",
-														border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
-													}}
-													onMouseEnter={(e) => {
-														if (darkMode) {
-															e.currentTarget.style.background = "#e100ff";
-															e.currentTarget.style.color = "#000000";
-														}
-													}}
-													onMouseLeave={(e) => {
-														if (darkMode) {
-															e.currentTarget.style.background =
-																"linear-gradient(135deg, #0c090f, #660c5e)";
-															e.currentTarget.style.color = "#ffffff";
-														}
-													}}
-												>
-													<ShoppingCart className='w-5 h-5 mr-2' />
-													Add to Cart
-												</button></div>
+													<button
+														onClick={(e) => {
+															e.preventDefault();
+															addToCart(product);
+														}}
+														className='w-full font-semibold py-2 px-2 bg-purple-600 hover:bg-pink-400 text-white  rounded-xl transition-all duration-300 flex items-center justify-center '
+														style={{
+															background: darkMode
+																? "linear-gradient(135deg, #0d0a11, #660c5e)"
+																: "",
+															color: darkMode ? "#ffffff" : "",
+															border: darkMode ? "1px solid #c646b3" : "1px solid #e9d5ff",
+														}}
+														onMouseEnter={(e) => {
+															if (darkMode) {
+																e.currentTarget.style.background = "#e100ff";
+																e.currentTarget.style.color = "#000000";
+															}
+														}}
+														onMouseLeave={(e) => {
+															if (darkMode) {
+																e.currentTarget.style.background =
+																	"linear-gradient(135deg, #0c090f, #660c5e)";
+																e.currentTarget.style.color = "#ffffff";
+															}
+														}}
+													>
+														<ShoppingCart className='w-5 h-5 mr-2' />
+														Add to Cart
+													</button></div>
 											</div>
 										</Link>
 									</div>

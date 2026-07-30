@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useProductStore } from "../stores/useProductStore";
 import { useThemeStore } from "../stores/useThemeStore";
 
-const SearchBar = ( {mobile = false, closeSearch}) => {
+const SearchBar = ({ mobile = false, closeSearch }) => {
 
 	/*
 		This stores whatever
@@ -107,7 +107,7 @@ const SearchBar = ( {mobile = false, closeSearch}) => {
 							? "#ffffff"
 							: "#111827",
 					}}
-					
+
 				/>
 				{mobile && (
 					<button onClick={closeSearch}>
@@ -170,7 +170,7 @@ const SearchBar = ( {mobile = false, closeSearch}) => {
 										setSearch("");
 
 										clearSearch();
-										if(closeSearch){
+										if (closeSearch) {
 											closeSearch();
 										}
 
@@ -180,8 +180,9 @@ const SearchBar = ( {mobile = false, closeSearch}) => {
 
 								>
 
+
 									<img
-										src={product.image}
+										src={product.images?.[0] || "/placeholder.png"}
 										alt={product.name}
 										className="w-14 h-14 rounded-lg object-cover"
 									/>

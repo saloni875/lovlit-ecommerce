@@ -18,8 +18,6 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
-
-
 		salePrice: {
 			type: Number,
 			min: 0,
@@ -33,9 +31,15 @@ const productSchema = new mongoose.Schema(
 			default: "none",
 		},
 
-		image: {
-			type: String,
-			required: [true, "Image is required"],
+		images: {
+			type: [String],
+			required: [true, "At least one image is required"],
+			validate: {
+				validator: function (value) {
+					return value.length > 0;
+				},
+				message: "At least one image is required",
+			},
 		},
 
 		category: {
@@ -43,9 +47,10 @@ const productSchema = new mongoose.Schema(
 			required: true,
 		},
 
-		displayOrder : {
+		displayOrder: {
 			type: Number,
-			default : 0,
+			required: true,
+			default: 0,
 		},
 
 		isFeatured: {

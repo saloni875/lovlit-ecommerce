@@ -7,10 +7,14 @@ import {
 	LogOut,
 	Lock,
 	Heart,
-	Home, Sun, Moon,
-	LayoutGrid, Search,
+	Home,
+	Sun,
+	Moon,
+	LayoutGrid,
+	Search,
 } from "lucide-react";
-import { useState, useEffect } from 'react'
+
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { useUserStore } from "../stores/useUserStore";
@@ -18,19 +22,28 @@ import { useCartStore } from "../stores/useCartStore";
 import { useThemeStore } from "../stores/useThemeStore";
 import SearchBar from "./SearchBar";
 
-
-
 const Navbar = () => {
+	// =========================
+	// Stores
+	// =========================
 	const { user, logout } = useUserStore();
-	const isAdmin = user?.role === "admin";
 	const { cart } = useCartStore();
 	const { darkMode, toggleTheme } = useThemeStore();
+
+	const isAdmin = user?.role === "admin";
+
+	// =========================
+	// States
+	// =========================
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const location = useLocation();
 	const [showCollectionDrawer, setShowCollectionDrawer] = useState(false);
-	const [showSearch, setShowSearch] = useState(false);
 	const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+	const location = useLocation();
+
+	// =========================
+	// Theme
+	// =========================
 	useEffect(() => {
 		if (localStorage.getItem("theme") === "dark") {
 			document.body.classList.add("dark-mode");
@@ -40,40 +53,41 @@ const Navbar = () => {
 	return (
 		<>
 			<header
-				className='fixed top-0 left-0 w-full backdrop-blur-md shadow-md z-40 transition-all duration-300'
+				className="fixed top-0 left-0 w-full backdrop-blur-md shadow-md z-40 transition-all duration-300"
 				style={{
 					background: darkMode
-						? "linear-gradient(135deg, #0c090f, #660c5e)"
-						: "linear-gradient(to right, rgb(216 180 254), white, rgb(251 207 232))",
+						? "linear-gradient(135deg,#0c090f,#660c5e)"
+						: "linear-gradient(to right,rgb(216 180 254),white,rgb(251 207 232))",
 					borderBottom: darkMode
 						? "1px solid #7a1b6d"
 						: "1px solid #e9d5ff",
 				}}
 			>
-				<div className='container mx-auto px-3 sm:px-6 py-3 sm:py-4'>
-					<div className=' flex justify-between items-center'>
+				<div className="container mx-auto px-3 sm:px-6 py-3 sm:py-4">
+					<div className="flex items-center justify-between">
 
-						<Link
-							to='/'
-							className='flex items-center'
-						>
+						{/* ================= Logo ================= */}
+						<Link to="/" className="flex items-center shrink-0">
 							<img
-								src='/logo.png'
-								alt='Lovlit'
-								className='h-14 md:h-16 w-auto'
+								src="/logo.png"
+								alt="Lovlit"
+								className="h-14 md:h-16 w-auto"
 							/>
 						</Link>
-						{/* searchbar */}
-						<div className="hidden md:flex flex-1 justify-center px-6">
-							<div className="w-full max-w-lg">
+
+						{/* ================= Search ================= */}
+
+						<div className="hidden md:flex flex-1 justify-center px-3 lg:px-6">
+							<div className="w-full max-w-sm xl:max-w-lg">
 								<SearchBar />
 							</div>
 						</div>
 
+						{/* ================= Mobile / Tablet Actions ================= */}
 
 						<div className="flex items-center gap-2 md:hidden">
 
-							{/* Mobile Search */}
+							{/* Search */}
 							<button
 								className="md:hidden"
 								onClick={() => setMobileSearchOpen(true)}
@@ -81,30 +95,28 @@ const Navbar = () => {
 								<Search size={22} />
 							</button>
 
+							{/* Theme */}
 							<button
 								onClick={toggleTheme}
 								className="p-1 rounded-full"
 								style={{
 									background: darkMode
-										? "linear-gradient(135deg, #0c090f, #660c5e)"
+										? "linear-gradient(135deg,#0c090f,#660c5e)"
 										: "#9333ea",
-									color: "#ffffff",
+									color: "#fff",
 									border: darkMode
 										? "1px solid #c646b3"
 										: "1px solid #e9d5ff",
 								}}
 							>
-								{darkMode ? (
-									<Sun size={18} />
-								) : (
-									<Moon size={18} />
-								)}
+								{darkMode ? <Sun size={18} /> : <Moon size={18} />}
 							</button>
 
+							{/* Menu */}
 							<button
 								onClick={() => setIsMenuOpen(!isMenuOpen)}
 								style={{
-									color: darkMode ? "#ffffff" : "#6b21a8",
+									color: darkMode ? "#fff" : "#6b21a8",
 								}}
 							>
 								{isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -112,12 +124,15 @@ const Navbar = () => {
 
 						</div>
 
-						<nav className='hidden md:flex flex-wrap items-center gap-4 '>
+						{/* ================= Desktop Navigation ================= */}
 
+						<nav className="hidden md:flex flex-wrap items-center gap-4">
+
+							{/* ================= Navigation Links ================= */}
 
 							<Link
-								to={"/"}
-								className='text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300 ease-in-out'
+								to="/"
+								className="text-purple-700 text-base lg:text-xl font-semibold hover:text-pink-500 transition duration-300"
 								style={{
 									color: darkMode ? "#ffffff" : "#6b21a8",
 								}}
@@ -125,19 +140,27 @@ const Navbar = () => {
 								Home
 							</Link>
 
-							<Link to={"/about"} className='hidden sm:block text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300'
+							<Link
+								to="/about"
+								className="hidden lg:block text-purple-700 text-base lg:text-xl font-semibold hover:text-pink-500 transition duration-300"
 								style={{
 									color: darkMode ? "#ffffff" : "#6b21a8",
-								}}>
+								}}
+							>
 								About
 							</Link>
 
-							<Link to={"/contact"} className='hidden sm:block text-purple-700 text-base sm:text-xl font-semibold hover:text-pink-500 transition duration-300'
+							<Link
+								to="/contact"
+								className="hidden lg:block text-purple-700 text-base lg:text-xl font-semibold hover:text-pink-500 transition duration-300"
 								style={{
 									color: darkMode ? "#ffffff" : "#6b21a8",
-								}}>
+								}}
+							>
 								Contact
 							</Link>
+
+							{/* ================= Wishlist ================= */}
 
 							{user ? (
 								<Link
@@ -150,7 +173,6 @@ const Navbar = () => {
 										}`}
 								>
 									<Heart size={22} />
-
 								</Link>
 							) : (
 								<Link
@@ -159,49 +181,51 @@ const Navbar = () => {
 										}`}
 								>
 									<Heart size={22} />
-
 								</Link>
 							)}
 
-
+							{/* ================= Cart ================= */}
 
 							{user && (
 								<Link
-									to={"/cart"}
-									className='relative group flex items-center text-purple-700 font-medium hover:text-pink-500 transition duration-300 ease-in-out' style={{
+									to="/cart"
+									className="relative group flex items-center font-medium hover:text-pink-500 transition duration-300"
+									style={{
 										color: darkMode ? "#ffffff" : "#6b21a8",
 									}}
 								>
 									<ShoppingCart
-										className='inline-block mr-1'
+										className="inline-block mr-1"
 										size={22}
 									/>
 
-									<span className='hidden sm:inline text-lg' style={{
-										color: darkMode ? "#ffffff" : "#6b21a8",
-									}}>
+									{/* Hide Cart text on tablets */}
+									<span
+										className="hidden xl:inline text-lg"
+										style={{
+											color: darkMode ? "#ffffff" : "#6b21a8",
+										}}
+									>
 										Cart
 									</span>
 
 									{cart.length > 0 && (
-										<span
-											className='absolute -top-2 -left-2 bg-purple-600 text-white rounded-full px-2 py-0.5 text-xs shadow-md'
-										>
+										<span className="absolute -top-2 -left-2 bg-purple-600 text-white rounded-full px-2 py-0.5 text-xs shadow-md">
 											{cart.length}
 										</span>
 									)}
 								</Link>
-							)}
 
+
+							)}
+							{/* ================= Theme Toggle ================= */}
 
 							<button
-								onClick={() => {
-									toggleTheme();
-								}}
+								onClick={toggleTheme}
 								className="p-2 rounded-full transition duration-300 ease-in-out"
 								style={{
 									background: darkMode
-										? "linear-gradient(135deg, #0c090f, #660c5e)"
+										? "linear-gradient(135deg,#0c090f,#660c5e)"
 										: "#9333ea",
 									color: "#ffffff",
 									border: darkMode
@@ -219,7 +243,7 @@ const Navbar = () => {
 								onMouseLeave={(e) => {
 									if (darkMode) {
 										e.currentTarget.style.background =
-											"linear-gradient(135deg, #0c090f, #660c5e)";
+											"linear-gradient(135deg,#0c090f,#660c5e)";
 										e.currentTarget.style.color = "#ffffff";
 									} else {
 										e.currentTarget.style.background = "#9333ea";
@@ -234,14 +258,15 @@ const Navbar = () => {
 								)}
 							</button>
 
+							{/* ================= Admin Dashboard ================= */}
+
 							{isAdmin && (
-								// dashboard link for admin users
 								<Link
-									to={"/secret-dashboard"}
-									className='px-3 sm:px-5 py-2 rounded-xl text-white font-semibold shadow-md transition duration-300 ease-in-out flex items-center'
+									to="/secret-dashboard"
+									className="px-2 lg:px-5 py-2 rounded-xl text-white font-semibold shadow-md transition duration-300 ease-in-out flex items-center"
 									style={{
 										background: darkMode
-											? "linear-gradient(135deg, #0c090f, #660c5e)"
+											? "linear-gradient(135deg,#0c090f,#660c5e)"
 											: "#9333ea",
 										border: darkMode
 											? "1px solid #d322b8"
@@ -258,29 +283,29 @@ const Navbar = () => {
 									onMouseLeave={(e) => {
 										if (darkMode) {
 											e.currentTarget.style.background =
-												"linear-gradient(135deg, #0c090f, #660c5e)";
+												"linear-gradient(135deg,#0c090f,#660c5e)";
 											e.currentTarget.style.color = "#ffffff";
-
 										} else {
 											e.currentTarget.style.background = "#9333ea";
 											e.currentTarget.style.color = "#ffffff";
 										}
 									}}
 								>
-									<Lock className='inline-block mr-2' size={18} />
+									<Lock className="mr-2" size={18} />
 
-									<span className='hidden sm:inline'>
+									<span className="hidden xl:inline">
 										Dashboard
 									</span>
 								</Link>
 							)}
 
+							{/* ================= Auth ================= */}
 
 							{user ? (
 								<button
-									className='bg-black/80 text-white py-2 px-3 sm:px-5 ho rounded-xl flex items-center shadow-md transition duration-300 ease-in-out'
+									onClick={logout}
+									className="bg-black/80 text-white py-2 px-2 lg:px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out"
 									style={{
-
 										border: darkMode
 											? "1px solid #c646b3"
 											: "1px solid #e9d5ff",
@@ -297,201 +322,233 @@ const Navbar = () => {
 											e.currentTarget.style.color = "#ffffff";
 										}
 									}}
-									onClick={logout}
 								>
 									<LogOut size={18} />
 
-									<span className='hidden sm:inline ml-2 font-medium'>
+									<span className="hidden xl:inline ml-2 font-medium">
 										Log Out
 									</span>
 								</button>
 							) : (
 								<>
-									{/* sign up button */}
+									{/* Signup */}
 
 									<Link
-										to={"/signup"}
-										className='text-white py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
+										to="/signup"
+										className="text-white py-2 px-3 lg:px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium"
 										style={{
 											background: darkMode
-												? "linear-gradient(135deg, #0c090f, #660c5e)"
+												? "linear-gradient(135deg,#0c090f,#660c5e)"
 												: "#9333ea",
 											border: darkMode
 												? "1px solid #c646b3"
 												: "1px solid #e9d5ff",
 										}}
-										onMouseEnter={(e) => {
-											if (darkMode) {
-												e.currentTarget.style.background = "#e100ff";
-												e.currentTarget.style.color = "#000000";
-											} else {
-												e.currentTarget.style.background = "#7e22ce";
-											}
-										}}
-										onMouseLeave={(e) => {
-											if (darkMode) {
-												e.currentTarget.style.background =
-													"linear-gradient(135deg, #0c090f, #660c5e)";
-												e.currentTarget.style.color = "#ffffff";
-											} else {
-												e.currentTarget.style.background = "#9333ea";
-												e.currentTarget.style.color = "#ffffff";
-											}
-										}}
 									>
-										<UserPlus className='mr-2' size={18} />
-										Sign Up
+										<UserPlus className="mr-2" size={18} />
+
+										<span className="hidden xl:inline">
+											Sign Up
+										</span>
 									</Link>
 
-									{/* login button */}
+									{/* Login */}
+
 									<Link
-										to={"/login"}
-										className='py-2 px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium'
+										to="/login"
+										className="py-2 px-3 lg:px-5 rounded-xl flex items-center shadow-md transition duration-300 ease-in-out font-medium"
 										style={{
 											background: darkMode
-												? "linear-gradient(135deg, #0c090f, #660c5e)"
+												? "linear-gradient(135deg,#0c090f,#660c5e)"
 												: "#ffffff",
 											color: darkMode ? "#ffffff" : "#6b21a8",
 											border: darkMode
 												? "1px solid #c646b3"
 												: "1px solid #d8b4fe",
 										}}
-										onMouseEnter={(e) => {
-											if (darkMode) {
-												e.currentTarget.style.background = "#e100ff";
-												e.currentTarget.style.color = "#000000";
-											} else {
-												e.currentTarget.style.background = "#f3e8ff";
-											}
-										}}
-										onMouseLeave={(e) => {
-											if (darkMode) {
-												e.currentTarget.style.background =
-													"linear-gradient(135deg, #0c090f, #660c5e)";
-												e.currentTarget.style.color = "#ffffff";
-											} else {
-												e.currentTarget.style.background = "#ffffff";
-												e.currentTarget.style.color = "#6b21a8";
-											}
-										}}
 									>
-										<LogIn className='mr-2' size={18} />
-										Login
+										<LogIn className="mr-2" size={18} />
+
+										<span className="hidden xl:inline">
+											Login
+										</span>
 									</Link>
 								</>
 							)}
 
 						</nav>
+						{/* ================= Mobile Menu ================= */}
 
 						{isMenuOpen && (
-							<div className='md:hidden mt-4  flex flex-col gap-4 border-t border-purple-200 pt-4'>
+							<div
+								className="md:hidden absolute top-full left-0 w-full shadow-lg border-t z-50"
+								style={{
+									background: darkMode
+										? "#111111"
+										: "#ffffff",
+									borderColor: darkMode ? "#333333" : "#e5e7eb",
+								}}
+							>
+								<div className="flex flex-col py-2">
 
-
-								<Link
-									to={"/"}
-									className={`${darkMode ? "text-red-500" : "text-green-500"} text-base sm:text-xl font-semibold`}
-									style={{
-										color: darkMode ? "#ffffff" : "#6b21a8",
-									}}
-								>
-									Home
-								</Link>
-
-								<Link
-									to='/about'
-									onClick={() => setIsMenuOpen(false)}
-									className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
-								>
-									About
-								</Link>
-
-								<Link
-									to='/contact'
-									onClick={() => setIsMenuOpen(false)}
-									className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
-								>
-									Contact
-								</Link>
-
-								{user && (
+									{/* Home */}
 									<Link
-										to='/cart'
+										to="/"
 										onClick={() => setIsMenuOpen(false)}
-										className={`${darkMode ? "text-white" : "text-purple-700"} font-semibold`}
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
 									>
-										Cart
+										<Home size={20} />
+										<span>Home</span>
 									</Link>
-								)}
 
-								{isAdmin && (
+									{/* About */}
 									<Link
-										to='/secret-dashboard'
+										to="/about"
 										onClick={() => setIsMenuOpen(false)}
-										className='text-purple-700 font-semibold'
-										style={{
-											color: darkMode ? "#ffffff" : "#6b21a8",
-										}}
+										className="px-5 py-3 hover:bg-purple-100 dark:hover:bg-gray-800"
 									>
-										Dashboard
+										About
 									</Link>
-								)}
 
-								{user ? (
-									<button
-										onClick={logout}
-										className='text-left text-purple-700 font-semibold'
-										style={{
-											color: darkMode ? "#ffffff" : "#6b21a8",
-										}}
+									{/* Contact */}
+									<Link
+										to="/contact"
+										onClick={() => setIsMenuOpen(false)}
+										className="px-5 py-3 hover:bg-purple-100 dark:hover:bg-gray-800"
 									>
-										Log Out
-									</button>
-								) : (
-									<>
-										<Link
-											to='/signup'
-											className='text-purple-700 font-semibold'
-											style={{
-												color: darkMode ? "#ffffff" : "#6b21a8",
-											}}
-										>
-											Sign Up
-										</Link>
+										Contact
+									</Link>
 
+									{/* Wishlist */}
+									<Link
+										to="/wishlist"
+										onClick={() => setIsMenuOpen(false)}
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+									>
+										<Heart size={20} />
+										<span>Wishlist</span>
+									</Link>
+
+									{/* Cart */}
+									{user && (
 										<Link
-											to='/login'
-											className='text-purple-700 font-semibold'
-											style={{
-												color: darkMode ? "#ffffff" : "#6b21a8",
-											}}
+											to="/cart"
+											onClick={() => setIsMenuOpen(false)}
+											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
 										>
-											Login
+											<ShoppingCart size={20} />
+											<span>Cart ({cart.length})</span>
 										</Link>
-									</>
-								)}
+									)}
+
+									{/* Admin */}
+									{isAdmin && (
+										<Link
+											to="/secret-dashboard"
+											onClick={() => setIsMenuOpen(false)}
+											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+										>
+											<Lock size={20} />
+											<span>Dashboard</span>
+										</Link>
+									)}
+
+									{/* Divider */}
+									<div className="border-t my-2 border-gray-300 dark:border-gray-700"></div>
+
+									{/* Auth */}
+									{user ? (
+										<button
+											onClick={() => {
+												logout();
+												setIsMenuOpen(false);
+											}}
+											className="px-5 py-3 flex items-center gap-3 text-left hover:bg-red-100 dark:hover:bg-red-900"
+										>
+											<LogOut size={20} />
+											<span>Logout</span>
+										</button>
+									) : (
+										<>
+											<Link
+												to="/signup"
+												onClick={() => setIsMenuOpen(false)}
+												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+											>
+												<UserPlus size={20} />
+												<span>Sign Up</span>
+											</Link>
+
+											<Link
+												to="/login"
+												onClick={() => setIsMenuOpen(false)}
+												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+											>
+												<LogIn size={20} />
+												<span>Login</span>
+											</Link>
+										</>
+									)}
+								</div>
 							</div>
 						)}
-					</div>
-				</div>
-			</header>
 
-			{/* Bottom Navigation - Mobile Only */}
+
+						{/* Collection Drawer */}
+
+						{showCollectionDrawer && (
+							<div
+								className="fixed inset-0 z-50 bg-black/40"
+								onClick={() => setShowCollectionDrawer(false)}
+							>
+								<div
+									className="absolute bottom-0 left-0 right-0 rounded-t-3xl p-5 max-h-[75vh] overflow-y-auto"
+									style={{
+										background: darkMode ? "#18181b" : "#ffffff",
+									}}
+									onClick={(e) => e.stopPropagation()}
+								>
+									<div className="flex items-center justify-between mb-5">
+										<h2 className="text-xl font-bold">
+											Collections
+										</h2>
+
+										<button
+											onClick={() => setShowCollectionDrawer(false)}
+										>
+											<X size={24} />
+										</button>
+									</div>
+
+									{/* Keep existing category / collection list here */}
+
+								</div>
+							</div>
+						)}
+
+						
+
+
+
+
+					</div>  
+				</div>       
+			</header>
+			{/* ================= Bottom Mobile Navigation ================= */}
+
 			<div
-				className="md:hidden fixed bottom-0 left-0 w-full z-50"
+				className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t shadow-lg"
 				style={{
-					background: darkMode
-						? "linear-gradient(135deg,#0c090f,#660c5e)"
-						: "#ffffff",
-					borderTop: darkMode
-						? "1px solid #c646b3"
-						: "1px solid #e5e7eb",
+					background: darkMode ? "#111111" : "#ffffff",
+					borderColor: darkMode ? "#333333" : "#e5e7eb",
 				}}
 			>
-				<div className="grid grid-cols-5 py-2">
+				<div className="grid grid-cols-5 h-16">
 
+					{/* Home */}
 					<Link
 						to="/"
-						className={`flex flex-col items-center ${location.pathname === "/"
+						className={`flex flex-col items-center justify-center ${location.pathname === "/"
 							? "text-purple-500"
 							: darkMode
 								? "text-white"
@@ -502,68 +559,64 @@ const Navbar = () => {
 						<span className="text-xs mt-1">Home</span>
 					</Link>
 
+					{/* Collections */}
 					<button
-						type="button"
 						onClick={() => setShowCollectionDrawer(true)}
-						className={`flex flex-col items-center ${darkMode ? "text-white" : "text-gray-600"
+						className={`flex flex-col items-center justify-center ${darkMode ? "text-white" : "text-gray-600"
 							}`}
 					>
 						<LayoutGrid size={22} />
-						<span className="text-xs mt-1">Collection</span>
+						<span className="text-xs mt-1">Collections</span>
 					</button>
 
+					{/* Wishlist */}
+					<Link
+						to="/wishlist"
+						className={`flex flex-col items-center justify-center ${location.pathname === "/wishlist"
+							? "text-purple-500"
+							: darkMode
+								? "text-white"
+								: "text-gray-600"
+							}`}
+					>
+						<Heart size={22} />
+						<span className="text-xs mt-1">Wishlist</span>
+					</Link>
+
+					{/* Cart */}
+					<Link
+						to="/cart"
+						className={`relative flex flex-col items-center justify-center ${location.pathname === "/cart"
+							? "text-purple-500"
+							: darkMode
+								? "text-white"
+								: "text-gray-600"
+							}`}
+					>
+						<ShoppingCart size={22} />
+
+						{cart.length > 0 && (
+							<span className="absolute top-1 right-4 bg-purple-600 text-white rounded-full text-[10px] px-1.5">
+								{cart.length}
+							</span>
+						)}
+
+						<span className="text-xs mt-1">Cart</span>
+					</Link>
+
+					{/* Profile */}
 					{user ? (
-						<Link
-							to="/wishlist"
-							className={`flex flex-col items-center ${location.pathname === "/wishlist"
-									? "text-purple-500"
-									: darkMode
-										? "text-white"
-										: "text-gray-600"
-								}`}
+						<button
+							onClick={logout}
+							className="flex flex-col items-center justify-center text-red-500"
 						>
-							<Heart size={22} />
-							<span className="text-xs mt-1">Wishlist</span>
-						</Link>
+							<LogOut size={22} />
+							<span className="text-xs mt-1">Logout</span>
+						</button>
 					) : (
 						<Link
 							to="/login"
-							className={`flex flex-col items-center ${darkMode ? "text-white" : "text-gray-600"
-								}`}
-						>
-							<Heart size={22} />
-							<span className="text-xs mt-1">Wishlist</span>
-						</Link>
-					)}
-
-					{user ? (
-						<Link
-							to="/cart"
-							className={`relative flex flex-col items-center ${location.pathname === "/cart"
-								? "text-purple-500"
-								: darkMode
-									? "text-white"
-									: "text-gray-600"
-								}`}
-						>
-							<ShoppingCart size={22} />
-
-							{cart.length > 0 && (
-								<span className="absolute -top-1 right-5 bg-pink-500 text-white text-[10px] px-1.5 rounded-full">
-									{cart.length}
-								</span>
-							)}
-
-							<span className="text-xs mt-1">Cart</span>
-						</Link>
-					) : (
-						<Link
-							to="/login"
-							className={`flex flex-col items-center ${location.pathname === "/login"
-								? "text-purple-500"
-								: darkMode
-									? "text-white"
-									: "text-gray-600"
+							className={`flex flex-col items-center justify-center ${darkMode ? "text-white" : "text-gray-600"
 								}`}
 						>
 							<LogIn size={22} />
@@ -571,148 +624,8 @@ const Navbar = () => {
 						</Link>
 					)}
 
-					
-
-					<Link
-						to="/about"
-						className={`flex flex-col items-center ${location.pathname === "/about"
-							? "text-purple-500"
-							: darkMode
-								? "text-white"
-								: "text-gray-600"
-							}`}
-					>
-						<UserPlus size={22} />
-						<span className="text-xs mt-1">About</span>
-					</Link>
-
 				</div>
 			</div>
-			{showCollectionDrawer && (
-				<div
-					className="fixed inset-0 bg-black/40 z-[60]"
-					onClick={() => setShowCollectionDrawer(false)}
-				>
-					<div
-						onClick={(e) => e.stopPropagation()}
-						className={`absolute bottom-20 left-3 right-3 rounded-3xl p-5 ${darkMode
-							? "bg-[#18111f] border border-fuchsia-700"
-							: "bg-white border border-purple-200"
-							}`}
-					>
-						<h2 className="text-xl font-bold mb-4">Collections</h2>
-
-
-						<div className="grid grid-cols-3 gap-2">
-							<Link
-								to="/category/necklaces"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Necklaces
-							</Link>
-							<Link
-								to="/category/bracelets"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Bracelets
-							</Link>
-
-							<Link
-								to="/category/body-chains"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Body Chains
-							</Link>
-
-							<Link
-								to="/category/photocards"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Photocards
-							</Link>
-
-							<Link
-								to="/category/candles"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Candles
-							</Link>
-
-							<Link
-								to="/category/phone-charms"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Phone Charms
-							</Link>
-
-							<Link
-								to="/category/scrunchies"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Scrunchies
-							</Link>
-
-							<Link
-								to="/category/action-figures"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Action Figures
-							</Link>
-
-							<Link
-								to="/category/chocolate-bouquets"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Chocolate Bouquets
-							</Link>
-
-
-							<Link
-								to="/category/gift-hampers"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Gift Hampers
-							</Link>
-
-							<Link
-								to="/category/special-boxes"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Special Boxes
-							</Link>
-
-							<Link
-								to="/category/mystery-scoops"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Mystery Scoops
-							</Link>
-
-
-							<Link
-								to="/category/gift-hampers"
-								onClick={() => setShowCollectionDrawer(false)}
-								className="rounded-xl border border-purple-300 py-3 text-xs font-medium text-center"
-							>
-								Gift Hampers
-							</Link>
-
-						</div>
-					</div>
-				</div>
-			)}
 
 			{mobileSearchOpen && (
 				<div
@@ -730,6 +643,7 @@ const Navbar = () => {
 					</div>
 				</div>
 			)}
+			
 		</>
 	);
 };

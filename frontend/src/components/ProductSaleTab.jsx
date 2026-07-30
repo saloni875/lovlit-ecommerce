@@ -118,7 +118,7 @@ const ProductSaleTab = () => {
                                 }}
                             >
                                 <img
-                                    src={product.image}
+                                    src={product.images?.[0] || "/placeholder.png"}
                                     alt={product.name}
                                     className="w-14 h-14 rounded-xl object-cover"
                                 />
@@ -165,7 +165,7 @@ const ProductSaleTab = () => {
                         <div className="flex flex-col sm:flex-row gap-5 items-center">
 
                             <img
-                                src={selectedProduct.image}
+                                src={selectedProduct.images?.[0] || "/placeholder.png"}
                                 alt={selectedProduct.name}
                                 className="w-28 h-28 rounded-2xl object-cover"
                             />
@@ -233,7 +233,7 @@ const ProductSaleTab = () => {
                                             )}% OFF
                                         </span>
                                     )}
-                                    
+
                                 </p>
 
 

@@ -19,7 +19,7 @@ const CreateProductForm = () => {
 		description: "",
 		price: "",
 		category: "",
-		image: "",
+		images: [],
 		highlights: "",
 		details: "",
 		colors: "",
@@ -44,7 +44,7 @@ const CreateProductForm = () => {
 				description: "",
 				price: "",
 				category: "",
-				image: "",
+				images: [],
 				highlights: "",
 				details: "",
 				colors: "",
@@ -60,21 +60,29 @@ const CreateProductForm = () => {
 		}
 	};
 
-	const handleImageChange = (e) => {
-		const file = e.target.files[0];
+	const handleImageChange = async (e) => {
+		const files = Array.from(e.target.files);
+		console.log("Files selected:", files.length);
+console.log(files);
 
-		if (file) {
-			const reader = new FileReader();
+		const imagePromises = files.map((file) => {
+			return new Promise((resolve) => {
+				const reader = new FileReader();
 
-			reader.onloadend = () => {
-				setNewProduct({
-					...newProduct,
-					image: reader.result,
-				});
-			};
+				reader.onloadend = () => {
+					resolve(reader.result);
+				};
 
-			reader.readAsDataURL(file);
-		}
+				reader.readAsDataURL(file);
+			});
+		});
+
+		const images = await Promise.all(imagePromises);
+
+		setNewProduct({
+			...newProduct,
+			images,
+		});
 	};
 
 	return (
@@ -473,6 +481,7 @@ const CreateProductForm = () => {
 						id='image'
 						className='sr-only'
 						accept='image/*'
+						multiple
 						onChange={handleImageChange}
 					/>
 
@@ -487,12 +496,12 @@ const CreateProductForm = () => {
 						Upload Image
 					</label>
 
-					{newProduct.image && (
+					{newProduct.images.length > 0 && (
 						<span
 							className={`ml-3 text-sm ${darkMode ? "text-gray-300" : "text-gray-500"
 								}`}
 						>
-							✅ Image uploaded
+							✅ {newProduct.images.length} image(s) selected
 						</span>
 					)}
 				</div>
