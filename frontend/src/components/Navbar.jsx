@@ -12,6 +12,8 @@ import {
 	Moon,
 	LayoutGrid,
 	Search,
+	Phone,
+	Info,
 } from "lucide-react";
 
 import { useState, useEffect } from "react";
@@ -23,27 +25,27 @@ import { useThemeStore } from "../stores/useThemeStore";
 import SearchBar from "./SearchBar";
 
 const Navbar = () => {
-	// =========================
+
 	// Stores
-	// =========================
+
 	const { user, logout } = useUserStore();
 	const { cart } = useCartStore();
 	const { darkMode, toggleTheme } = useThemeStore();
 
 	const isAdmin = user?.role === "admin";
 
-	// =========================
+
 	// States
-	// =========================
+
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [showCollectionDrawer, setShowCollectionDrawer] = useState(false);
 	const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
 	const location = useLocation();
 
-	// =========================
+
 	// Theme
-	// =========================
+
 	useEffect(() => {
 		if (localStorage.getItem("theme") === "dark") {
 			document.body.classList.add("dark-mode");
@@ -66,7 +68,7 @@ const Navbar = () => {
 				<div className="container mx-auto px-3 sm:px-6 py-3 sm:py-4">
 					<div className="flex items-center justify-between">
 
-						{/* ================= Logo ================= */}
+						{/*  Logo  */}
 						<Link to="/" className="flex items-center shrink-0">
 							<img
 								src="/logo.png"
@@ -75,7 +77,7 @@ const Navbar = () => {
 							/>
 						</Link>
 
-						{/* ================= Search ================= */}
+						{/*  Search  */}
 
 						<div className="hidden md:flex flex-1 justify-center px-3 lg:px-6">
 							<div className="w-full max-w-sm xl:max-w-lg">
@@ -83,7 +85,7 @@ const Navbar = () => {
 							</div>
 						</div>
 
-						{/* ================= Mobile / Tablet Actions ================= */}
+						{/*  Mobile / Tablet Actions */}
 
 						<div className="flex items-center gap-2 md:hidden">
 
@@ -124,11 +126,11 @@ const Navbar = () => {
 
 						</div>
 
-						{/* ================= Desktop Navigation ================= */}
+						{/*  Desktop Navigation  */}
 
 						<nav className="hidden md:flex flex-wrap items-center gap-4">
 
-							{/* ================= Navigation Links ================= */}
+							{/* = Navigation Links  */}
 
 							<Link
 								to="/"
@@ -385,7 +387,7 @@ const Navbar = () => {
 								style={{
 									background: darkMode
 										? "#111111"
-										: "#ffffff",
+										: "rgb(240, 158, 249)",
 									borderColor: darkMode ? "#333333" : "#e5e7eb",
 								}}
 							>
@@ -395,7 +397,7 @@ const Navbar = () => {
 									<Link
 										to="/"
 										onClick={() => setIsMenuOpen(false)}
-										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 									>
 										<Home size={20} />
 										<span>Home</span>
@@ -405,25 +407,27 @@ const Navbar = () => {
 									<Link
 										to="/about"
 										onClick={() => setIsMenuOpen(false)}
-										className="px-5 py-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 									>
-										About
+										<Info size={20} />
+										<span>About</span>
 									</Link>
 
 									{/* Contact */}
 									<Link
 										to="/contact"
 										onClick={() => setIsMenuOpen(false)}
-										className="px-5 py-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 									>
-										Contact
+										<Phone size={20} />
+										<span>Contact</span>
 									</Link>
 
 									{/* Wishlist */}
 									<Link
 										to="/wishlist"
 										onClick={() => setIsMenuOpen(false)}
-										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+										className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 									>
 										<Heart size={20} />
 										<span>Wishlist</span>
@@ -434,7 +438,7 @@ const Navbar = () => {
 										<Link
 											to="/cart"
 											onClick={() => setIsMenuOpen(false)}
-											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 										>
 											<ShoppingCart size={20} />
 											<span>Cart ({cart.length})</span>
@@ -446,7 +450,7 @@ const Navbar = () => {
 										<Link
 											to="/secret-dashboard"
 											onClick={() => setIsMenuOpen(false)}
-											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+											className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 										>
 											<Lock size={20} />
 											<span>Dashboard</span>
@@ -463,7 +467,7 @@ const Navbar = () => {
 												logout();
 												setIsMenuOpen(false);
 											}}
-											className="px-5 py-3 flex items-center gap-3 text-left hover:bg-red-100 dark:hover:bg-red-900"
+											className="px-5 py-3 flex items-center gap-3 text-left hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-700 dark:hover:text-white transition-colors"
 										>
 											<LogOut size={20} />
 											<span>Logout</span>
@@ -473,7 +477,7 @@ const Navbar = () => {
 											<Link
 												to="/signup"
 												onClick={() => setIsMenuOpen(false)}
-												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 											>
 												<UserPlus size={20} />
 												<span>Sign Up</span>
@@ -482,7 +486,7 @@ const Navbar = () => {
 											<Link
 												to="/login"
 												onClick={() => setIsMenuOpen(false)}
-												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-gray-800"
+												className="px-5 py-3 flex items-center gap-3 hover:bg-purple-100 dark:hover:bg-fuchsia-900 hover:text-purple-700 dark:hover:text-white transition-colors"
 											>
 												<LogIn size={20} />
 												<span>Login</span>
@@ -493,47 +497,92 @@ const Navbar = () => {
 							</div>
 						)}
 
+					</div>
+				</div>
+			</header>
+			{/* Collection Drawer */}
+			{showCollectionDrawer && (
+				<div
+					className="fixed inset-0 bg-black/40 z-[60]"
+					onClick={() => setShowCollectionDrawer(false)}
+				>
+					<div
+						onClick={(e) => e.stopPropagation()}
+						className={`absolute bottom-20 left-3 right-3 rounded-3xl p-5 border shadow-xl ${darkMode
+							? "bg-[#18111f] border-fuchsia-700"
+							: "bg-white border-purple-200"
+							}`}
+					>
+						<div className="flex items-center justify-between mb-4">
+							<h2
+								className={`text-xl font-bold ${darkMode ? "text-white" : "text-purple-700"
+									}`}
+							>
+								Collections
+							</h2>
 
-						{/* Collection Drawer */}
-
-						{showCollectionDrawer && (
-							<div
-								className="fixed inset-0 z-50 bg-black/40"
+							<button
 								onClick={() => setShowCollectionDrawer(false)}
 							>
-								<div
-									className="absolute bottom-0 left-0 right-0 rounded-t-3xl p-5 max-h-[75vh] overflow-y-auto"
-									style={{
-										background: darkMode ? "#18181b" : "#ffffff",
-									}}
-									onClick={(e) => e.stopPropagation()}
-								>
-									<div className="flex items-center justify-between mb-5">
-										<h2 className="text-xl font-bold">
-											Collections
-										</h2>
+								<X size={22} />
+							</button>
+						</div>
 
-										<button
-											onClick={() => setShowCollectionDrawer(false)}
-										>
-											<X size={24} />
-										</button>
-									</div>
+						<div className="grid grid-cols-2 gap-3">
 
-									{/* Keep existing category / collection list here */}
+							<Link
+								to="/category/jewelry"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Jewelry
+							</Link>
 
-								</div>
-							</div>
-						)}
+							<Link
+								to="/category/phone-charms"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Phone Charms
+							</Link>
 
-						
+							<Link
+								to="/category/army-zone"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Fan Zone
+							</Link>
 
+							<Link
+								to="/category/candles"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Candles
+							</Link>
 
+							<Link
+								to="/category/gifts-bouquets"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Gifts & Bouquets
+							</Link>
 
+							<Link
+								to="/category/trinkets-more"
+								onClick={() => setShowCollectionDrawer(false)}
+								className="rounded-xl border border-purple-300 py-3 text-center text-sm font-medium"
+							>
+								Trinkets & More
+							</Link>
 
-					</div>  
-				</div>       
-			</header>
+						</div>
+					</div>
+				</div>
+			)}
+
 			{/* ================= Bottom Mobile Navigation ================= */}
 
 			<div
@@ -643,7 +692,7 @@ const Navbar = () => {
 					</div>
 				</div>
 			)}
-			
+
 		</>
 	);
 };

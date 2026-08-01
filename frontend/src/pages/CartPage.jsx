@@ -8,91 +8,104 @@ import PeopleAlsoBought from "../components/PeopleAlsoBought";
 import OrderSummary from "../components/OrderSummary";
 import GiftCouponCard from "../components/GiftCouponCard";
 import { useThemeStore } from "../stores/useThemeStore";
+import { Helmet } from "react-helmet-async";
 
 const CartPage = () => {
 	const { cart } = useCartStore();
 	const { darkMode } = useThemeStore();
 
 	return (
-		<div
-			className="min-h-screen py-10 md:py-16 transition-all duration-300"
-			style={{
-				background: darkMode
-					? "linear-gradient(135deg,#0c090f,#660c5e)"
-					: "linear-gradient(to bottom right,#ede9fe,#ffffff,#fce7f3)",
-			}}
-		>
-			<div className='mx-auto max-w-screen-xl px-4 2xl:px-0'>
-
-				<motion.div
-					initial={{ opacity: 0, y: -20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-					className='text-center mb-12'
-				>
-					<h1
-						className={`logo-font text-6xl mb-3 ${darkMode ? "text-pink-500" : "text-purple-700"
-							}`}
-					>
-						Lovlit
-					</h1>
-
-					<h2
-						className={`text-4xl font-bold ${darkMode ? "text-white" : "text-purple-700"
-							}`}
-					>
-						Your Shopping Cart
-					</h2>
-
-					<p
-						className={`mt-3 text-lg ${darkMode ? "text-gray-300" : "text-gray-600"}`}
-					>						Your favorite BTS inspired collection 💜
-					</p>
-				</motion.div>
+		<>
 
 
-				<div className='mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8'>
+			<Helmet>
+				<title>Shopping Cart | Lovlit</title>
+
+				<meta
+					name="description"
+					content="Review the items in your Lovlit shopping cart before proceeding to secure checkout."
+				/>
+			</Helmet>
+			<div
+				className="min-h-screen py-10 md:py-16 transition-all duration-300"
+				style={{
+					background: darkMode
+						? "linear-gradient(135deg,#0c090f,#660c5e)"
+						: "linear-gradient(to bottom right,#ede9fe,#ffffff,#fce7f3)",
+				}}
+			>
+				<div className='mx-auto max-w-screen-xl px-4 2xl:px-0'>
 
 					<motion.div
-						className='mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl'
-						initial={{ opacity: 0, x: -20 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.2 }}
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5 }}
+						className='text-center mb-12'
 					>
-						{cart.length === 0 ? (
-							<EmptyCartUI />
-						) : (
-							<div className='space-y-6'>
-								{cart.map((item) => (
-									<CartItem
-										key={`${item._id}-${item.customText}-${item.selectedOption}`}
-										item={item}
-									/>
-								))}
-							</div>
-						)}
+						<h1
+							className={`logo-font text-6xl mb-3 ${darkMode ? "text-pink-500" : "text-purple-700"
+								}`}
+						>
+							Lovlit
+						</h1>
 
+						<h2
+							className={`text-4xl font-bold ${darkMode ? "text-white" : "text-purple-700"
+								}`}
+						>
+							Your Shopping Cart
+						</h2>
 
+						<p
+							className={`mt-3 text-lg ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+						>						Your favorite BTS inspired collection 💜
+						</p>
 					</motion.div>
 
 
-					{cart.length > 0 && (
-						<motion.div
-							className='mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full'
-							initial={{ opacity: 0, x: 20 }}
-							animate={{ opacity: 1, x: 0 }}
-							transition={{ duration: 0.5, delay: 0.4 }}
-						>
+					<div className='mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8'>
 
-							<OrderSummary />
-							<GiftCouponCard />
+						<motion.div
+							className='mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl'
+							initial={{ opacity: 0, x: -20 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.5, delay: 0.2 }}
+						>
+							{cart.length === 0 ? (
+								<EmptyCartUI />
+							) : (
+								<div className='space-y-6'>
+									{cart.map((item) => (
+										<CartItem
+											key={`${item._id}-${item.customText}-${item.selectedOption}`}
+											item={item}
+										/>
+									))}
+								</div>
+							)}
+
+
 						</motion.div>
 
-					)}
 
-				</div>{cart.length > 0 && <PeopleAlsoBought />}
+						{cart.length > 0 && (
+							<motion.div
+								className='mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full'
+								initial={{ opacity: 0, x: 20 }}
+								animate={{ opacity: 1, x: 0 }}
+								transition={{ duration: 0.5, delay: 0.4 }}
+							>
+
+								<OrderSummary />
+								<GiftCouponCard />
+							</motion.div>
+
+						)}
+
+					</div>{cart.length > 0 && <PeopleAlsoBought />}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
@@ -101,11 +114,11 @@ export default CartPage;
 const EmptyCartUI = () => {
 	const { darkMode } = useThemeStore();
 
-	return (
+	return (	
 		<motion.div
 			className={`flex flex-col items-center justify-center space-y-5 py-20 rounded-3xl shadow-xl transition-all duration-300 ${darkMode
-					? "border border-fuchsia-700"
-					: "border border-purple-200"
+				? "border border-fuchsia-700"
+				: "border border-purple-200"
 				}`}
 			style={{
 				background: darkMode

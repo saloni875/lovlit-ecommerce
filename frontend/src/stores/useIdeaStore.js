@@ -16,6 +16,8 @@ export const useIdeaStore = create((set) => ({
 			set({ loading: true });
 
 			const res = await axios.get(API_URL);
+			console.log("Ideas Response:", res.data);
+			console.log("Is Array:", Array.isArray(res.data));
 
 			set({
 				ideas: res.data,
@@ -26,7 +28,7 @@ export const useIdeaStore = create((set) => ({
 
 			toast.error(
 				error.response?.data?.message ||
-					"Failed to load ideas"
+				"Failed to load ideas"
 			);
 		}
 	},
@@ -45,7 +47,7 @@ export const useIdeaStore = create((set) => ({
 		} catch (error) {
 			toast.error(
 				error.response?.data?.message ||
-					"Failed to delete idea"
+				"Failed to delete idea"
 			);
 		}
 	},

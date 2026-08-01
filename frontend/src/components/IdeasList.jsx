@@ -52,6 +52,14 @@ const IdeasList = () => {
                     Customer Ideas
                 </h1>
 
+                <h1>Ideas</h1>
+
+                {ideas.map((idea) => (
+                    <div key={idea._id}>
+                        {idea.name}
+                    </div>
+                ))}
+
 
                 <p
                     className={`mt-2 text-sm sm:text-base ${darkMode ? "text-gray-300" : "text-gray-700"
@@ -73,14 +81,14 @@ const IdeasList = () => {
                             : "#ffffff",
                     }}
                 >
-                    <div className="overflow-x-auto">
+                    {/* <div className="overflow-x-auto">
 
                         <table className="min-w-[1000px] w-full">
 
                             <thead
                                 className={`sticky top-0 ${darkMode
-                                        ? "bg-black/40 text-white"
-                                        : "bg-gradient-to-r from-purple-200 via-white to-pink-100 text-purple-700"
+                                    ? "bg-black/40 text-white"
+                                    : "bg-gradient-to-r from-purple-200 via-white to-pink-100 text-purple-700"
                                     }`}
                             >
                                 <tr>
@@ -115,14 +123,14 @@ const IdeasList = () => {
                                     <tr
                                         key={idea._id}
                                         className={`border-t transition ${darkMode
-                                                ? "border-fuchsia-800 hover:bg-white/5"
-                                                : "border-purple-100 hover:bg-purple-50"
+                                            ? "border-fuchsia-800 hover:bg-white/5"
+                                            : "border-purple-100 hover:bg-purple-50"
                                             }`}
                                     >
                                         <td
                                             className={`p-4 font-semibold ${darkMode
-                                                    ? "text-white"
-                                                    : "text-purple-700"
+                                                ? "text-white"
+                                                : "text-purple-700"
                                                 }`}
                                         >
                                             {idea.name}
@@ -130,8 +138,8 @@ const IdeasList = () => {
 
                                         <td
                                             className={`p-4 text-sm ${darkMode
-                                                    ? "text-gray-200"
-                                                    : "text-gray-700"
+                                                ? "text-gray-200"
+                                                : "text-gray-700"
                                                 }`}
                                         >
                                             {idea.contact}
@@ -139,8 +147,8 @@ const IdeasList = () => {
 
                                         <td
                                             className={`p-4 text-sm whitespace-pre-wrap break-words max-w-lg ${darkMode
-                                                    ? "text-gray-200"
-                                                    : "text-gray-700"
+                                                ? "text-gray-200"
+                                                : "text-gray-700"
                                                 }`}
                                         >
                                             {idea.idea}
@@ -153,8 +161,8 @@ const IdeasList = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={`inline-flex items-center justify-center p-2 rounded-full transition ${darkMode
-                                                            ? "hover:bg-fuchsia-500 hover:text-black text-white"
-                                                            : "hover:bg-purple-100 text-purple-700"
+                                                        ? "hover:bg-fuchsia-500 hover:text-black text-white"
+                                                        : "hover:bg-purple-100 text-purple-700"
                                                         }`}
                                                 >
                                                     <ExternalLink size={18} />
@@ -174,8 +182,8 @@ const IdeasList = () => {
 
                                         <td
                                             className={`text-center text-sm ${darkMode
-                                                    ? "text-gray-300"
-                                                    : "text-gray-600"
+                                                ? "text-gray-300"
+                                                : "text-gray-600"
                                                 }`}
                                         >
                                             {new Date(idea.createdAt).toLocaleDateString()}
@@ -185,8 +193,8 @@ const IdeasList = () => {
                                             <button
                                                 onClick={() => deleteIdea(idea._id)}
                                                 className={`p-2 rounded-full transition ${darkMode
-                                                        ? "text-red-400 hover:bg-fuchsia-500 hover:text-black"
-                                                        : "text-red-500 hover:bg-red-100"
+                                                    ? "text-red-400 hover:bg-fuchsia-500 hover:text-black"
+                                                    : "text-red-500 hover:bg-red-100"
                                                     }`}
                                             >
                                                 <Trash2 size={18} />
@@ -200,11 +208,14 @@ const IdeasList = () => {
 
                         </table>
 
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
     );
+
+
+
 };
 
 export default IdeasList;

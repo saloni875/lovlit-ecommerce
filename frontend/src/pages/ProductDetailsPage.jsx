@@ -18,6 +18,8 @@ import {
 	Minus,
 	Plus,
 } from "lucide-react";
+import { Helmet } from "react-helmet-async";
+
 
 const ProductDetailsPage = () => {
 	const { id } = useParams();
@@ -123,7 +125,17 @@ const ProductDetailsPage = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>{product?.name} | Lovlit</title>
 
+				<meta
+					name="description"
+					content={
+						product?.description ||
+						"Premium handmade product from Lovlit."
+					}
+				/>
+			</Helmet>
 			<div
 				className="min-h-screen px-2 sm:px-6 lg:px-8 py-8 sm:py-12 transition-all duration-300"
 				style={{
@@ -173,28 +185,28 @@ const ProductDetailsPage = () => {
 							</div>
 						)}
 
-						
-							<div className="absolute top-2 right-2">
-								<Heart
-									onClick={(e) => {
-										e.preventDefault();
-										e.stopPropagation();
 
-										if (!user) {
-											return toast.error("Please login first.");
-										}
+						<div className="absolute top-2 right-2">
+							<Heart
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
 
-										toggleWishlist(product._id);
-									}}
-									className={`h-7 w-7 cursor-pointer drop-shadow-lg transition-all duration-300 ${isWishlisted
-											? "fill-red-500 text-red-500"
-											: darkMode
-												? "text-white"
-												: "text-purple-600"
-										}`}
-								/>
-							</div>
-						
+									if (!user) {
+										return toast.error("Please login first.");
+									}
+
+									toggleWishlist(product._id);
+								}}
+								className={`h-7 w-7 cursor-pointer drop-shadow-lg transition-all duration-300 ${isWishlisted
+									? "fill-red-500 text-red-500"
+									: darkMode
+										? "text-white"
+										: "text-purple-600"
+									}`}
+							/>
+						</div>
+
 					</div>
 
 					<div className="product-info flex flex-col justify-center">

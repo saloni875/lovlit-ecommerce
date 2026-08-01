@@ -1,109 +1,122 @@
+import {Helmet} from "react-helmet-async";
+
 const RefundPolicyPage = () => {
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white py-12 px-4">
+		<>
+			
+			<Helmet>
+				<title>Refund Policy | Lovlit</title>
 
-			<div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border border-purple-200 p-6 sm:p-10">
+				<meta
+					name="description"
+					content="Read Lovlit's Refund Policy to understand refunds, cancellations, damaged products and return eligibility."
+				/>
+			</Helmet>
+			<div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white py-12 px-4">
 
-				<h1 className="logo-font text-5xl text-center text-purple-700 mb-2">
-					Lovlit
-				</h1>
+				<div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border border-purple-200 p-6 sm:p-10">
 
-				<h2 className="text-3xl font-bold text-center text-pink-500 mb-8">
-					Refund & Replacement Policy
-				</h2>
+					<h1 className="logo-font text-5xl text-center text-purple-700 mb-2">
+						Lovlit
+					</h1>
 
-				<div className="space-y-6 text-gray-700 leading-relaxed">
+					<h2 className="text-3xl font-bold text-center text-pink-500 mb-8">
+						Refund & Replacement Policy
+					</h2>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Returns
-						</h3>
+					<div className="space-y-6 text-gray-700 leading-relaxed">
 
-						<p>
-							We do not accept returns due to change of mind,
-							personal preference, or accidental orders.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Returns
+							</h3>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Customized Products
-						</h3>
+							<p>
+								We do not accept returns due to change of mind,
+								personal preference, or accidental orders.
+							</p>
+						</section>
 
-						<p>
-							Customized and personalized products are
-							non-returnable and non-refundable.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Customized Products
+							</h3>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Damaged Products
-						</h3>
+							<p>
+								Customized and personalized products are
+								non-returnable and non-refundable.
+							</p>
+						</section>
 
-						<p>
-							If your product arrives damaged, please contact
-							us within 24 hours of delivery.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Damaged Products
+							</h3>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Proof Required
-						</h3>
+							<p>
+								If your product arrives damaged, please contact
+								us within 24 hours of delivery.
+							</p>
+						</section>
 
-						<p>
-							A complete and unedited unboxing video is
-							mandatory for all damage claims.
-						</p>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Proof Required
+							</h3>
 
-						<p className="mt-2">
-							Claims submitted without an unboxing video
-							may not be eligible for replacement.
-						</p>
-					</section>
+							<p>
+								A complete and unedited unboxing video is
+								mandatory for all damage claims.
+							</p>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Replacement Policy
-						</h3>
+							<p className="mt-2">
+								Claims submitted without an unboxing video
+								may not be eligible for replacement.
+							</p>
+						</section>
 
-						<p>
-							After verification of the damage claim,
-							an eligible order may receive a replacement
-							product.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Replacement Policy
+							</h3>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Refunds
-						</h3>
+							<p>
+								After verification of the damage claim,
+								an eligible order may receive a replacement
+								product.
+							</p>
+						</section>
 
-						<p>
-							Refunds are generally not provided.
-							Replacement is the primary resolution
-							for approved damage claims.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Refunds
+							</h3>
 
-					<section>
-						<h3 className="text-xl font-semibold text-purple-700 mb-2">
-							Contact Us
-						</h3>
+							<p>
+								Refunds are generally not provided.
+								Replacement is the primary resolution
+								for approved damage claims.
+							</p>
+						</section>
 
-						<p>
-							For any issues regarding your order,
-							please contact Lovlit by Anshu through
-							WhatsApp or Instagram.
-						</p>
-					</section>
+						<section>
+							<h3 className="text-xl font-semibold text-purple-700 mb-2">
+								Contact Us
+							</h3>
+
+							<p>
+								For any issues regarding your order,
+								please contact Lovlit by Anshu through
+								WhatsApp or Instagram.
+							</p>
+						</section>
+
+					</div>
 
 				</div>
 
 			</div>
-
-		</div>
+		</>
 	);
 };
 

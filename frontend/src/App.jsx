@@ -28,6 +28,7 @@ import { useThemeStore } from "./stores/useThemeStore";
 import NotFoundPage from "./pages/NotFoundPage";
 import ContactPage from "./pages/ContactPage";
 import WishlistPage from "./pages/WishlistPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 
@@ -50,13 +51,7 @@ function App() {
 	if (checkingAuth) return <LoadingSpinner />;
 
 	return (
-		// <div
-		// 	className='min-h-screen text-black dark:text-white relative overflow-hidden'
-		// 	style={{
-		// 		background:
-		// 			"linear-gradient(to right, rgb(233 213 255), white, rgb(251 207 232))",
-		// 	}}
-		// >
+
 		<div
 			className="min-h-screen relative overflow-hidden"
 			style={{
@@ -75,6 +70,8 @@ function App() {
 
 			<div className='relative z-50 pt-20'>
 				<Navbar />
+				<ScrollToTop />
+
 				<Routes>
 					<Route path='/about' element={<AboutPage />} />
 					<Route path='/ideas' element={<CustomIdeaPage />} />
