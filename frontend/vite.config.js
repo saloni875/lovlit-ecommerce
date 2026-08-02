@@ -1,14 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { sitemap } from "vite-plugin-sitemap";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    sitemap({
-      hostname: "https://lovlit.in",
-    }),
-  ],
+  plugins: [react()],
 
   server: {
     proxy: {
@@ -18,3 +12,25 @@ export default defineConfig({
     },
   },
 });
+
+
+// import { defineConfig } from "vite";
+// import react from "@vitejs/plugin-react";
+// import { sitemap } from "vite-plugin-sitemap";
+
+// export default defineConfig({
+//   plugins: [
+//     react(),
+//     sitemap({
+//       hostname: "https://lovlit.in",
+//     }),
+//   ],
+
+//   server: {
+//     proxy: {
+//       "/api": {
+//         target: "http://localhost:5000",
+//       },
+//     },
+//   },
+// });

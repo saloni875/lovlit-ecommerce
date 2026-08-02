@@ -1,0 +1,12 @@
+User-agent: *
+
+Allow: /
+
+Disallow: /login
+Disallow: /signup
+Disallow: /cart
+Disallow: /checkout
+Disallow: /wishlist
+Disallow: /secret-dashboard
+
+Sitemap: https://lovlit.in/sitemap.xml
