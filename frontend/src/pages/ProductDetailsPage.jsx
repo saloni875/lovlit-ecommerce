@@ -126,12 +126,12 @@ const ProductDetailsPage = () => {
 	return (
 		<>
 			<Helmet>
-				<title>{product?.name} | Lovlit</title>
+				<title>{selectedProduct?.name} | Lovlit</title>
 
 				<meta
 					name="description"
 					content={
-						product?.description ||
+						selectedProduct?.description ||
 						"Premium handmade product from Lovlit."
 					}
 				/>
@@ -196,7 +196,7 @@ const ProductDetailsPage = () => {
 										return toast.error("Please login first.");
 									}
 
-									toggleWishlist(product._id);
+									toggleWishlist(selectedProduct._id);
 								}}
 								className={`h-7 w-7 cursor-pointer drop-shadow-lg transition-all duration-300 ${isWishlisted
 									? "fill-red-500 text-red-500"
