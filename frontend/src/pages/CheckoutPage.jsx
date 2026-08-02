@@ -292,13 +292,13 @@ Thank you , kindly share your payment details.`;
 									checked={shippingMethod === "Standard Shipping"}
 									onChange={() => {
 										setShippingMethod("Standard Shipping");
-										setShippingCharge(45);
+										setShippingCharge(59);
 									}}
 								/>
 
 								<div>
 									<p className="font-medium">
-										Standard Shipping — ₹45
+										Standard Shipping — ₹59
 									</p>
 
 									<p className="text-sm text-gray-500">
@@ -314,13 +314,13 @@ Thank you , kindly share your payment details.`;
 									checked={shippingMethod === "Speed Post"}
 									onChange={() => {
 										setShippingMethod("Speed Post");
-										setShippingCharge(72);
+										setShippingCharge(89);
 									}}
 								/>
 
 								<div>
 									<p className="font-medium">
-										Speed Post — ₹72
+										Speed Post — ₹89
 									</p>
 
 									<p className="text-sm text-gray-500">
@@ -349,9 +349,9 @@ Thank you , kindly share your payment details.`;
 							? "bg-[#18111f] border-fuchsia-700 text-gray-200"
 							: "bg-purple-50 border-purple-200 text-gray-700"
 							}`}>
-							<p>📦 <b>Standard Shipping:</b> ₹45</p>
+							<p>📦 <b>Standard Shipping:</b> ₹59</p>
 
-							<p>⚡ <b>Speed Post:</b> ₹72</p>
+							<p>⚡ <b>Speed Post:</b> ₹89</p>
 
 							<p>🧵 <b>Every Lovlit product is <i>handmade</i>  with care.</b></p>
 
