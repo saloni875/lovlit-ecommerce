@@ -26,11 +26,20 @@ const CategoryPage = () => {
 
 
 			<Helmet>
-				<title>{category} | Lovlit</title>
-
+				<title>
+					{category
+						.split("-")
+						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+						.join(" ")} | Lovlit
+				</title>
 				<meta
 					name="description"
 					content={`Shop handmade ${category} from Lovlit. Discover premium quality gifts, jewelry, candles and aesthetic accessories.`}
+				/>
+
+				<link
+					rel="canonical"
+					href={`https://lovlit.in/category/${category}`}
 				/>
 			</Helmet>
 			<div
