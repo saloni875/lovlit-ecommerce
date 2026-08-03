@@ -36,7 +36,9 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: [
           "'self'",
+          "'unsafe-inline'",
           "https://challenges.cloudflare.com",
+          "https://www.googletagmanager.com",
         ],
         frameSrc: [
           "'self'",
@@ -50,32 +52,35 @@ app.use(
           "'self'",
           "data:",
           "https://res.cloudinary.com",
+          "https://www.google-analytics.com",
         ],
         connectSrc: [
           "'self'",
           "https://challenges.cloudflare.com",
+          "https://www.google-analytics.com",
+          "https://region1.google-analytics.com",
         ],
       },
     },
   })
 );
 app.use(cors({
-	origin:
-		process.env.NODE_ENV === "production"
-			? process.env.CLIENT_URL
-			: "http://localhost:5173",
-	credentials: true,
+  origin:
+    process.env.NODE_ENV === "production"
+      ? process.env.CLIENT_URL
+      : "http://localhost:5173",
+  credentials: true,
 }));
 
 
 
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: process.env.NODE_ENV === "production" ? 1000 : 10000,
-	standardHeaders: true,
-	legacyHeaders: false,
+  windowMs: 15 * 60 * 1000,
+  max: process.env.NODE_ENV === "production" ? 1000 : 10000,
+  standardHeaders: true,
+  legacyHeaders: false,
 });
-app.use("/api/auth", limiter,authRoutes);
+app.use("/api/auth", limiter, authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
@@ -100,18 +105,18 @@ app.use("/api/wishlist", wishlistRoutes);
 
 
 app.get("/api/test", (req, res) => {
-	res.send("Backend is working");
+  res.send("Backend is working");
 });
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-	});
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
 }
 
 app.listen(PORT, () => {
-	console.log("Server is running on http://localhost:" + PORT);
-	connectDB();
+  console.log("Server is running on http://localhost:" + PORT);
+  connectDB();
 });
