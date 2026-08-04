@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const API_URL =
 	import.meta.env.MODE === "development"
 		? "http://localhost:5000/api/ideas"
-		: "/api/ideas";
+		: "/ideas";
 
 export const useIdeaStore = create((set) => ({
 	ideas: [],
