@@ -47,6 +47,12 @@ export const sendContactEmail = async (req, res) => {
 	} catch (error) {
 
 		console.log(error);
+		console.error("Contact mail error:");
+
+		console.error(error.code);
+		console.error(error.response);
+		console.error(error.responseCode);
+		console.error(error.command);
 
 		res.status(500).json({
 			success: false,
