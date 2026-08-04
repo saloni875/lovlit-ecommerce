@@ -81,7 +81,7 @@ const IdeasList = () => {
                             : "#ffffff",
                     }}
                 >
-                    {/* <div className="overflow-x-auto">
+                    <div className="overflow-x-auto">
 
                         <table className="min-w-[1000px] w-full">
 
@@ -208,7 +208,7 @@ const IdeasList = () => {
 
                         </table>
 
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </>
