@@ -70,7 +70,7 @@ const Footer = () => {
                                 className="flex items-center gap-2 hover:text-purple-700 transition"
                             >
                                 <MessageCircle size={16} />
-                                <p>+91 85830 94531</p>
+                                <p></p>
                             </a>
 
                             <a
