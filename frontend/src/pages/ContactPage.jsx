@@ -124,16 +124,16 @@ const ContactPage = () => {
                   </div>
                 </a>
 
-                <a
+                {/* <a
                   href="tel:+918583094531"
                   className="flex items-center gap-3 hover:text-pink-500 transition"
                 >
                   <Phone className="text-pink-500" />
                   <div>
                     <p className="font-semibold">Phone</p>
-                    {/* <p>+91 85830 94531</p> */}
+                    {/* <p>+91 85830 94531</p>
                   </div>
-                </a>
+                </a> */}
 
                 <a
                   href="https://instagram.com/lovlit_"
