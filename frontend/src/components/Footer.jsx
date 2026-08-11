@@ -63,7 +63,7 @@ const Footer = () => {
                                 <p>+91 85830 94531</p>
                             </a> */}
 
-                            <a
+                            {/* <a
                                 href="https://wa.me/918583094531?text=Hello Lovlit, I'm interested in your handmade gifts. Could you share more details and options?"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -71,7 +71,7 @@ const Footer = () => {
                             >
                                 <MessageCircle size={16} />
                                 <p></p>
-                            </a>
+                            </a> */}
 
                             <a
                                 href="https://www.instagram.com/lovlit_/"
