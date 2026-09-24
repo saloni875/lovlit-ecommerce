@@ -10,11 +10,7 @@ const applyDiscount = async (product) => {
 	let finalPrice = product.price;
 
 	// 1. Product Sale Price (Highest Priority)
-	if (
-		product.salePrice !== null &&
-		product.salePrice > 0 &&
-		product.salePrice < product.price
-	) {
+	if (product.salePrice !== null && product.salePrice > 0 && product.salePrice < product.price) {
 		finalPrice = product.salePrice;
 
 		finalDiscount = Math.round(
@@ -82,41 +78,28 @@ export const getAllProducts = async (req, res) => {
 
 export const getFeaturedProducts = async (req, res) => {
 	try {
-		let cachedProducts = await redis.get("featured_products");
-
-		// if (cachedProducts) {
-		// 	return res.json(JSON.parse(cachedProducts));
-		// 	console.log("featured from redis:" , cachedProducts);
-		// }
-
-		// if not in redis, fetch from mongodb
-		// .lean() is gonna return a plain javascript object instead of a mongodb document
-		// which is good for performance when we just want to read data and not use any mongoose methods on it
-
-		const featured = await Product.find({
+		const featuredProducts = await Product.find({
 			isFeatured: true,
 		});
 
-		if (!featured.length) {
+		if (featuredProducts.length === 0) {
 			return res.status(404).json({
 				message: "No featured products found",
 			});
 		}
 
-		const featuredProducts = await Promise.all(
-			featured.map((product) => applyDiscount(product))
+		const discountedProducts = await Promise.all(
+			featuredProducts.map((product) => applyDiscount(product))
 		);
 
-		// Store discounted products in Redis
-		await redis.set(
-			"featured_products",
-			JSON.stringify(featuredProducts)
-		);
-
-		res.json(featuredProducts);
+		res.json(discountedProducts);
 	} catch (error) {
 		console.log("Error in getFeaturedProducts controller", error.message);
-		res.status(500).json({ message: "Server error", error: error.message });
+
+		res.status(500).json({
+			message: "Server error",
+			error: error.message,
+		});
 	}
 };
 
@@ -243,8 +226,6 @@ export const deleteProduct = async (req, res) => {
 		}
 
 		await Product.findByIdAndDelete(req.params.id);
-		await redis.del("featured_products"); // Invalidate the cache after deletion
-		await updateFeaturedProductsCache();
 		res.json({ message: "Product deleted successfully" });
 	} catch (error) {
 		console.log("Error in deleteProduct controller", error.message);
@@ -336,7 +317,7 @@ export const toggleFeaturedProduct = async (req, res) => {
 		if (product) {
 			product.isFeatured = !product.isFeatured;
 			const updatedProduct = await product.save();
-			await updateFeaturedProductsCache();
+
 			res.json(updatedProduct);
 		} else {
 			res.status(404).json({ message: "Product not found" });
@@ -356,59 +337,16 @@ async function updateFeaturedProductsCache() {
 		const featuredProducts =
 			await Product.find({ isFeatured: true }).lean();
 
-		console.log(featuredProducts.length);
 
 		await redis.set(
 			"featured_products",
 			JSON.stringify(featuredProducts)
 		);
 
-		console.log("Cache updated");
 	} catch (error) {
 		console.log(error);
 	}
 }
-
-// export const updateProductDiscount = async (req, res) => {
-// 	try {
-// 		const { productDiscount } = req.body;
-
-// 		if (productDiscount < 0 || productDiscount > 80) {
-// 			return res.status(400).json({
-// 				success: false,
-// 				message: "Discount must be between 0 and 60%",
-// 			});
-// 		}
-
-// 		const product = await Product.findByIdAndUpdate(
-// 			req.params.id,
-// 			{ productDiscount },
-// 			{ new: true }
-// 		);
-
-// 		if (!product) {
-// 			return res.status(404).json({
-// 				success: false,
-// 				message: "Product not found",
-// 			});
-// 		}
-
-// 		await updateFeaturedProductsCache();
-
-// 		res.status(200).json({
-// 			success: true,
-// 			product,
-// 		});
-// 	} catch (error) {
-// 		console.log(error);
-
-// 		res.status(500).json({
-// 			success: false,
-// 			message: "Server Error",
-// 		});
-// 	}
-// };
-
 
 
 export const updateProduct = async (req, res) => {

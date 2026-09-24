@@ -15,7 +15,7 @@ export const getCartProducts = async (req, res) => {
 				(cartItem) =>
 					cartItem.product &&
 					cartItem.product.toString() ===
-					product._id.toString()
+				product._id.toString()
 			);
 
 			return {

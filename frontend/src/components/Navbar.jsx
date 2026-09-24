@@ -71,9 +71,9 @@ const Navbar = () => {
 						{/*  Logo  */}
 						<Link to="/" className="flex items-center shrink-0">
 							<img
-								src="/logo.png"
+								src="/logo1.png"
 								alt="Lovlit"
-								className="h-14 md:h-16 w-auto"
+								className="h-14 w-14 md:h-16 md:w-16 rounded-xl object-cover aspect-square"
 							/>
 						</Link>
 

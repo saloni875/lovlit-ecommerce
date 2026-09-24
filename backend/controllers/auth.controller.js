@@ -23,10 +23,9 @@ const setCookies = (res, accessToken, refreshToken) => {
 	res.cookie("accessToken", accessToken, {
 		httpOnly: true, // prevent XSS attacks, cross site scripting attack
 		secure: process.env.NODE_ENV === "production",
-		sameSite:
-			process.env.NODE_ENV === "production"
-				? "none"
-				: "strict", // prevents CSRF attack, cross-site request forgery attack
+		sameSite: process.env.NODE_ENV === "production"
+			? "none"
+			: "strict", // prevents CSRF attack, cross-site request forgery attack
 		maxAge: 15 * 60 * 1000, // 15 minutes
 	});
 	res.cookie("refreshToken", refreshToken, {
@@ -65,13 +64,14 @@ export const signup = async (req, res) => {
 				},
 			}
 		);
-		
+
 
 		if (!verify.data.success) {
 			return res.status(400).json({
 				message: "dear user, Captcha verification failed.",
 			});
 		}
+
 		const userExists = await User.findOne({ email });
 
 		if (userExists) {
@@ -81,9 +81,10 @@ export const signup = async (req, res) => {
 
 		// authenticate
 		const { accessToken, refreshToken } = generateTokens(user._id);
-		await storeRefreshToken(user._id, refreshToken);
 
-		setCookies(res, accessToken, refreshToken);
+		await storeRefreshToken(user._id, refreshToken); // store in redis
+
+		setCookies(res, accessToken, refreshToken); // set both token http only cookies
 
 		res.status(201).json({
 			_id: user._id,
@@ -101,10 +102,10 @@ export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		if (!email || !password) {
-	return res.status(400).json({
-		message: "Email and password are required",
-	});
-}
+			return res.status(400).json({
+				message: "Email and password are required",
+			});
+		}
 		const user = await User.findOne({ email });
 
 		if (user && (await user.comparePassword(password))) {
@@ -160,7 +161,7 @@ export const refreshToken = async (req, res) => {
 			return res.status(401).json({ message: "Invalid refresh token" });
 		}
 
-		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15min" });
 
 		res.cookie("accessToken", accessToken, {
 			httpOnly: true,

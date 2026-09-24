@@ -17,7 +17,7 @@ export const protectRoute = async (req, res, next) => {
 				return res.status(401).json({ message: "User not found" });
 			}
 
-			req.user = user;
+			req.user = user; // it attached the user info to req ans req now carries the user info to other middleware/controller
 
 			next();
 		} catch (error) {

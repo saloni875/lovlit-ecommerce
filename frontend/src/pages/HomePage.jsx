@@ -129,7 +129,7 @@ const HomePage = () => {
 							<CategoryItem
 								category={category}
 								key={category.name}
-							/>
+							/> 
 						))}
 					</div>
 

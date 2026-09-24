@@ -8,7 +8,7 @@ export const useUserStore = create((set, get) => ({
 	checkingAuth: true,
 
 	signup: async ({ name, email, password, confirmPassword, turnstileToken }) => {
-		set({ loading: true });
+		set({ loading: true });  
 
 		if (password !== confirmPassword) {
 			set({ loading: false });
@@ -72,7 +72,7 @@ export const useUserStore = create((set, get) => ({
 	},
 }));
 
-// TODO: Implement the axios interceptors for refreshing access token
+
 
 // Axios interceptor for token refresh
 let refreshPromise = null;
